@@ -336,7 +336,7 @@ public class IguanaConfig
         Property modFoodSaturationMultiplierProperty = config.get("food", "modFoodSaturationMultiplier", 1);
         modFoodSaturationMultiplierProperty.comment = "Other mod's food saturation values are multiplied by this ('modifyFoodValues' must be true). Recommended range between 0.8 and 1.2";
         modFoodSaturationMultiplier = modFoodSaturationMultiplierProperty.getDouble(1);
-        modFoodSaturationMultiplierProperty.set(modFoodValueDivider);
+        modFoodSaturationMultiplierProperty.set(modFoodSaturationMultiplier);
 
         Property addWellFedEffectProperty = config.get("food", "addWellFedEffect", true);
         addWellFedEffectProperty.comment = "Adds a 'well fed' effect that gives slight health regen";
