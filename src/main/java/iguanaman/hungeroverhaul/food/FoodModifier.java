@@ -36,6 +36,9 @@ public class FoodModifier
             float saturationValue = Math.max(foodValue / 20F, 0F);
             event.foodValues = new FoodValues(foodValue, saturationValue);
         }
+        float newSaturationValue = event.foodValues.saturationModifier;
+        newSaturationValue = (float) (newSaturationValue * IguanaConfig.modFoodSaturationMultiplier);
+        event.foodValues = new FoodValues(event.foodValues.hunger, newSaturationValue);
     }
 
     public static void setModifiedFoodValues(Item item, FoodValues values)

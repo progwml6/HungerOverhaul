@@ -68,6 +68,7 @@ public class IguanaConfig
     public static boolean modifyFoodEatingSpeed;
     public static int foodStackSizeMultiplier;
     public static int modFoodValueDivider;
+    public static double modFoodSaturationMultiplier;
     public static boolean addWellFedEffect;
 
     // harvestcraft integration
@@ -322,7 +323,7 @@ public class IguanaConfig
         Property modifyFoodEatingSpeedProperty = config.get("food", "modifyFoodEatingSpeed", true);
         modifyFoodEatingSpeedProperty.comment = "Changes the eating animation speed to be dependant on the food's replenishment value";
         modifyFoodEatingSpeed = modifyFoodEatingSpeedProperty.getBoolean(true);
-
+        
         Property modifyFoodStackSizeProperty = config.get("food", "modifyFoodStackSize", true);
         modifyFoodStackSizeProperty.comment = "Changes the stack size of food to be dependant on the food's replenishment value";
         modifyFoodStackSize = modifyFoodStackSizeProperty.getBoolean(true);
@@ -336,6 +337,11 @@ public class IguanaConfig
         modFoodValueDividerProperty.comment = "Other mod's food replenishment values are divided by this ('modifyFoodValues' must be true)";
         modFoodValueDivider = Math.max(modFoodValueDividerProperty.getInt(4), 1);
         modFoodValueDividerProperty.set(modFoodValueDivider);
+        
+        Property modFoodSaturationMultiplierProperty = config.get("food", "modFoodSaturationMultiplier", 1);
+        modFoodSaturationMultiplierProperty.comment = "Other mod's food saturation values are multiplied by this ('modifyFoodValues' must be true). Recommended range between 0.8 and 1.2";
+        modFoodSaturationMultiplier = modFoodSaturationMultiplierProperty.getDouble(1);
+        modFoodSaturationMultiplierProperty.set(modFoodSaturationMultiplier);
 
         Property addWellFedEffectProperty = config.get("food", "addWellFedEffect", true);
         addWellFedEffectProperty.comment = "Adds a 'well fed' effect that gives slight health regen";
