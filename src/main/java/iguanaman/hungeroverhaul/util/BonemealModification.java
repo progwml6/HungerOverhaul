@@ -2,6 +2,8 @@ package iguanaman.hungeroverhaul.util;
 
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
@@ -9,9 +11,9 @@ import net.minecraft.world.World;
  */
 public abstract class BonemealModification
 {
-    public void onBonemeal(World world, int x, int y, int z, Block block, int meta)
+    public void onBonemeal(World world, BlockPos pos, IBlockState state, int meta)
     {
     }
 
-    public abstract int getNewMeta(World world, int x, int y, int z, Block block, int currentMeta);
+    public abstract int getNewMeta(World world, BlockPos pos, IBlockState state, int currentMeta);
 }

@@ -5,8 +5,8 @@ import iguanaman.hungeroverhaul.food.FoodModifier;
 
 import com.google.common.collect.ImmutableList;
 
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.event.FMLInterModComms.IMCMessage;
 
 public class IMCHandler
 {

@@ -8,7 +8,7 @@ import thaumcraft.api.aspects.AspectList;
 
 import com.pam.temperateplants.temperateplants;
 
-import cpw.mods.fml.common.Loader;
+import net.minecraftforge.fml.common.Loader;
 
 public class ModuleTemperatePlants {
 	public static void init()

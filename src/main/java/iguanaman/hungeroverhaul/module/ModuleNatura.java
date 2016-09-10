@@ -1,17 +1,17 @@
 package iguanaman.hungeroverhaul.module;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.util.BonemealModification;
 import iguanaman.hungeroverhaul.util.PlantGrowthModification;
 import iguanaman.hungeroverhaul.util.RecipeRemover;
-import mods.natura.Natura;
-import mods.natura.blocks.crops.BerryBush;
-import mods.natura.blocks.crops.CropBlock;
-import mods.natura.blocks.crops.NetherBerryBush;
-import mods.natura.blocks.trees.SaguaroBlock;
-import mods.natura.common.NContent;
+import com.progwml6.natura.Natura;
+import com.progwml6.natura.blocks.crops.BerryBush;
+import com.progwml6.natura.blocks.crops.CropBlock;
+import com.progwml6.natura.blocks.crops.NetherBerryBush;
+import com.progwml6.natura.blocks.trees.SaguaroBlock;
+import com.progwml6.natura.common.NContent;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

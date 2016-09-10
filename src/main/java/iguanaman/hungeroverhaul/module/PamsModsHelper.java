@@ -13,12 +13,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import com.pam.harvestcraft.BlockRegistry;
-import com.pam.harvestcraft.ItemPamSeedFood;
-import com.pam.harvestcraft.ItemRegistry;
+import com.pam.harvestcraft.blocks.BlockRegistry;
+import com.pam.harvestcraft.item.items.ItemPamSeedFood;
+import com.pam.harvestcraft.item.ItemRegistry;
 import com.pam.weeeflowers.weeeflowers;
 
-import cpw.mods.fml.common.Loader;
+import net.minecraftforge.fml.common.Loader;
 
 public class PamsModsHelper
 {

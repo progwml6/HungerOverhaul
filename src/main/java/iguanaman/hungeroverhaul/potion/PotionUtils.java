@@ -5,8 +5,8 @@ import java.lang.reflect.Modifier;
 
 import net.minecraft.potion.Potion;
 
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import iguanaman.hungeroverhaul.HungerOverhaul;
 
 public class PotionUtils {

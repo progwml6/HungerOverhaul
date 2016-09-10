@@ -1,6 +1,8 @@
 package iguanaman.hungeroverhaul.module;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.util.BonemealModification;
@@ -18,32 +20,32 @@ public class ModuleVanilla
     public static void init()
     {
         if (IguanaConfig.addSeedsCraftingRecipe)
-            GameRegistry.addRecipe(new ShapelessOreRecipe(Items.wheat_seeds, Items.wheat));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(Items.WHEAT_SEEDS, Items.WHEAT));
 
         /*
          * Food values
          */
         if (IguanaConfig.modifyFoodValues && IguanaConfig.useHOFoodValues)
         {
-            FoodModifier.setModifiedFoodValues(Items.apple, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.bread, new FoodValues(3, 0.2F));
-            FoodModifier.setModifiedFoodValues(Items.porkchop, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.cooked_porkchop, new FoodValues(2, 0.15F));
-            FoodModifier.setModifiedFoodValues(Items.fish, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.cooked_fished, new FoodValues(2, 0.1F));
-            FoodModifier.setModifiedFoodValues(Items.cookie, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.melon, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.beef, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.cooked_beef, new FoodValues(2, 0.15F));
-            FoodModifier.setModifiedFoodValues(Items.chicken, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.cooked_chicken, new FoodValues(2, 0.15F));
-            FoodModifier.setModifiedFoodValues(Items.rotten_flesh, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.baked_potato, new FoodValues(2, 0.15F));
-            FoodModifier.setModifiedFoodValues(Items.poisonous_potato, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.pumpkin_pie, new FoodValues(3, 0.15F));
-            FoodModifier.setModifiedFoodValues(Items.mushroom_stew, new FoodValues(2, 0.1F));
-            FoodModifier.setModifiedFoodValues(Items.carrot, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.potato, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.APPLE, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.BREAD, new FoodValues(3, 0.2F));
+            FoodModifier.setModifiedFoodValues(Items.PORKCHOP, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.COOKED_PORKCHOP, new FoodValues(2, 0.15F));
+            FoodModifier.setModifiedFoodValues(Items.FISH, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.COOKED_FISH, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(Items.COOKIE, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.MELON, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.BEEF, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.COOKED_BEEF, new FoodValues(2, 0.15F));
+            FoodModifier.setModifiedFoodValues(Items.CHICKEN, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.COOKED_CHICKEN, new FoodValues(2, 0.15F));
+            FoodModifier.setModifiedFoodValues(Items.ROTTEN_FLESH, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.BAKED_POTATO, new FoodValues(2, 0.15F));
+            FoodModifier.setModifiedFoodValues(Items.POISONOUS_POTATO, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.PUMPKIN_PIE, new FoodValues(3, 0.15F));
+            FoodModifier.setModifiedFoodValues(Items.MUSHROOM_STEW, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(Items.CARROT, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.POTATO, new FoodValues(1, 0.05F));
         }
 
         /*
@@ -99,10 +101,10 @@ public class ModuleVanilla
         BonemealModification cropBonemealModification = new BonemealModification()
         {
             @Override
-            public int getNewMeta(World world, int x, int y, int z, Block block, int currentMeta)
+            public int getNewMeta(World world, BlockPos pos, IBlockState block, int currentMeta)
             {
                 int metaIncrease = 1;
-                if (IguanaConfig.difficultyScalingBoneMeal && world.difficultySetting.getDifficultyId() < EnumDifficulty.EASY.getDifficultyId())
+                if (IguanaConfig.difficultyScalingBoneMeal && world.getDifficulty().getDifficultyId() < EnumDifficulty.EASY.getDifficultyId())
                     metaIncrease = world.rand.nextInt(3);
                 return Math.min(currentMeta + metaIncrease, 7);
             }

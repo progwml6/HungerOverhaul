@@ -8,8 +8,8 @@ import squeek.applecore.api.food.FoodValues;
 import java.util.HashMap;
 import java.util.Map;
 
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 

@@ -6,8 +6,8 @@ import iguanaman.hungeroverhaul.module.PamsModsHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import mods.natura.blocks.crops.CropBlock;
-import mods.natura.common.NContent;
+import com.progwml6.natura.blocks.crops.CropBlock;
+import com.progwml6.natura.common.NContent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.item.Item;
@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 
 import com.pam.harvestcraft.BlockPamCrop;
 
-import cpw.mods.fml.common.Loader;
+import net.minecraftforge.fml.common.Loader;
 
 public class BlockHelper
 {

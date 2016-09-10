@@ -8,9 +8,9 @@ import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.event.entity.player.BonemealEvent;
-import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ModuleBonemeal
 {
@@ -65,7 +65,7 @@ public class ModuleBonemeal
         if (event.getResult() != Result.DEFAULT || event.isCanceled() || IguanaConfig.bonemealEffectiveness == 1.0f)
             return;
 
-        BonemealModification bonemealModification = getBonemealModification(event.block);
+        BonemealModification bonemealModification = getBonemealModification(event.getBlock());
         if (bonemealModification == null)
             return;
 
@@ -78,17 +78,17 @@ public class ModuleBonemeal
             return;
         }
 
-        if (event.world.rand.nextFloat() < IguanaConfig.bonemealEffectiveness)
+        if (event.getWorld().rand.nextFloat() < IguanaConfig.bonemealEffectiveness)
         {
             if (IguanaConfig.modifyBonemealGrowth)
             {
-                int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
-                int resultingMeta = bonemealModification.getNewMeta(event.world, event.x, event.y, event.z, event.block, meta);
+                int meta = event.getWorld().getBlockMetadata(event.getPos());
+                int resultingMeta = bonemealModification.getNewMeta(event.getWorld(), event.getPos(), event.getBlock(), meta);
                 if (meta != resultingMeta)
                 {
-                    event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, resultingMeta, 3);
+                    event.getWorld().setBlockMetadataWithNotify(event.getPos(), resultingMeta, 3);
                 }
-                bonemealModification.onBonemeal(event.world, event.x, event.y, event.z, event.block, resultingMeta);
+                bonemealModification.onBonemeal(event.getWorld(), event.getPos(), event.getBlock(), resultingMeta);
                 event.setResult(Result.ALLOW);
             }
             // otherwise fall through to default implementation (Result.DEFAULT)

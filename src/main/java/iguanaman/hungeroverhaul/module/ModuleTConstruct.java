@@ -4,9 +4,9 @@ import iguanaman.hungeroverhaul.config.IguanaConfig;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-import tconstruct.armor.TinkerArmor;
-import tconstruct.library.crafting.DryingRackRecipes;
-import tconstruct.util.config.PHConstruct;
+import slimeknights.tconstruct.armor.TinkerArmor;
+import slimeknights.tconstruct.library.crafting.DryingRackRecipes;
+import slimeknights.tconstruct.util.config.PHConstruct;
 
 public class ModuleTConstruct
 {

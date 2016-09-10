@@ -2,7 +2,7 @@ package iguanaman.hungeroverhaul;
 
 import java.io.File;
 
-import cpw.mods.fml.common.registry.VillagerRegistry;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.json.JsonModule;
 import iguanaman.hungeroverhaul.module.*;
@@ -12,20 +12,20 @@ import net.minecraft.world.gen.structure.MapGenStructureIO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import iguanaman.hungeroverhaul.food.FoodEventHandler;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.potion.PotionWellFed;
 import iguanaman.hungeroverhaul.util.ComponentVillageCustomField;
@@ -101,8 +101,8 @@ public class HungerOverhaul
 
         if (IguanaConfig.removeHoeRecipes)
         {
-            RecipeRemover.removeAnyRecipe(new ItemStack(Items.wooden_hoe));
-            RecipeRemover.removeAnyRecipe(new ItemStack(Items.stone_hoe));
+            RecipeRemover.removeAnyRecipe(new ItemStack(Items.WOODEN_HOE));
+            RecipeRemover.removeAnyRecipe(new ItemStack(Items.STONE_HOE));
         }
     }
 

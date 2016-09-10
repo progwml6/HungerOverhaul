@@ -12,7 +12,7 @@ import thaumcraft.api.aspects.AspectList;
 import com.pam.weeeflowers.BlockPamFlowerCrop;
 import com.pam.weeeflowers.weeeflowers;
 
-import cpw.mods.fml.common.Loader;
+import net.minecraftforge.fml.common.Loader;
 
 public class ModuleWeeeFlowers
 {
