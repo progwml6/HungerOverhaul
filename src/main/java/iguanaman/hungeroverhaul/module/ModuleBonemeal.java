@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -27,13 +28,13 @@ public class ModuleBonemeal
         bonemealModificationsByBlock.put(block, bonemealModification);
     }
 
-    public static BonemealModification getBonemealModification(Block block)
+    public static BonemealModification getBonemealModification(IBlockState block)
     {
         BonemealModification bonemealModification = bonemealModificationsByBlock.get(block);
         if (bonemealModification != null)
             return bonemealModification;
         else
-            return getBonemealModification(block.getClass());
+            return getBonemealModification(block.getBlock().getClass());
     }
 
     public static BonemealModification getBonemealModification(Class<? extends Block> blockClass)
@@ -58,7 +59,7 @@ public class ModuleBonemeal
         // only the server matters
         // can't simulate this on the client because the client
         // generates different random numbers, causing visual desyncing
-        if (event.world.isRemote)
+        if (event.getWorld().isRemote)
             return;
 
         // do nothing if effectiveness is normal
@@ -82,13 +83,13 @@ public class ModuleBonemeal
         {
             if (IguanaConfig.modifyBonemealGrowth)
             {
-                int meta = event.getWorld().getBlockMetadata(event.getPos());
-                int resultingMeta = bonemealModification.getNewMeta(event.getWorld(), event.getPos(), event.getBlock(), meta);
-                if (meta != resultingMeta)
+                //IBlockState meta = event.getWorld().getBlockState(event.getPos());
+                IBlockState resultingState = bonemealModification.getNewState(event.getWorld(), event.getPos(), event.getBlock());
+                if (event.getBlock() != resultingState)
                 {
                     event.getWorld().setBlockMetadataWithNotify(event.getPos(), resultingMeta, 3);
                 }
-                bonemealModification.onBonemeal(event.getWorld(), event.getPos(), event.getBlock(), resultingMeta);
+                bonemealModification.onBonemeal(event.getWorld(), event.getPos(), event.getBlock(), resultingState);
                 event.setResult(Result.ALLOW);
             }
             // otherwise fall through to default implementation (Result.DEFAULT)

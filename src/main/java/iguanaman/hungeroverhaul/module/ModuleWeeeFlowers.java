@@ -5,12 +5,6 @@ import iguanaman.hungeroverhaul.util.PlantGrowthModification;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-
-import com.pam.weeeflowers.BlockPamFlowerCrop;
-import com.pam.weeeflowers.weeeflowers;
 
 import net.minecraftforge.fml.common.Loader;
 
@@ -19,7 +13,7 @@ public class ModuleWeeeFlowers
 
     public static void init()
     {
-        // Add Thaumcraft aspects
+      /*  // Add Thaumcraft aspects
         if (Loader.isModLoaded("Thaumcraft"))
             // Flower seeds
             for (Item flowerSeed : PamsModsHelper.PamFlowerSeeds)
@@ -48,6 +42,6 @@ public class ModuleWeeeFlowers
                 .setNeedsSunlight(true)
                 .setGrowthTickProbability(IguanaConfig.flowerRegrowthMultiplier);
         ModulePlantGrowth.registerPlantGrowthModifier(BlockPamFlowerCrop.class, flowerGrowthModification);
-    }
+    */}
 
 }

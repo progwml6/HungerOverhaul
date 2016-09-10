@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.block.Block;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import squeek.applecore.api.plants.PlantGrowthEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
@@ -67,7 +67,7 @@ public class ModulePlantGrowth
             return;
 
         // sunlight
-        float sunlightModifier = !growthModification.needsSunlight || (growthModification.needsSunlight && event.world.isDaytime() && event.world.canBlockSeeTheSky(event.x, event.y, event.z)) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
+        float sunlightModifier = !growthModification.needsSunlight || (growthModification.needsSunlight && event.world.isDaytime() && event.world.canBlockSeeSky(event.pos)) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
         if (sunlightModifier == 0)
         {
             event.setResult(Result.DENY);
@@ -79,7 +79,7 @@ public class ModulePlantGrowth
         if (!growthModification.biomeGrowthModifiers.isEmpty())
         {
             biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
-            BiomeGenBase biome = event.world.getBiomeGenForCoords(event.x, event.z);
+            Biome biome = event.world.getBiomeForCoordsBody(event.pos);//.getBiomeGenForCoords(event.x, event.z);
             for (BiomeDictionary.Type type : BiomeDictionary.getTypesForBiome(biome))
             {
                 if (growthModification.biomeGrowthModifiers.containsKey(type))

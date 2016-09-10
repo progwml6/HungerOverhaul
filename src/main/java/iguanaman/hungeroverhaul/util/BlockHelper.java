@@ -13,7 +13,7 @@ import net.minecraft.block.BlockCrops;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import com.pam.harvestcraft.BlockPamCrop;
+import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
 
 import net.minecraftforge.fml.common.Loader;
 

@@ -1,7 +1,7 @@
 package iguanaman.hungeroverhaul.util;
 
-import com.pam.harvestcraft.BlockPamSapling;
-import com.pam.harvestcraft.ItemPamSeedFood;
+import com.pam.harvestcraft.blocks.growables.BlockPamSapling;
+import com.pam.harvestcraft.item.items.ItemPamSeedFood;
 
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;

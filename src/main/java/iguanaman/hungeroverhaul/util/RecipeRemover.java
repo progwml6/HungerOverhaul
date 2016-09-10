@@ -28,7 +28,7 @@ public class RecipeRemover
     @SuppressWarnings("unchecked")
     public static void removeFurnaceRecipe(ItemStack furnaceInput)
     {
-        Map<ItemStack, ItemStack> recipes = FurnaceRecipes.smelting().getSmeltingList();
+        Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
         Iterator<Map.Entry<ItemStack, ItemStack>> recipeIterator = recipes.entrySet().iterator();
         while (recipeIterator.hasNext())
         {

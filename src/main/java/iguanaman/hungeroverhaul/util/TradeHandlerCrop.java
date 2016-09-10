@@ -22,7 +22,7 @@ public class TradeHandlerCrop implements IVillageTradeHandler {
 
 	@Override
 	public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random random) {
-		recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(item, 16, 0), new ItemStack(Items.emerald, 1)));
+		recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(item, 16, 0), new ItemStack(Items.EMERALD, 1)));
 	}
 
 }

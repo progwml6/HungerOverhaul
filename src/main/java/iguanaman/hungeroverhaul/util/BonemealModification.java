@@ -11,9 +11,9 @@ import net.minecraft.world.World;
  */
 public abstract class BonemealModification
 {
-    public void onBonemeal(World world, BlockPos pos, IBlockState state, int meta)
+    public void onBonemeal(World world, BlockPos pos, IBlockState state, IBlockState newState)
     {
     }
 
-    public abstract int getNewMeta(World world, BlockPos pos, IBlockState state, int currentMeta);
+    public abstract IBlockState getNewState(World world, BlockPos pos, IBlockState state);
 }

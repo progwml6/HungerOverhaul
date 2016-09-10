@@ -11,12 +11,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.pam.harvestcraft.blocks.BlockRegistry;
 import com.pam.harvestcraft.item.items.ItemPamSeedFood;
 import com.pam.harvestcraft.item.ItemRegistry;
-import com.pam.weeeflowers.weeeflowers;
 
 import net.minecraftforge.fml.common.Loader;
 
@@ -164,7 +164,7 @@ public class PamsModsHelper
 
     public static void loadWF()
     {
-        if (Loader.isModLoaded("weeeflowers"))
+        /*if (Loader.isModLoaded("weeeflowers"))
         {
             PamFlowerCrops = new Block[]{
             weeeflowers.pamwhiteflowerCrop, weeeflowers.pamorangeflowerCrop, weeeflowers.pammagentaflowerCrop, weeeflowers.pamlightblueflowerCrop, weeeflowers.pamyellowflowerCrop,
@@ -177,7 +177,7 @@ public class PamsModsHelper
             weeeflowers.limeflowerseedItem, weeeflowers.pinkflowerseedItem, weeeflowers.lightgreyflowerseedItem, weeeflowers.darkgreyflowerseedItem, weeeflowers.cyanflowerseedItem,
             weeeflowers.purpleflowerseedItem, weeeflowers.blueflowerseedItem, weeeflowers.brownflowerseedItem, weeeflowers.greenflowerseedItem, weeeflowers.redflowerseedItem, weeeflowers.blackflowerseedItem
             };
-        }
+        }*/
     }
 
     public static void mapFruit(Block blockSapling, Item fruitItem, Block fruitBlock)
@@ -187,9 +187,9 @@ public class PamsModsHelper
     }
 
     // mimics the logic in ItemPamSeedFood.onItemUse
-    public static boolean canPlantSeedFoodAt(EntityPlayer player, ItemStack itemStack, World world, int x, int y, int z, int side)
+    public static boolean canPlantSeedFoodAt(EntityPlayer player, ItemStack itemStack, World world, BlockPos pos, int side)
     {
-        if (!player.canPlayerEdit(x, y, z, side, itemStack) || !player.canPlayerEdit(x, y + 1, z, side, itemStack))
+        if (!player.canPlayerEdit(pos, side, itemStack) || !player.canPlayerEdit(x, y + 1, z, side, itemStack))
             return false;
 
         try
