@@ -35,7 +35,7 @@ public class ItemTweaks
                 || IguanaConfig.addSaplingTradesFarmer;
         if (worthLooping)
         {
-            for (Object obj : Item.itemRegistry)
+            for (Object obj : Item.REGISTRY)
             {
                 Item item = (Item) obj;
                 if (item instanceof ItemFood)
@@ -89,7 +89,7 @@ public class ItemTweaks
 
     public static void addButcherTrade(Item item, ItemStack stack, FoodValues values)
     {
-        VillagerRegistry.instance().registerVillageTradeHandler(VillagerType.BUTCHER.ordinal(), new TradeHandlerFood(item, item.getItemStackLimit(stack)));
+        VillagerRegistry.instance().registerVillageTradeHandler(VillagerType.BUTCHER, new TradeHandlerFood(item, item.getItemStackLimit(stack)));
     }
 
     public static void addSaplingTrade(Block block)

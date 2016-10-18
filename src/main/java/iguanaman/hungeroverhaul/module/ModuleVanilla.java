@@ -101,7 +101,7 @@ public class ModuleVanilla
         BonemealModification cropBonemealModification = new BonemealModification()
         {
             @Override
-            public int getNewMeta(World world, BlockPos pos, IBlockState block, int currentMeta)
+            public IBlockState getNewState(World world, BlockPos pos, IBlockState state)
             {
                 int metaIncrease = 1;
                 if (IguanaConfig.difficultyScalingBoneMeal && world.getDifficulty().getDifficultyId() < EnumDifficulty.EASY.getDifficultyId())

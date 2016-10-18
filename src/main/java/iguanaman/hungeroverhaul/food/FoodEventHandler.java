@@ -19,7 +19,7 @@ public class FoodEventHandler
     @SubscribeEvent
     public void onFoodEaten(FoodEvent.FoodEaten event)
     {
-        if (!event.player.worldObj.isRemote && event.player.worldObj.getGameRules().getGameRuleBooleanValue("naturalRegeneration") && IguanaConfig.healthRegenRatePercentage > 0)
+        if (!event.player.worldObj.isRemote && event.player.worldObj.getGameRules().getBoolean("naturalRegeneration") && IguanaConfig.healthRegenRatePercentage > 0)
         {
             if (IguanaConfig.addWellFedEffect)
             {
@@ -61,7 +61,7 @@ public class FoodEventHandler
     @SubscribeEvent
     public void getMaxExhaustion(ExhaustionEvent.GetMaxExhaustion event)
     {
-        EnumDifficulty difficulty = event.player.worldObj.difficultySetting;
+        EnumDifficulty difficulty = event.player.worldObj.getDifficulty();
         float hungerLossRate = event.maxExhaustionLevel / (IguanaConfig.hungerLossRatePercentage / 100F);
         if (IguanaConfig.difficultyScalingHunger)
         {
@@ -86,7 +86,7 @@ public class FoodEventHandler
     {
         if (event.player.getFoodStats().getFoodLevel() >= IguanaConfig.minHungerToHeal
                 && IguanaConfig.healthRegenRatePercentage > 0
-                && event.player.worldObj.getGameRules().getGameRuleBooleanValue("naturalRegeneration")
+                && event.player.worldObj.getGameRules().getBoolean("naturalRegeneration")
                 && event.player.shouldHeal())
         {
             event.setResult(Result.ALLOW);
@@ -102,7 +102,7 @@ public class FoodEventHandler
         if (event.player.isPotionActive(HungerOverhaul.potionWellFed))
             wellfedModifier = 0.75F;
 
-        EnumDifficulty difficulty = event.player.worldObj.difficultySetting;
+        EnumDifficulty difficulty = event.player.worldObj.getDifficulty();
         float difficultyModifierHealing = 1.0F;
         if (IguanaConfig.difficultyScalingHealing)
         {
