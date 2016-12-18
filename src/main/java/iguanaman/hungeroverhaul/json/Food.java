@@ -1,9 +1,10 @@
 package iguanaman.hungeroverhaul.json;
 
-import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.oredict.OreDictionary;
 import squeek.applecore.api.food.FoodValues;
 
@@ -14,11 +15,16 @@ import squeek.applecore.api.food.FoodValues;
 public class Food
 {
     //Registry Name
-    public String name = "";
+    public ResourceLocation name;
+
     public String oreName = "";
+
     public int meta = 0;
+
     public int count = 1;
+
     public float saturationModifier = 0.0F;
+
     public int hunger = 0;
 
     public boolean hasOredictEntry()

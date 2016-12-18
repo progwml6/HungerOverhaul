@@ -1,32 +1,27 @@
 package iguanaman.hungeroverhaul.util;
 
-import iguanaman.hungeroverhaul.config.IguanaConfig;
-import iguanaman.hungeroverhaul.module.PamsModsHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import com.progwml6.natura.blocks.crops.CropBlock;
-import com.progwml6.natura.common.NContent;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
 import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
 
+import iguanaman.hungeroverhaul.module.PamsModsHelper;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 
 public class BlockHelper
 {
-    public static List<ItemStack> modifyCropDrops(List<ItemStack> drops, Block block, int meta, int minSeeds, int maxSeeds, int minProduce, int maxProduce)
+    public static List<ItemStack> modifyCropDrops(List<ItemStack> drops, IBlockState state, int minSeeds, int maxSeeds, int minProduce, int maxProduce)
     {
         List<ItemStack> modifiedDrops = new ArrayList<ItemStack>();
 
         int seeds = RandomHelper.getRandomIntFromRange(minSeeds, maxSeeds);
         int produce = RandomHelper.getRandomIntFromRange(minProduce, maxProduce);
-        ItemStack seedItem = BlockHelper.getSeedsOfBlock(block, meta, seeds);
-        ItemStack produceItem = BlockHelper.getProduceOfBlock(block, meta, produce);
+        ItemStack seedItem = BlockHelper.getSeedsOfBlock(state, seeds);
+        ItemStack produceItem = BlockHelper.getProduceOfBlock(state, produce);
         boolean produceIsNotSeed = (seedItem.getItem() != produceItem.getItem() || seedItem.getItemDamage() != produceItem.getItemDamage());
 
         for (ItemStack item : drops)
@@ -50,29 +45,31 @@ public class BlockHelper
         return modifiedDrops;
     }
 
-    public static ItemStack getSeedOfBlock(Block block, int meta)
+    public static ItemStack getSeedOfBlock(IBlockState state)
     {
-        return getSeedsOfBlock(block, meta, 1);
+        return getSeedsOfBlock(state, 1);
     }
 
-    public static ItemStack getSeedsOfBlock(Block block, int meta, int num)
+    public static ItemStack getSeedsOfBlock(IBlockState state, int num)
     {
-        return new ItemStack(getSeedItem(block, meta), num, getSeedMetadata(block, meta));
+        return new ItemStack(getSeedItem(state), num, getSeedMetadata(state));
     }
 
-    public static ItemStack getProduceOfBlock(Block block, int meta)
+    public static ItemStack getProduceOfBlock(IBlockState state)
     {
-        return getProduceOfBlock(block, meta, 1);
+        return getProduceOfBlock(state, 1);
     }
 
-    public static ItemStack getProduceOfBlock(Block block, int meta, int num)
+    public static ItemStack getProduceOfBlock(IBlockState state, int num)
     {
-        return new ItemStack(getProduceItem(block, meta), num, getProduceMetadata(block, meta));
+        return new ItemStack(getProduceItem(state), num, getProduceMetadata(state));
     }
 
-    public static Item getSeedItem(Block block, int meta)
+    public static Item getSeedItem(IBlockState state)
     {
-        Item itemDropped = block.getItemDropped(0, RandomHelper.random, 0);
+        Block block = state.getBlock();
+
+        Item itemDropped = block.getItemDropped(state, RandomHelper.random, 0);
         if (Loader.isModLoaded("harvestcraft") && block instanceof BlockPamCrop)
         {
             Item seedForProduct = PamsModsHelper.productToSeedMap.get(itemDropped);
@@ -82,25 +79,32 @@ public class BlockHelper
         return itemDropped;
     }
 
-    public static Item getProduceItem(Block block, int meta)
+    public static Item getProduceItem(IBlockState state)
     {
-        return block.getItemDropped(meta, RandomHelper.random, 0);
+        Block block = state.getBlock();
+
+        return block.getItemDropped(state, RandomHelper.random, 0);
     }
 
-    public static int getProduceMetadata(Block block, int meta)
+    public static int getProduceMetadata(IBlockState state)
     {
-        return block.damageDropped(meta);
+        Block block = state.getBlock();
+
+        return block.damageDropped(state);
     }
 
-    public static int getSeedMetadata(Block block, int meta)
+    public static int getSeedMetadata(IBlockState state)
     {
-        if (Loader.isModLoaded("Natura") && block == NContent.crops)
+        Block block = state.getBlock();
+        //TODO: FIX
+        /*if (Loader.isModLoaded("Natura") && block == NContent.crops)
         {
             return ((CropBlock) block).seedDamageDropped(meta);
         }
         else
         {
             return block.damageDropped(0);
-        }
+        }*/
+        return block.damageDropped(state);
     }
 }

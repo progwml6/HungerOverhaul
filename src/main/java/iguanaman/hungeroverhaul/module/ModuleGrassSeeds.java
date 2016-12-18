@@ -7,16 +7,31 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.ForgeHooks.SeedEntry;
 
 public class ModuleGrassSeeds
 {
-    public static List<Object> hoeSeedList = new ArrayList<Object>();
+    static class SeedEntry extends WeightedRandom.Item
+    {
+        public final ItemStack seed;
+        public SeedEntry(ItemStack seed, int weight)
+        {
+            super(weight);
+            this.seed = seed;
+        }
+        public ItemStack getStack(Random rand, int fortune)
+        {
+            return seed.copy();
+        }
+    }
+    public static List<SeedEntry> hoeSeedList = new ArrayList<SeedEntry>();
 
     public static Class<?> SeedEntry = null;
     public static Constructor<?> SeedEntryConstructor = null;

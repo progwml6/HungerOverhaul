@@ -9,14 +9,18 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemAndBlockList
 {
     private static LinkedHashSet<Class<?>> classes = new LinkedHashSet<Class<?>>();
+
     private static HashSet<Item> items = new HashSet<Item>();
+
     private static HashSet<Block> blocks = new HashSet<Block>();
+
     private static List<ItemStack> itemStacks = new ArrayList<ItemStack>();
 
     public void add(Class<?> clazz)
@@ -46,8 +50,8 @@ public class ItemAndBlockList
     {
         if (objectOrClassName.contains(":"))
         {
-            Item item = GameData.getItemRegistry().getObject(objectOrClassName);
-            Block block = GameData.getBlockRegistry().getObject(objectOrClassName);
+            Item item = GameData.getItemRegistry().getObject(new ResourceLocation(objectOrClassName));
+            Block block = GameData.getBlockRegistry().getObject(new ResourceLocation(objectOrClassName));
 
             if (item != null)
                 add(item);

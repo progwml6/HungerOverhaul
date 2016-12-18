@@ -1,11 +1,10 @@
 package iguanaman.hungeroverhaul.module;
 
-import iguanaman.hungeroverhaul.config.IguanaConfig;
-import iguanaman.hungeroverhaul.util.BonemealModification;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import iguanaman.hungeroverhaul.config.IguanaConfig;
+import iguanaman.hungeroverhaul.util.BonemealModification;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraftforge.event.entity.player.BonemealEvent;
@@ -16,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class ModuleBonemeal
 {
     private static HashMap<Class<? extends Block>, BonemealModification> bonemealModificationsByBlockClass = new HashMap<Class<? extends Block>, BonemealModification>();
+
     private static HashMap<Block, BonemealModification> bonemealModificationsByBlock = new HashMap<Block, BonemealModification>();
 
     public static void registerBonemealModifier(Class<? extends Block> blockClass, BonemealModification bonemealModification)
@@ -87,7 +87,7 @@ public class ModuleBonemeal
                 IBlockState resultingState = bonemealModification.getNewState(event.getWorld(), event.getPos(), event.getBlock());
                 if (event.getBlock() != resultingState)
                 {
-                    event.getWorld().setBlockMetadataWithNotify(event.getPos(), resultingMeta, 3);
+                    event.getWorld().setBlockState(event.getPos(), resultingState, 3);
                 }
                 bonemealModification.onBonemeal(event.getWorld(), event.getPos(), event.getBlock(), resultingState);
                 event.setResult(Result.ALLOW);

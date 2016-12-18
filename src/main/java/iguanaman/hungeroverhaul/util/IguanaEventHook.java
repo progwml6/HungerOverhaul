@@ -1,18 +1,19 @@
 package iguanaman.hungeroverhaul.util;
 
+import java.util.List;
+import java.util.Random;
+
+import com.pam.harvestcraft.item.items.ItemPamSeedFood;
+import com.progwml6.natura.blocks.crops.CropBlock;
+
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 import iguanaman.hungeroverhaul.module.ModulePlantGrowth;
 import iguanaman.hungeroverhaul.module.PamsModsHelper;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import com.progwml6.natura.blocks.crops.CropBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -22,16 +23,16 @@ import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.BiomeDictionary;
@@ -44,23 +45,21 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.BlockEvent;
-import squeek.applecore.api.AppleCoreAPI;
-import squeek.applecore.api.food.FoodValues;
-
-import com.pam.harvestcraft.item.items.ItemPamSeedFood;
-
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import squeek.applecore.api.AppleCoreAPI;
+import squeek.applecore.api.food.FoodValues;
 
 public class IguanaEventHook
 {
     private static long lastRightClickCrop = 0;
+
     public static ItemAndBlockList rightClickHarvestBlacklist = new ItemAndBlockList();
+
     public static ItemAndBlockList harvestDropsBlacklist = new ItemAndBlockList();
     static
     {
@@ -111,7 +110,7 @@ public class IguanaEventHook
             }
 
             // Reduced milked value every second
-            if (IguanaConfig.milkedTimeout > 0 && event.getEntityLiving() instanceof EntityCow && event.getEntityLiving().worldObj.getTotalWorldTime() % 20 == 0)
+            if (IguanaConfig.milkedTimeout > 0 && event.getEntityLiving() instanceof EntityCow && event.getEntityLiving().world.getTotalWorldTime() % 20 == 0)
             {
                 NBTTagCompound tags = event.getEntityLiving().getEntityData();
                 if (tags.hasKey("Milked"))
@@ -125,7 +124,7 @@ public class IguanaEventHook
             }
         }
 
-        if (!event.getEntityLiving().worldObj.isRemote)
+        if (!event.getEntityLiving().world.isRemote)
         {
             NBTTagCompound tags = event.getEntityLiving().getEntityData();
 
@@ -164,9 +163,9 @@ public class IguanaEventHook
                 if (IguanaConfig.addLowStatEffects)
                 {
                     int difficultyModifierEffects = 2;
-                    if (IguanaConfig.difficultyScalingEffects && event.getEntityLiving().worldObj.getDifficulty() != null)
+                    if (IguanaConfig.difficultyScalingEffects && event.getEntityLiving().world.getDifficulty() != null)
                     {
-                        difficultyModifierEffects = event.getEntityLiving().worldObj.getDifficulty().getDifficultyId();
+                        difficultyModifierEffects = event.getEntityLiving().world.getDifficulty().getDifficultyId();
 
                         if (!(event.getEntityLiving() instanceof EntityPlayer))
                             difficultyModifierEffects = difficultyModifierEffects * -1 + 3;
@@ -178,39 +177,39 @@ public class IguanaEventHook
 
                         if (IguanaConfig.addLowHealthSlowness || IguanaConfig.addLowHungerSlowness)
                             if ((IguanaConfig.addLowHungerSlowness && foodLevel <= 1) || (IguanaConfig.addLowHealthSlowness && healthPercent <= 0.05F))
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, 1 + difficultyModifierEffects, true));
+                                event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 19, 1 + difficultyModifierEffects, true, true));
                             else if ((IguanaConfig.addLowHungerSlowness && foodLevel <= 2) || (IguanaConfig.addLowHealthSlowness && healthPercent <= 0.10F))
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, difficultyModifierEffects, true));
+                                event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 19, difficultyModifierEffects, true, true));
                             else if (((IguanaConfig.addLowHungerSlowness && foodLevel <= 3) || (IguanaConfig.addLowHealthSlowness && healthPercent <= 0.15F)) && difficultyModifierEffects >= 1)
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -1 + difficultyModifierEffects, true));
+                                event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 19, -1 + difficultyModifierEffects, true, true));
                             else if (((IguanaConfig.addLowHungerSlowness && foodLevel <= 4) || (IguanaConfig.addLowHealthSlowness && healthPercent <= 0.20F)) && difficultyModifierEffects >= 2)
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -2 + difficultyModifierEffects, true));
+                                event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 19, -2 + difficultyModifierEffects, true, true));
                             else if (((IguanaConfig.addLowHungerSlowness && foodLevel <= 5) || (IguanaConfig.addLowHealthSlowness && healthPercent <= 0.25F)) && difficultyModifierEffects >= 3)
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -3 + difficultyModifierEffects, true));
+                                event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 19, -3 + difficultyModifierEffects, true, true));
 
                         if (IguanaConfig.addLowHealthMiningSlowdown || IguanaConfig.addLowHungerMiningSlowdown)
                             if ((IguanaConfig.addLowHungerMiningSlowdown && foodLevel <= 1) || (IguanaConfig.addLowHealthMiningSlowdown && healthPercent <= 0.05F))
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, 1 + difficultyModifierEffects, true));
+                                event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 19, 1 + difficultyModifierEffects, true, true));
                             else if ((IguanaConfig.addLowHungerMiningSlowdown && foodLevel <= 2) || (IguanaConfig.addLowHealthMiningSlowdown && healthPercent <= 0.10F))
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, difficultyModifierEffects, true));
+                                event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 19, difficultyModifierEffects, true, true));
                             else if (((IguanaConfig.addLowHungerMiningSlowdown && foodLevel <= 3) || (IguanaConfig.addLowHealthMiningSlowdown && healthPercent <= 0.15F)) && difficultyModifierEffects >= 1)
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -1 + difficultyModifierEffects, true));
+                                event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 19, -1 + difficultyModifierEffects, true, true));
                             else if (((IguanaConfig.addLowHungerMiningSlowdown && foodLevel <= 4) || (IguanaConfig.addLowHealthMiningSlowdown && healthPercent <= 0.20F)) && difficultyModifierEffects >= 2)
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -2 + difficultyModifierEffects, true));
+                                event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 19, -2 + difficultyModifierEffects, true, true));
                             else if (((IguanaConfig.addLowHungerMiningSlowdown && foodLevel <= 5) || (IguanaConfig.addLowHealthMiningSlowdown && healthPercent <= 0.25F)) && difficultyModifierEffects >= 3)
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -3 + difficultyModifierEffects, true));
+                                event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 19, -3 + difficultyModifierEffects, true, true));
 
                         if (IguanaConfig.addLowHealthWeakness || IguanaConfig.addLowHungerWeakness)
                             //Weakness effect
                             if (((IguanaConfig.addLowHungerWeakness && foodLevel <= 1) || (IguanaConfig.addLowHealthWeakness && healthPercent <= 0.05F)) && difficultyModifierEffects >= 1)
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -1 + difficultyModifierEffects, true));
+                            event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 19, -1 + difficultyModifierEffects, true, true));
                             else if (((IguanaConfig.addLowHungerWeakness && foodLevel <= 2) || (IguanaConfig.addLowHealthWeakness && healthPercent <= 0.10F)) && difficultyModifierEffects >= 2)
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -2 + difficultyModifierEffects, true));
+                            event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 19, -2 + difficultyModifierEffects, true, true));
                             else if (((IguanaConfig.addLowHungerWeakness && foodLevel <= 3) || (IguanaConfig.addLowHealthWeakness && healthPercent <= 0.15F)) && difficultyModifierEffects >= 3)
-                                event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -3 + difficultyModifierEffects, true));
+                            event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 19, -3 + difficultyModifierEffects, true, true));
 
                         if ((IguanaConfig.addLowHungerNausea && foodLevel <= 1) || (IguanaConfig.addLowHealthNausea && healthPercent <= 0.05F))
-                            event.getEntityLiving().addPotionEffect(new PotionEffect(Potion.confusion.id, 19, 0, true));
+                            event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 19, 0, true, true));
                     }
                 }
 
@@ -224,18 +223,19 @@ public class IguanaEventHook
     {
         if (IguanaConfig.modifyHoeUse)
         {
-            Block block = event.getWorld().getBlock(event.getPos());
+            IBlockState state = event.getWorld().getBlockState(event.getPos());
+            Block block = state.getBlock();
 
             if ((block == Blocks.DIRT || block == Blocks.GRASS) && isWaterNearby(event.getWorld(), event.getPos()))
             {
                 if (IguanaConfig.hoeToolDamageMultiplier > 1)
-                    event.getCurrent().damageItem(IguanaConfig.hoeToolDamageMultiplier - 1, event.entityPlayer);
+                    event.getCurrent().damageItem(IguanaConfig.hoeToolDamageMultiplier - 1, event.getEntityPlayer());
             }
             else if (block == Blocks.GRASS && !isWaterNearby(event.getWorld(), event.getPos()))
             {
-
                 Block block1 = Blocks.FARMLAND;
-                event.getWorld().playSoundEffect(event.x + 0.5F, event.y + 0.5F, event.z + 0.5F, block1.stepSound.soundName, (block1.stepSound.getVolume() + 1.0F) / 2.0F, block1.stepSound.getPitch() * 0.8F);
+
+                event.getWorld().playSoundEffect(event.getPos().getX() + 0.5F, event.getPos().getY() + 0.5F, event.getPos().getZ() + 0.5F, block1.stepSound.soundName, (block1.stepSound.getVolume() + 1.0F) / 2.0F, block1.stepSound.getPitch() * 0.8F);
                 if (!event.getWorld().isRemote && IguanaConfig.seedChance > 0)
                 {
                     int seedChance = IguanaConfig.seedChance;
@@ -250,7 +250,7 @@ public class IguanaEventHook
                         if (seed != null)
                             block.dropBlockAsItem(event.getWorld(), event.getPos(), seed);
                     }
-                    event.getWorld().setBlock(event.getPos(), Blocks.DIRT);
+                    event.getWorld().setBlockState(event.getPos(), Blocks.DIRT.getDefaultState());
                 }
 
                 if (IguanaConfig.hoeToolDamageMultiplier > 1)
@@ -269,7 +269,7 @@ public class IguanaEventHook
         if (IguanaConfig.addGuiText)
         {
             Minecraft mc = Minecraft.getMinecraft();
-            EntityPlayer player = mc.thePlayer;
+            EntityPlayer player = mc.player;
 
             if (!player.isDead && !player.capabilities.isCreativeMode && !mc.gameSettings.showDebugInfo)
             {
@@ -277,18 +277,18 @@ public class IguanaEventHook
                 float healthPercent = player.getHealth() / player.getMaxHealth();
 
                 if (healthPercent <= 0.15F)
-                    event.getLeft().add(EnumChatFormatting.RED + StatCollector.translateToLocal("hungeroverhaul.dying") + EnumChatFormatting.RESET);
+                    event.getLeft().add(EnumChatFormatting.RED + I18n.translateToLocal("hungeroverhaul.dying") + EnumChatFormatting.RESET);
                 else if (healthPercent <= 0.3F)
-                    event.getLeft().add(EnumChatFormatting.YELLOW + StatCollector.translateToLocal("hungeroverhaul.injured") + EnumChatFormatting.RESET);
+                    event.getLeft().add(EnumChatFormatting.YELLOW + I18n.translateToLocal("hungeroverhaul.injured") + EnumChatFormatting.RESET);
                 else if (healthPercent < 0.5F)
-                    event.getLeft().add(EnumChatFormatting.WHITE + StatCollector.translateToLocal("hungeroverhaul.hurt") + EnumChatFormatting.RESET);
+                    event.getLeft().add(EnumChatFormatting.WHITE + I18n.translateToLocal("hungeroverhaul.hurt") + EnumChatFormatting.RESET);
 
                 if (player.getFoodStats().getFoodLevel() <= 6)
-                    event.getLeft().add(EnumChatFormatting.RED + StatCollector.translateToLocal("hungeroverhaul.starving") + EnumChatFormatting.RESET);
+                    event.getLeft().add(EnumChatFormatting.RED + I18n.translateToLocal("hungeroverhaul.starving") + EnumChatFormatting.RESET);
                 else if (player.getFoodStats().getFoodLevel() <= 10)
-                    event.getLeft().add(EnumChatFormatting.YELLOW + StatCollector.translateToLocal("hungeroverhaul.hungry") + EnumChatFormatting.RESET);
+                    event.getLeft().add(EnumChatFormatting.YELLOW + I18n.translateToLocal("hungeroverhaul.hungry") + EnumChatFormatting.RESET);
                 else if (player.getFoodStats().getFoodLevel() <= 14)
-                    event.getLeft().add(EnumChatFormatting.WHITE + StatCollector.translateToLocal("hungeroverhaul.peckish") + EnumChatFormatting.RESET);
+                    event.getLeft().add(EnumChatFormatting.WHITE + I18n.translateToLocal("hungeroverhaul.peckish") + EnumChatFormatting.RESET);
             }
         }
     }
@@ -300,17 +300,17 @@ public class IguanaEventHook
         {
             EntityCow cow = (EntityCow) event.target;
             EntityPlayer player = event.entityPlayer;
-            ItemStack equipped = player.getCurrentEquippedItem();
+            ItemStack equipped = player.getActiveItemStack();
             if (equipped != null && equipped.getItem() != null)
             {
                 Item item = equipped.getItem();
-                if (item instanceof ItemBucket && ((ItemBucket) item).isFull == Blocks.air || cow instanceof EntityMooshroom && item == Items.bowl)
+                if (item instanceof ItemBucket && ((ItemBucket) item).isFull == Blocks.AIR || cow instanceof EntityMooshroom && item == Items.BOWL)
                 {
                     NBTTagCompound tags = cow.getEntityData();
                     if (tags.hasKey("Milked"))
                     {
                         event.setCanceled(true);
-                        if (!player.worldObj.isRemote)
+                        if (!player.world.isRemote)
                             cow.playSound("mob.cow.hurt", 0.4F, (event.entity.worldObj.rand.nextFloat() - event.entity.worldObj.rand.nextFloat()) * 0.2F + 1.0F);
                     }
                     else
@@ -330,6 +330,7 @@ public class IguanaEventHook
         }
     }
 
+    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public void onPlayerInteraction(PlayerInteractEvent event)
     {
@@ -370,20 +371,22 @@ public class IguanaEventHook
         if (!IguanaConfig.enableRightClickHarvesting)
             return;
 
-        Block clicked = event.getWorld().getBlock(event.getPos());
-        int meta = event.getWorld().getBlockMetadata(event.getPos());
+        IBlockState state = event.getWorld().getBlockState(event.getPos());
+        Block clicked = state.getBlock();
+        int meta = clicked.getMetaFromState(state);
         int resultingMeta = -1;
 
         // certain things we don't want to add right-click harvest support for
         if (rightClickHarvestBlacklist.contains(clicked))
             return;
 
-        if (Loader.isModLoaded("Natura") && clicked instanceof CropBlock)
+        /*if (Loader.isModLoaded("Natura") && clicked instanceof CropBlock)
         {
             if (meta == 3 || meta == 8)
                 resultingMeta = meta == 3 ? 0 : 4;
         }
-        else if (clicked instanceof BlockCrops && meta >= 7)
+        else if (clicked instanceof BlockCrops && meta >= 7)*/
+        if (clicked instanceof BlockCrops && meta >= 7)
         {
             resultingMeta = 0;
         }
@@ -395,10 +398,10 @@ public class IguanaEventHook
             // but we re-modify them using the right-click specific config options
             if (!event.getWorld().isRemote && !event.getWorld().restoringBlockSnapshots) // do not drop items while restoring blockstates, prevents item dupe
             {
-                ArrayList<ItemStack> drops = clicked.getDrops(event.getWorld(), event.getPos(), meta, 0);
-                float odds = ForgeEventFactory.fireBlockHarvesting(drops, event.getWorld(), clicked, event.getPos(), meta, 0, 1.0f, false, event.getEntityPlayer());
+                List<ItemStack> drops = clicked.getDrops(event.getWorld(), event.getPos(), state, 0);
+                float odds = ForgeEventFactory.fireBlockHarvesting(drops, event.getWorld(), event.getPos(), state, 0, 1.0f, false, event.getEntityPlayer());
 
-                List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(drops, clicked, meta, IguanaConfig.seedsPerHarvestRightClickMin, IguanaConfig.seedsPerHarvestRightClickMax, IguanaConfig.producePerHarvestRightClickMin, IguanaConfig.producePerHarvestRightClickMax);
+                List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(drops, state, IguanaConfig.seedsPerHarvestRightClickMin, IguanaConfig.seedsPerHarvestRightClickMax, IguanaConfig.producePerHarvestRightClickMin, IguanaConfig.producePerHarvestRightClickMax);
 
                 for (ItemStack drop : modifiedDrops)
                 {
@@ -406,7 +409,7 @@ public class IguanaEventHook
                 }
             }
 
-            event.getWorld().setBlockMetadataWithNotify(event.getPos(), resultingMeta, 2);
+            event.getWorld().setBlockState(event.getPos(), clicked.getStateFromMeta(resultingMeta), 2);
 
             lastRightClickCrop = event.getWorld().getTotalWorldTime();
 
@@ -434,25 +437,28 @@ public class IguanaEventHook
     @SubscribeEvent
     public void onBlockHarvested(BlockEvent.HarvestDropsEvent event)
     {
+        Block block = event.getState().getBlock();
+        int blockMeta = block.getMetaFromState(event.getState());
+
         if (!IguanaConfig.modifyCropDropsBreak)
             return;
 
         // certain things we don't want to modify the drops of
-        if (IguanaEventHook.harvestDropsBlacklist.contains(event.block))
+        if (IguanaEventHook.harvestDropsBlacklist.contains(block))
             return;
 
-        boolean isNaturaCrop = Loader.isModLoaded("Natura") && event.block instanceof CropBlock;
-        boolean eligable = isNaturaCrop || event.block instanceof BlockCrops;
+        boolean isNaturaCrop = Loader.isModLoaded("Natura") && block instanceof CropBlock;
+        boolean eligable = isNaturaCrop || block instanceof BlockCrops;
 
         if (!eligable)
             return;
 
-        boolean fullyGrown = (!isNaturaCrop && event.blockMetadata >= 7) || (isNaturaCrop && event.blockMetadata == 3 || event.blockMetadata == 8);
+        boolean fullyGrown = (!isNaturaCrop && blockMeta >= 7) || (isNaturaCrop && blockMeta == 3 || blockMeta == 8);
 
         if (!fullyGrown)
             return;
 
-        List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(event.getDrops(), event.block, event.blockMetadata, IguanaConfig.seedsPerHarvestBreakMin, IguanaConfig.seedsPerHarvestBreakMax, IguanaConfig.producePerHarvestBreakMin, IguanaConfig.producePerHarvestBreakMax);
+        List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(event.getDrops(), event.getState(), IguanaConfig.seedsPerHarvestBreakMin, IguanaConfig.seedsPerHarvestBreakMax, IguanaConfig.producePerHarvestBreakMin, IguanaConfig.producePerHarvestBreakMax);
         event.getDrops().clear();
         for (ItemStack drop : modifiedDrops)
         {
@@ -460,6 +466,7 @@ public class IguanaEventHook
         }
     }
 
+    @SuppressWarnings("deprecation")
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void renderTooltips(ItemTooltipEvent event)
     {
@@ -495,16 +502,16 @@ public class IguanaEventHook
             else if (satiation < 0.0F)
                 adjective = "unfulfilling";
 
-            if (adjective != null && StatCollector.canTranslate("hungeroverhaul." + adjective + "." + noun))
+            if (adjective != null && I18n.canTranslate("hungeroverhaul." + adjective + "." + noun))
             {
-                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul." + adjective + "." + noun);
+                mealDescriptor = I18n.translateToLocal("hungeroverhaul." + adjective + "." + noun);
             }
             else
             {
-                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul." + noun);
+                mealDescriptor = I18n.translateToLocal("hungeroverhaul." + noun);
                 if (adjective != null)
                 {
-                    mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul." + adjective), mealDescriptor);
+                    mealDescriptor = I18n.translateToLocalFormatted(I18n.translateToLocal("hungeroverhaul." + adjective), mealDescriptor);
                 }
             }
 
@@ -516,7 +523,7 @@ public class IguanaEventHook
             PlantGrowthModification growthModification = null;
             if (event.getItemStack().getItem() instanceof IPlantable)
             {
-                growthModification = ModulePlantGrowth.getPlantGrowthModification(((IPlantable) event.getItemStack().getItem()).getPlant(event.entityPlayer.worldObj, 0, 0, 0));
+                growthModification = ModulePlantGrowth.getPlantGrowthModification(((IPlantable) event.getItemStack().getItem()).getPlant(event.getEntityPlayer().world, BlockPos.ORIGIN).getBlock());
             }
             else if (event.getItemStack().getItem() instanceof ItemBlock)
             {
@@ -536,7 +543,7 @@ public class IguanaEventHook
                 String tooltip = "";
                 for (BiomeDictionary.Type biomeType : growthModification.biomeGrowthModifiers.keySet())
                     tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
-                event.getToolTip().add(StatCollector.translateToLocal("hungeroverhaul.crop.grows.best.in"));
+                event.getToolTip().add(I18n.translateToLocal("hungeroverhaul.crop.grows.best.in"));
                 event.getToolTip().add(tooltip.substring(0, tooltip.length() - 2));
             }
         }
@@ -550,7 +557,7 @@ public class IguanaEventHook
         for (int l = par2 - 4; l <= par2 + 4; ++l)
             for (int i1 = par3; i1 <= par3 + 1; ++i1)
                 for (int j1 = par4 - 4; j1 <= par4 + 4; ++j1)
-                    if (par1World.getBlock(l, i1, j1).getMaterial() == Material.WATER)
+                    if (par1World.getBlockState(new BlockPos(l, i1, j1)).getMaterial() == Material.WATER)
                         return true;
 
         return false;

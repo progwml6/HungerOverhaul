@@ -1,9 +1,14 @@
 package iguanaman.hungeroverhaul.module;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.pam.harvestcraft.blocks.BlockRegistry;
 import com.pam.harvestcraft.blocks.growables.BlockPamFruit;
 import com.pam.harvestcraft.blocks.growables.BlockPamSapling;
+import com.pam.harvestcraft.config.ConfigHandler;
 import com.pam.harvestcraft.item.ItemRegistry;
+
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.util.BonemealModification;
@@ -11,17 +16,18 @@ import iguanaman.hungeroverhaul.util.PlantGrowthModification;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import squeek.applecore.api.food.FoodValues;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class ModuleHarvestCraft {
-    public static void init () {
+public class ModuleHarvestCraft
+{
+    public static void init()
+    {
         // SETUP VALUES
-        if (IguanaConfig.modifyFoodValues && IguanaConfig.useHOFoodValues) {
+        if (IguanaConfig.modifyFoodValues && IguanaConfig.useHOFoodValues)
+        {
             // crop special cases (unsure why these are singled out, exactly; was like this in 1.6.4)
             List<Item> lowerSaturationCrops = Arrays.asList(new Item[] {
                     ItemRegistry.riceItem,
@@ -46,30 +52,39 @@ public class ModuleHarvestCraft {
                     ItemRegistry.zucchiniItem,
             });
 
-            ItemRegistry.cropfoodRestore = 1;
+            ConfigHandler.cropfoodRestore = 1;
 
-            FoodValues cropFoodValues = new FoodValues(ItemRegistry.cropfoodRestore, 0.1F);
-            FoodValues lowerSaturationFoodValues = new FoodValues(ItemRegistry.cropfoodRestore, 0.05F);
+            FoodValues cropFoodValues = new FoodValues(ConfigHandler.cropfoodRestore, 0.1F);
+            FoodValues lowerSaturationFoodValues = new FoodValues(ConfigHandler.cropfoodRestore, 0.05F);
 
             // crops
-            for (Item crop : ItemRegistry.PamCropItems) {
-                if (crop == ItemRegistry.cantaloupeItem) {
+            for (Item crop : ItemRegistry.PamCropItems)
+            {
+                if (crop == ItemRegistry.cantaloupeItem)
+                {
                     FoodModifier.setModifiedFoodValues(ItemRegistry.cantaloupeItem, new FoodValues(2, 0.1F));
-                } else if (lowerSaturationCrops.contains(crop)) {
+                }
+                else if (lowerSaturationCrops.contains(crop))
+                {
                     FoodModifier.setModifiedFoodValues(crop, lowerSaturationFoodValues);
-                } else {
+                }
+                else
+                {
                     FoodModifier.setModifiedFoodValues(crop, cropFoodValues);
                 }
             }
 
             // fruits
-            for (Item fruit : ItemRegistry.PamWarmFruits) {
+            for (Item fruit : ItemRegistry.PamWarmFruits)
+            {
                 FoodModifier.setModifiedFoodValues(fruit, lowerSaturationFoodValues);
             }
-            for (Item fruit : ItemRegistry.PamTemperateFruits) {
+            for (Item fruit : ItemRegistry.PamTemperateFruits)
+            {
                 FoodModifier.setModifiedFoodValues(fruit, lowerSaturationFoodValues);
             }
-            for (Item fruit : ItemRegistry.PamLogFruits) {
+            for (Item fruit : ItemRegistry.PamLogFruits)
+            {
                 FoodModifier.setModifiedFoodValues(fruit, lowerSaturationFoodValues);
             }
 
@@ -504,7 +519,8 @@ public class ModuleHarvestCraft {
                 .setGrowthTickProbability(IguanaConfig.saplingRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.FOREST, 1)
                 .setBiomeGrowthModifier(Type.PLAINS, 1);
-        for (Block temperateSapling : BlockRegistry.PamTemperateSaplings) {
+        for (Block temperateSapling : BlockRegistry.PamTemperateSaplings)
+        {
             ModulePlantGrowth.registerPlantGrowthModifier(temperateSapling, temperateSaplingGrowthModification);
         }
         ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pammapleSapling, temperateSaplingGrowthModification);
@@ -513,7 +529,8 @@ public class ModuleHarvestCraft {
                 .setGrowthTickProbability(IguanaConfig.saplingRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.JUNGLE, 1)
                 .setBiomeGrowthModifier(Type.SWAMP, 1);
-        for (Block warmSapling : BlockRegistry.PamWarmSaplings) {
+        for (Block warmSapling : BlockRegistry.PamWarmSaplings)
+        {
             ModulePlantGrowth.registerPlantGrowthModifier(warmSapling, warmSaplingGrowthModification);
         }
         ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamcinnamonSapling, warmSaplingGrowthModification);
@@ -529,7 +546,8 @@ public class ModuleHarvestCraft {
                 .setGrowthTickProbability(IguanaConfig.treeCropRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.FOREST, 1)
                 .setBiomeGrowthModifier(Type.PLAINS, 1);
-        for (Block temperateSapling : BlockRegistry.PamTemperateSaplings) {
+        for (Block temperateSapling : BlockRegistry.PamTemperateSaplings)
+        {
             Block fruitBlock = PamsModsHelper.saplingToFruitBlockMap.get(temperateSapling);
             ModulePlantGrowth.registerPlantGrowthModifier(fruitBlock, temperateFruitGrowthModification);
         }
@@ -540,7 +558,8 @@ public class ModuleHarvestCraft {
                 .setGrowthTickProbability(IguanaConfig.treeCropRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.JUNGLE, 1)
                 .setBiomeGrowthModifier(Type.SWAMP, 1);
-        for (Block warmSapling : BlockRegistry.PamWarmSaplings) {
+        for (Block warmSapling : BlockRegistry.PamWarmSaplings)
+        {
             Block fruitBlock = PamsModsHelper.saplingToFruitBlockMap.get(warmSapling);
             ModulePlantGrowth.registerPlantGrowthModifier(fruitBlock, warmFruitGrowthModification);
         }
@@ -569,9 +588,11 @@ public class ModuleHarvestCraft {
         /*
          * Bonemeal
          */
-        BonemealModification fruitBonemealModification = new BonemealModification() {
+        BonemealModification fruitBonemealModification = new BonemealModification()
+        {
             @Override
-            public int getNewMeta (World world, BlockPos pos, IBlockState state, int currentMeta) {
+            public int getNewMeta(World world, BlockPos pos, IBlockState state, int currentMeta)
+            {
                 return Math.min(currentMeta + 1, 2);
             }
         };

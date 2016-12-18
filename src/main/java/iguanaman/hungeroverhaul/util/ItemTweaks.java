@@ -3,8 +3,7 @@ package iguanaman.hungeroverhaul.util;
 import com.pam.harvestcraft.blocks.growables.BlockPamSapling;
 import com.pam.harvestcraft.item.items.ItemPamSeedFood;
 
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -12,18 +11,15 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
-import iguanaman.hungeroverhaul.config.IguanaConfig;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import squeek.applecore.api.food.FoodValues;
 
 public class ItemTweaks
 {
     public static enum VillagerType
     {
-        FARMER,
-        LIBRARIAN,
-        PRIEST,
-        SMITH,
-        BUTCHER
+        FARMER, LIBRARIAN, PRIEST, SMITH, BUTCHER
     }
 
     public static void init()
