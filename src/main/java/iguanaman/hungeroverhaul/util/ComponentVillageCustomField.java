@@ -17,12 +17,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
-import net.minecraft.world.gen.structure.StructureVillagePieces;
+import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
+import net.minecraft.world.gen.structure.StructureVillagePieces.Village;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.Loader;
 
-public class ComponentVillageCustomField extends StructureVillagePieces.Village
+public class ComponentVillageCustomField extends Village
 {
     private fieldType typeA;
 
@@ -32,7 +33,7 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
     {
     }
 
-    public ComponentVillageCustomField(StructureVillagePieces.Start start, int type, Random rand, StructureBoundingBox structurebb, EnumFacing facing)
+    public ComponentVillageCustomField(Start start, int type, Random rand, StructureBoundingBox structurebb, EnumFacing facing)
     {
         super(start, type);
         this.setCoordBaseMode(facing);
@@ -50,14 +51,16 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
     private Block getRandomStemCrop(Random par1Random)
     {
         ArrayList<Block> crops = Lists.newArrayList();
+
         crops.add(Blocks.PUMPKIN_STEM);
         crops.add(Blocks.MELON_STEM);
+
         return crops.get(par1Random.nextInt(crops.size() - 1));
     }
 
     private Block getRandomCrop(Random random)
     {
-        return Loader.isModLoaded("harvestcraft") ? getRandomCropHarvestCraft(random) : getRandomCropVanilla(random);
+        return Loader.isModLoaded("harvestcraft") ? this.getRandomCropHarvestCraft(random) : this.getRandomCropVanilla(random);
     }
 
     private Block getRandomCropVanilla(Random random)
@@ -75,7 +78,7 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
     {
         int length = PamsModsHelper.PamCrops.length;
 
-        return random.nextInt(length + 3) <= length ? PamsModsHelper.PamCrops[random.nextInt(length)] : getRandomCropVanilla(random);
+        return random.nextInt(length + 3) <= length ? PamsModsHelper.PamCrops[random.nextInt(length)] : this.getRandomCropVanilla(random);
     }
 
     private int getCropMeta(Block block, Random random)
@@ -83,9 +86,10 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
         return random.nextInt(4);
     }
 
-    public static ComponentVillageCustomField createPiece(StructureVillagePieces.Start start, List<StructureComponent> listIn, Random rand, int structureMinX, int structureMinY, int structureMinZ, EnumFacing facing, int type)
+    public static ComponentVillageCustomField createPiece(Start start, List<StructureComponent> listIn, Random rand, int structureMinX, int structureMinY, int structureMinZ, EnumFacing facing, int type)
     {
-        StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(structureMinX, structureMinY, structureMinZ, 0, 0, 0, 4, 6, 5, facing);
+        StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(structureMinX, structureMinY, structureMinZ, 0, 0, 0, 13, 4, 9, facing);
+
         return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(listIn, structureboundingbox) == null ? new ComponentVillageCustomField(start, type, rand, structureboundingbox, facing) : null;
     }
 
@@ -130,15 +134,15 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
                 return true;
             }
 
-            this.boundingBox.offset(0, this.averageGroundLvl - this.boundingBox.maxY + 12 - 1, 0);
+            this.boundingBox.offset(0, this.averageGroundLvl - this.boundingBox.maxY + 4 - 1, 0);
         }
 
         BlockPos center = new BlockPos(this.boundingBox.getCenter());
 
         Biome biome = worldIn.getBiome(center);
 
-        typeA = randomFieldType(biome, randomIn);
-        typeB = randomFieldType(biome, randomIn);
+        typeA = this.randomFieldType(biome, randomIn);
+        typeB = this.randomFieldType(biome, randomIn);
 
         IBlockState blockStateOutA = Blocks.FARMLAND.getDefaultState();
         IBlockState blockStateInA = Blocks.FLOWING_WATER.getDefaultState();
@@ -161,13 +165,13 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
         }
         else if (typeA == fieldType.STEM)
         {
-            crop1A = getRandomStemCrop(randomIn);
-            crop2A = getRandomStemCrop(randomIn);
+            crop1A = this.getRandomStemCrop(randomIn);
+            crop2A = this.getRandomStemCrop(randomIn);
         }
         else
         {
-            crop1A = getRandomCrop(randomIn);
-            crop2A = getRandomCrop(randomIn);
+            crop1A = this.getRandomCrop(randomIn);
+            crop2A = this.getRandomCrop(randomIn);
         }
 
         if (typeB == fieldType.REED)
@@ -181,19 +185,19 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
         }
         else if (typeA == fieldType.STEM)
         {
-            crop1B = getRandomStemCrop(randomIn);
-            crop2B = getRandomStemCrop(randomIn);
+            crop1B = this.getRandomStemCrop(randomIn);
+            crop2B = this.getRandomStemCrop(randomIn);
         }
         else
         {
-            crop1B = getRandomCrop(randomIn);
-            crop2B = getRandomCrop(randomIn);
+            crop1B = this.getRandomCrop(randomIn);
+            crop2B = this.getRandomCrop(randomIn);
         }
 
-        int cropMeta1A = getCropMeta(crop1A, randomIn);
-        int cropMeta2A = getCropMeta(crop2A, randomIn);
-        int cropMeta1B = getCropMeta(crop1B, randomIn);
-        int cropMeta2B = getCropMeta(crop2B, randomIn);
+        int cropMeta1A = this.getCropMeta(crop1A, randomIn);
+        int cropMeta2A = this.getCropMeta(crop2A, randomIn);
+        int cropMeta1B = this.getCropMeta(crop1B, randomIn);
+        int cropMeta2B = this.getCropMeta(crop2B, randomIn);
 
         IBlockState cropState1A = crop1A.getStateFromMeta(cropMeta1A);
         IBlockState cropState2A = crop1A.getStateFromMeta(cropMeta2A);
@@ -201,50 +205,57 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
         IBlockState cropState2B = crop1A.getStateFromMeta(cropMeta2B);
 
         IBlockState AIR = Blocks.AIR.getDefaultState();
-        IBlockState LOG = Blocks.LOG.getDefaultState();
+        IBlockState LOG = this.getBiomeSpecificBlockState(Blocks.LOG.getDefaultState());//Blocks.LOG.getDefaultState();
 
         //BASE
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 0, 1, 0, 12, 4, 8, AIR, AIR, false);
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 0, 0, 0, 0, 0, 8, LOG, LOG, false);
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 6, 0, 0, 6, 0, 8, LOG, LOG, false);
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 12, 0, 0, 12, 0, 8, LOG, LOG, false);
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 1, 0, 0, 11, 0, 0, LOG, LOG, false);
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 1, 0, 8, 11, 0, 8, LOG, LOG, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 0, 1, 0, 12, 4, 8, AIR, AIR, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 0, 0, 0, 0, 0, 8, LOG, LOG, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 6, 0, 0, 6, 0, 8, LOG, LOG, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 12, 0, 0, 12, 0, 8, LOG, LOG, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 1, 0, 0, 11, 0, 0, LOG, LOG, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 1, 0, 8, 11, 0, 8, LOG, LOG, false);
 
         //A
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 1, 0, 1, 2, 0, 7, blockStateOutA, blockStateOutA, false);
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 3, 0, 1, 3, 0, 7, blockStateInA, blockStateInA, false);
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 4, 0, 1, 5, 0, 7, blockStateOutA, blockStateOutA, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 1, 0, 1, 2, 0, 7, blockStateOutA, blockStateOutA, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 3, 0, 1, 3, 0, 7, blockStateInA, blockStateInA, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 4, 0, 1, 5, 0, 7, blockStateOutA, blockStateOutA, false);
 
         //B
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 7, 0, 1, 8, 0, 7, blockStateOutB, blockStateOutB, false);
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 9, 0, 1, 9, 0, 7, blockStateInB, blockStateInB, false);
-        fillWithBlocks(worldIn, structureBoundingBoxIn, 10, 0, 1, 11, 0, 7, blockStateOutB, blockStateOutB, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 7, 0, 1, 8, 0, 7, blockStateOutB, blockStateOutB, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 9, 0, 1, 9, 0, 7, blockStateInB, blockStateInB, false);
+        this.fillWithBlocks(worldIn, structureBoundingBoxIn, 10, 0, 1, 11, 0, 7, blockStateOutB, blockStateOutB, false);
 
         //CROPS
         for (int tempZ = 1; tempZ <= 7; tempZ++)
         {
             if (typeA == fieldType.NORMAL)
-                placeCropAtCurrentPosition(worldIn, cropState1A, 1, 1, tempZ, structureBoundingBoxIn);
-            placeCropAtCurrentPosition(worldIn, cropState1A, 2, 1, tempZ, structureBoundingBoxIn);
-            placeCropAtCurrentPosition(worldIn, cropState2A, 4, 1, tempZ, structureBoundingBoxIn);
+                this.placeCropAtCurrentPosition(worldIn, cropState1A, 1, 1, tempZ, structureBoundingBoxIn);
+
+            this.placeCropAtCurrentPosition(worldIn, cropState1A, 2, 1, tempZ, structureBoundingBoxIn);
+            this.placeCropAtCurrentPosition(worldIn, cropState2A, 4, 1, tempZ, structureBoundingBoxIn);
+
             if (typeA == fieldType.NORMAL)
-                placeCropAtCurrentPosition(worldIn, cropState2A, 5, 1, tempZ, structureBoundingBoxIn);
+                this.placeCropAtCurrentPosition(worldIn, cropState2A, 5, 1, tempZ, structureBoundingBoxIn);
+
             if (typeA == fieldType.NORMAL)
-                placeCropAtCurrentPosition(worldIn, cropState1B, 7, 1, tempZ, structureBoundingBoxIn);
-            placeCropAtCurrentPosition(worldIn, cropState1B, 8, 1, tempZ, structureBoundingBoxIn);
-            placeCropAtCurrentPosition(worldIn, cropState2B, 10, 1, tempZ, structureBoundingBoxIn);
+                this.placeCropAtCurrentPosition(worldIn, cropState1B, 7, 1, tempZ, structureBoundingBoxIn);
+
+            this.placeCropAtCurrentPosition(worldIn, cropState1B, 8, 1, tempZ, structureBoundingBoxIn);
+            this.placeCropAtCurrentPosition(worldIn, cropState2B, 10, 1, tempZ, structureBoundingBoxIn);
+
             if (typeA == fieldType.NORMAL)
-                placeCropAtCurrentPosition(worldIn, cropState2B, 11, 1, tempZ, structureBoundingBoxIn);
+                this.placeCropAtCurrentPosition(worldIn, cropState2B, 11, 1, tempZ, structureBoundingBoxIn);
         }
 
         //FILLER
-        for (int z1 = 0; z1 < 9; ++z1)
-            for (int x1 = 0; x1 < 13; ++x1)
+        for (int z = 0; z < 9; ++z)
+        {
+            for (int x = 0; x < 13; ++x)
             {
-                clearCurrentPositionBlocksUpwards(worldIn, x1, 4, z1, structureBoundingBoxIn);
-                replaceAirAndLiquidDownwards(worldIn, Blocks.DIRT.getDefaultState(), x1, -1, z1, structureBoundingBoxIn);
+                this.clearCurrentPositionBlocksUpwards(worldIn, x, 4, z, structureBoundingBoxIn);
+                this.replaceAirAndLiquidDownwards(worldIn, Blocks.DIRT.getDefaultState(), x, -1, z, structureBoundingBoxIn);
             }
+        }
 
         return true;
     }
@@ -252,9 +263,9 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
     private void placeCropAtCurrentPosition(World worldIn, IBlockState blockstateIn, int x, int y, int z, StructureBoundingBox boundingboxIn)
     {
         if (Loader.isModLoaded("harvestcraft"))
-            placeHarvestCraftCropAtCurrentPosition(worldIn, blockstateIn, x, y, z, boundingboxIn);
+            this.placeHarvestCraftCropAtCurrentPosition(worldIn, blockstateIn, x, y, z, boundingboxIn);
         else
-            replaceAirAndLiquidDownwards(worldIn, blockstateIn, x, y, z, boundingboxIn);
+            this.replaceAirAndLiquidDownwards(worldIn, blockstateIn, x, y, z, boundingboxIn);
     }
 
     private void placeHarvestCraftCropAtCurrentPosition(World worldIn, IBlockState blockstateIn, int x, int y, int z, StructureBoundingBox boundingboxIn)
