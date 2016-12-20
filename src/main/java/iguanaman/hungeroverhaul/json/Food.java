@@ -33,6 +33,7 @@ public class Food
     }
 
     //TODO handle blocks as well!!
+    @SuppressWarnings("deprecation")
     public ItemStack toItemStack()
     {
         Item i = GameData.getItemRegistry().getObject(name);
@@ -55,13 +56,14 @@ public class Food
         return fromItemStack(is, fv.saturationModifier, fv.hunger);
     }
 
+    @SuppressWarnings("deprecation")
     public static Food fromItemStack(ItemStack is, Float saturationModifier, int hunger)
     {
         Food fd = new Food();
         fd.name = GameData.getItemRegistry().getNameForObject(is.getItem());
-        if (fd.name == null || fd.name.isEmpty())
-            fd.name = GameData.getBlockRegistry().getNameForObject(is.getItem());
-        if (fd.name == null || fd.name.isEmpty())
+        if (fd.name == null || fd.name.getResourcePath().isEmpty())
+            fd.name = GameData.getBlockRegistry().getNameForObject(Block.getBlockFromItem(is.getItem()));
+        if (fd.name == null || fd.name.getResourcePath().isEmpty())
             return null;
         fd.meta = is.getItemDamage();
         fd.count = is.stackSize;

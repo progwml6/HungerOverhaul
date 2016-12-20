@@ -1,17 +1,23 @@
 package iguanaman.hungeroverhaul.module;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.util.BonemealModification;
 import iguanaman.hungeroverhaul.util.PlantGrowthModification;
-import net.minecraft.block.*;
+import net.minecraft.block.BlockCactus;
+import net.minecraft.block.BlockCocoa;
+import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockNetherWart;
+import net.minecraft.block.BlockReed;
+import net.minecraft.block.BlockSapling;
+import net.minecraft.block.BlockStem;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import squeek.applecore.api.food.FoodValues;
 
@@ -100,13 +106,15 @@ public class ModuleVanilla
          */
         BonemealModification cropBonemealModification = new BonemealModification()
         {
+            @SuppressWarnings("deprecation")
             @Override
             public IBlockState getNewState(World world, BlockPos pos, IBlockState state)
             {
+                int currentMeta = state.getBlock().getMetaFromState(state);
                 int metaIncrease = 1;
                 if (IguanaConfig.difficultyScalingBoneMeal && world.getDifficulty().getDifficultyId() < EnumDifficulty.EASY.getDifficultyId())
                     metaIncrease = world.rand.nextInt(3);
-                return Math.min(currentMeta + metaIncrease, 7);
+                return state.getBlock().getStateFromMeta(Math.min(currentMeta + metaIncrease, 7));
             }
         };
         ModuleBonemeal.registerBonemealModifier(BlockCrops.class, cropBonemealModification);

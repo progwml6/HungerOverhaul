@@ -2,11 +2,11 @@ package iguanaman.hungeroverhaul.module;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import com.google.common.collect.Maps;
-import com.pam.harvestcraft.blocks.BlockRegistry;
-import com.pam.harvestcraft.item.ItemRegistry;
-import com.pam.harvestcraft.item.items.ItemPamSeedFood;
+import com.pam.harvestcraft.blocks.CropRegistry;
+import com.pam.harvestcraft.blocks.FruitRegistry;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,6 +14,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -43,122 +44,128 @@ public class PamsModsHelper
         if (Loader.isModLoaded("harvestcraft"))
         {
             PamCrops = new Block[] {
-                    BlockRegistry.pamblackberryCrop, BlockRegistry.pamblueberryCrop, BlockRegistry.pamcandleberryCrop, BlockRegistry.pamraspberryCrop, BlockRegistry.pamstrawberryCrop,
-                    BlockRegistry.pamcactusfruitCrop, BlockRegistry.pamasparagusCrop, BlockRegistry.pambarleyCrop, BlockRegistry.pamoatsCrop, BlockRegistry.pamryeCrop,
-                    BlockRegistry.pamcornCrop, BlockRegistry.pambambooshootCrop, BlockRegistry.pamcantaloupeCrop, BlockRegistry.pamcucumberCrop, BlockRegistry.pamwintersquashCrop,
-                    BlockRegistry.pamzucchiniCrop, BlockRegistry.pambeetCrop, BlockRegistry.pamonionCrop, BlockRegistry.pamparsnipCrop, BlockRegistry.pampeanutCrop,
-                    BlockRegistry.pamradishCrop, BlockRegistry.pamrutabagaCrop, BlockRegistry.pamsweetpotatoCrop, BlockRegistry.pamturnipCrop, BlockRegistry.pamrhubarbCrop,
-                    BlockRegistry.pamceleryCrop, BlockRegistry.pamgarlicCrop, BlockRegistry.pamgingerCrop, BlockRegistry.pamspiceleafCrop, BlockRegistry.pamtealeafCrop,
-                    BlockRegistry.pamcoffeebeanCrop, BlockRegistry.pammustardseedsCrop, BlockRegistry.pambroccoliCrop, BlockRegistry.pamcauliflowerCrop, BlockRegistry.pamleekCrop,
-                    BlockRegistry.pamlettuceCrop, BlockRegistry.pamscallionCrop, BlockRegistry.pamartichokeCrop, BlockRegistry.pambrusselsproutCrop, BlockRegistry.pamcabbageCrop,
-                    BlockRegistry.pamwhitemushroomCrop, BlockRegistry.pambeanCrop, BlockRegistry.pamsoybeanCrop, BlockRegistry.pambellpepperCrop, BlockRegistry.pamchilipepperCrop,
-                    BlockRegistry.pameggplantCrop, BlockRegistry.pamokraCrop, BlockRegistry.pampeasCrop, BlockRegistry.pamtomatoCrop, BlockRegistry.pamcottonCrop,
-                    BlockRegistry.pampineappleCrop, BlockRegistry.pamgrapeCrop, BlockRegistry.pamkiwiCrop, BlockRegistry.pamcranberryCrop, BlockRegistry.pamriceCrop, BlockRegistry.pamseaweedCrop
+                    CropRegistry.getCrop(CropRegistry.BLACKBERRY), CropRegistry.getCrop(CropRegistry.BLUEBERRY), CropRegistry.getCrop(CropRegistry.CANDLEBERRY), CropRegistry.getCrop(CropRegistry.RASPBERRY), CropRegistry.getCrop(CropRegistry.STRAWBERRY),
+                    CropRegistry.getCrop(CropRegistry.CACTUSFRUIT), CropRegistry.getCrop(CropRegistry.ASPARAGUS), CropRegistry.getCrop(CropRegistry.BARLEY), CropRegistry.getCrop(CropRegistry.OATS), CropRegistry.getCrop(CropRegistry.RYE),
+                    CropRegistry.getCrop(CropRegistry.CORN), CropRegistry.getCrop(CropRegistry.BAMBOOSHOOT), CropRegistry.getCrop(CropRegistry.CANTALOUPE), CropRegistry.getCrop(CropRegistry.CUCUMBER), CropRegistry.getCrop(CropRegistry.WINTERSQUASH),
+                    CropRegistry.getCrop(CropRegistry.ZUCCHINI), CropRegistry.getCrop(CropRegistry.BEET), CropRegistry.getCrop(CropRegistry.ONION), CropRegistry.getCrop(CropRegistry.PARSNIP), CropRegistry.getCrop(CropRegistry.PEANUT),
+                    CropRegistry.getCrop(CropRegistry.RADISH), CropRegistry.getCrop(CropRegistry.RUTABAGA), CropRegistry.getCrop(CropRegistry.SWEETPOTATO), CropRegistry.getCrop(CropRegistry.TURNIP), CropRegistry.getCrop(CropRegistry.RHUBARB),
+                    CropRegistry.getCrop(CropRegistry.CELERY), CropRegistry.getCrop(CropRegistry.GARLIC), CropRegistry.getCrop(CropRegistry.GINGER), CropRegistry.getCrop(CropRegistry.SPICELEAF), CropRegistry.getCrop(CropRegistry.TEALEAF),
+                    CropRegistry.getCrop(CropRegistry.COFFEE), CropRegistry.getCrop(CropRegistry.MUSTARD), CropRegistry.getCrop(CropRegistry.BROCCOLI), CropRegistry.getCrop(CropRegistry.CAULIFLOWER), CropRegistry.getCrop(CropRegistry.LEEK),
+                    CropRegistry.getCrop(CropRegistry.LETTUCE), CropRegistry.getCrop(CropRegistry.SCALLION), CropRegistry.getCrop(CropRegistry.ARTICHOKE), CropRegistry.getCrop(CropRegistry.BRUSSELSPROUT), CropRegistry.getCrop(CropRegistry.CABBAGE),
+                    CropRegistry.getCrop(CropRegistry.WHITEMUSHROOM), CropRegistry.getCrop(CropRegistry.BEAN), CropRegistry.getCrop(CropRegistry.SOYBEAN), CropRegistry.getCrop(CropRegistry.BELLPEPPER), CropRegistry.getCrop(CropRegistry.CHILIPEPPER),
+                    CropRegistry.getCrop(CropRegistry.EGGPLANT), CropRegistry.getCrop(CropRegistry.OKRA), CropRegistry.getCrop(CropRegistry.PEAS), CropRegistry.getCrop(CropRegistry.TOMATO), CropRegistry.getCrop(CropRegistry.COTTON),
+                    CropRegistry.getCrop(CropRegistry.PINEAPPLE), CropRegistry.getCrop(CropRegistry.GRAPE), CropRegistry.getCrop(CropRegistry.KIWI), CropRegistry.getCrop(CropRegistry.CRANBERRY), CropRegistry.getCrop(CropRegistry.RICE), CropRegistry.getCrop(CropRegistry.SEAWEED)
             };
 
-            crops.put(BlockRegistry.pamasparagusCrop, 0);
-            crops.put(BlockRegistry.pambarleyCrop, 1);
-            crops.put(BlockRegistry.pambeanCrop, 2);
-            crops.put(BlockRegistry.pambeetCrop, 3);
-            crops.put(BlockRegistry.pambroccoliCrop, 4);
-            crops.put(BlockRegistry.pamcauliflowerCrop, 5);
-            crops.put(BlockRegistry.pamceleryCrop, 6);
-            crops.put(BlockRegistry.pamcranberryCrop, 7);
-            crops.put(BlockRegistry.pamgarlicCrop, 8);
-            crops.put(BlockRegistry.pamgingerCrop, 9);
-            crops.put(BlockRegistry.pamleekCrop, 10);
-            crops.put(BlockRegistry.pamlettuceCrop, 11);
-            crops.put(BlockRegistry.pamoatsCrop, 12);
-            crops.put(BlockRegistry.pamonionCrop, 13);
-            crops.put(BlockRegistry.pamparsnipCrop, 14);
-            crops.put(BlockRegistry.pampeanutCrop, 15);
-            crops.put(BlockRegistry.pampineappleCrop, 16);
-            crops.put(BlockRegistry.pamradishCrop, 17);
-            crops.put(BlockRegistry.pamriceCrop, 18);
-            crops.put(BlockRegistry.pamrutabagaCrop, 19);
-            crops.put(BlockRegistry.pamryeCrop, 20);
-            crops.put(BlockRegistry.pamscallionCrop, 21);
-            crops.put(BlockRegistry.pamsoybeanCrop, 22);
-            crops.put(BlockRegistry.pamspiceleafCrop, 23);
-            crops.put(BlockRegistry.pamsweetpotatoCrop, 24);
-            crops.put(BlockRegistry.pamtealeafCrop, 25);
-            crops.put(BlockRegistry.pamturnipCrop, 26);
-            crops.put(BlockRegistry.pamwhitemushroomCrop, 27);
-            crops.put(BlockRegistry.pamartichokeCrop, 28);
-            crops.put(BlockRegistry.pambellpepperCrop, 29);
-            crops.put(BlockRegistry.pamblackberryCrop, 30);
-            crops.put(BlockRegistry.pamblueberryCrop, 31);
-            crops.put(BlockRegistry.pambrusselsproutCrop, 32);
-            crops.put(BlockRegistry.pamcabbageCrop, 33);
-            crops.put(BlockRegistry.pamcactusfruitCrop, 34);
-            crops.put(BlockRegistry.pamcandleberryCrop, 35);
-            crops.put(BlockRegistry.pamcantaloupeCrop, 36);
-            crops.put(BlockRegistry.pamchilipepperCrop, 37);
-            crops.put(BlockRegistry.pamcoffeebeanCrop, 38);
-            crops.put(BlockRegistry.pamcornCrop, 39);
-            crops.put(BlockRegistry.pamcottonCrop, 40);
-            crops.put(BlockRegistry.pamcucumberCrop, 41);
-            crops.put(BlockRegistry.pameggplantCrop, 42);
-            crops.put(BlockRegistry.pamgrapeCrop, 43);
-            crops.put(BlockRegistry.pamkiwiCrop, 44);
-            crops.put(BlockRegistry.pammustardseedsCrop, 45);
-            crops.put(BlockRegistry.pamokraCrop, 46);
-            crops.put(BlockRegistry.pampeasCrop, 47);
-            crops.put(BlockRegistry.pamraspberryCrop, 48);
-            crops.put(BlockRegistry.pamrhubarbCrop, 49);
-            crops.put(BlockRegistry.pamseaweedCrop, 50);
-            crops.put(BlockRegistry.pamstrawberryCrop, 51);
-            crops.put(BlockRegistry.pamtomatoCrop, 52);
-            crops.put(BlockRegistry.pamwintersquashCrop, 53);
-            crops.put(BlockRegistry.pamzucchiniCrop, 54);
-            crops.put(BlockRegistry.pambambooshootCrop, 55);
+            crops.put(CropRegistry.getCrop(CropRegistry.ASPARAGUS), 0);
+            crops.put(CropRegistry.getCrop(CropRegistry.BARLEY), 1);
+            crops.put(CropRegistry.getCrop(CropRegistry.BEAN), 2);
+            crops.put(CropRegistry.getCrop(CropRegistry.BEET), 3);
+            crops.put(CropRegistry.getCrop(CropRegistry.BROCCOLI), 4);
+            crops.put(CropRegistry.getCrop(CropRegistry.CAULIFLOWER), 5);
+            crops.put(CropRegistry.getCrop(CropRegistry.CELERY), 6);
+            crops.put(CropRegistry.getCrop(CropRegistry.CRANBERRY), 7);
+            crops.put(CropRegistry.getCrop(CropRegistry.GARLIC), 8);
+            crops.put(CropRegistry.getCrop(CropRegistry.GINGER), 9);
+            crops.put(CropRegistry.getCrop(CropRegistry.LEEK), 10);
+            crops.put(CropRegistry.getCrop(CropRegistry.LETTUCE), 11);
+            crops.put(CropRegistry.getCrop(CropRegistry.OATS), 12);
+            crops.put(CropRegistry.getCrop(CropRegistry.ONION), 13);
+            crops.put(CropRegistry.getCrop(CropRegistry.PARSNIP), 14);
+            crops.put(CropRegistry.getCrop(CropRegistry.PEANUT), 15);
+            crops.put(CropRegistry.getCrop(CropRegistry.PINEAPPLE), 16);
+            crops.put(CropRegistry.getCrop(CropRegistry.RADISH), 17);
+            crops.put(CropRegistry.getCrop(CropRegistry.RICE), 18);
+            crops.put(CropRegistry.getCrop(CropRegistry.RUTABAGA), 19);
+            crops.put(CropRegistry.getCrop(CropRegistry.RYE), 20);
+            crops.put(CropRegistry.getCrop(CropRegistry.SCALLION), 21);
+            crops.put(CropRegistry.getCrop(CropRegistry.SOYBEAN), 22);
+            crops.put(CropRegistry.getCrop(CropRegistry.SPICELEAF), 23);
+            crops.put(CropRegistry.getCrop(CropRegistry.SWEETPOTATO), 24);
+            crops.put(CropRegistry.getCrop(CropRegistry.TEALEAF), 25);
+            crops.put(CropRegistry.getCrop(CropRegistry.TURNIP), 26);
+            crops.put(CropRegistry.getCrop(CropRegistry.WHITEMUSHROOM), 27);
+            crops.put(CropRegistry.getCrop(CropRegistry.ARTICHOKE), 28);
+            crops.put(CropRegistry.getCrop(CropRegistry.BELLPEPPER), 29);
+            crops.put(CropRegistry.getCrop(CropRegistry.BLACKBERRY), 30);
+            crops.put(CropRegistry.getCrop(CropRegistry.BLUEBERRY), 31);
+            crops.put(CropRegistry.getCrop(CropRegistry.BRUSSELSPROUT), 32);
+            crops.put(CropRegistry.getCrop(CropRegistry.CABBAGE), 33);
+            crops.put(CropRegistry.getCrop(CropRegistry.CACTUSFRUIT), 34);
+            crops.put(CropRegistry.getCrop(CropRegistry.CANDLEBERRY), 35);
+            crops.put(CropRegistry.getCrop(CropRegistry.CANTALOUPE), 36);
+            crops.put(CropRegistry.getCrop(CropRegistry.CHILIPEPPER), 37);
+            crops.put(CropRegistry.getCrop(CropRegistry.COFFEE), 38);
+            crops.put(CropRegistry.getCrop(CropRegistry.CORN), 39);
+            crops.put(CropRegistry.getCrop(CropRegistry.COTTON), 40);
+            crops.put(CropRegistry.getCrop(CropRegistry.CUCUMBER), 41);
+            crops.put(CropRegistry.getCrop(CropRegistry.EGGPLANT), 42);
+            crops.put(CropRegistry.getCrop(CropRegistry.GRAPE), 43);
+            crops.put(CropRegistry.getCrop(CropRegistry.KIWI), 44);
+            crops.put(CropRegistry.getCrop(CropRegistry.MUSTARD), 45);
+            crops.put(CropRegistry.getCrop(CropRegistry.OKRA), 46);
+            crops.put(CropRegistry.getCrop(CropRegistry.PEAS), 47);
+            crops.put(CropRegistry.getCrop(CropRegistry.RASPBERRY), 48);
+            crops.put(CropRegistry.getCrop(CropRegistry.RHUBARB), 49);
+            crops.put(CropRegistry.getCrop(CropRegistry.SEAWEED), 50);
+            crops.put(CropRegistry.getCrop(CropRegistry.STRAWBERRY), 51);
+            crops.put(CropRegistry.getCrop(CropRegistry.TOMATO), 52);
+            crops.put(CropRegistry.getCrop(CropRegistry.WINTERSQUASH), 53);
+            crops.put(CropRegistry.getCrop(CropRegistry.ZUCCHINI), 54);
+            crops.put(CropRegistry.getCrop(CropRegistry.BAMBOOSHOOT), 55);
 
-            mapFruit(BlockRegistry.pamappleSapling, Items.apple, BlockRegistry.pamApple);
-            mapFruit(BlockRegistry.pamalmondSapling, ItemRegistry.almondItem, BlockRegistry.pamAlmond);
-            mapFruit(BlockRegistry.pamapricotSapling, ItemRegistry.apricotItem, BlockRegistry.pamApricot);
-            mapFruit(BlockRegistry.pamavocadoSapling, ItemRegistry.avocadoItem, BlockRegistry.pamAvocado);
-            mapFruit(BlockRegistry.pambananaSapling, ItemRegistry.bananaItem, BlockRegistry.pamBanana);
-            mapFruit(BlockRegistry.pamcashewSapling, ItemRegistry.cashewItem, BlockRegistry.pamCashew);
-            mapFruit(BlockRegistry.pamcherrySapling, ItemRegistry.cherryItem, BlockRegistry.pamCherry);
-            mapFruit(BlockRegistry.pamchestnutSapling, ItemRegistry.chestnutItem, BlockRegistry.pamChestnut);
-            mapFruit(BlockRegistry.pamcinnamonSapling, ItemRegistry.cinnamonItem, BlockRegistry.pamCinnamon);
-            mapFruit(BlockRegistry.pamcoconutSapling, ItemRegistry.coconutItem, BlockRegistry.pamCoconut);
-            mapFruit(BlockRegistry.pamdateSapling, ItemRegistry.dateItem, BlockRegistry.pamDate);
-            mapFruit(BlockRegistry.pamdragonfruitSapling, ItemRegistry.dragonfruitItem, BlockRegistry.pamDragonfruit);
-            mapFruit(BlockRegistry.pamdurianSapling, ItemRegistry.durianItem, BlockRegistry.pamDurian);
-            mapFruit(BlockRegistry.pamfigSapling, ItemRegistry.figItem, BlockRegistry.pamFig);
-            mapFruit(BlockRegistry.pamgrapefruitSapling, ItemRegistry.grapefruitItem, BlockRegistry.pamGrapefruit);
-            mapFruit(BlockRegistry.pamlemonSapling, ItemRegistry.lemonItem, BlockRegistry.pamLemon);
-            mapFruit(BlockRegistry.pamlimeSapling, ItemRegistry.limeItem, BlockRegistry.pamLime);
-            mapFruit(BlockRegistry.pammapleSapling, ItemRegistry.maplesyrupItem, BlockRegistry.pamMaple);
-            mapFruit(BlockRegistry.pammangoSapling, ItemRegistry.mangoItem, BlockRegistry.pamMango);
-            mapFruit(BlockRegistry.pamnutmegSapling, ItemRegistry.nutmegItem, BlockRegistry.pamNutmeg);
-            mapFruit(BlockRegistry.pamoliveSapling, ItemRegistry.oliveItem, BlockRegistry.pamOlive);
-            mapFruit(BlockRegistry.pamorangeSapling, ItemRegistry.orangeItem, BlockRegistry.pamOrange);
-            mapFruit(BlockRegistry.pampapayaSapling, ItemRegistry.papayaItem, BlockRegistry.pamPapaya);
-            mapFruit(BlockRegistry.pampaperbarkSapling, Items.paper, BlockRegistry.pamPaperbark);
-            mapFruit(BlockRegistry.pampeachSapling, ItemRegistry.peachItem, BlockRegistry.pamPeach);
-            mapFruit(BlockRegistry.pampearSapling, ItemRegistry.pearItem, BlockRegistry.pamPear);
-            mapFruit(BlockRegistry.pampecanSapling, ItemRegistry.pecanItem, BlockRegistry.pamPecan);
-            mapFruit(BlockRegistry.pampeppercornSapling, ItemRegistry.peppercornItem, BlockRegistry.pamPeppercorn);
-            mapFruit(BlockRegistry.pampersimmonSapling, ItemRegistry.persimmonItem, BlockRegistry.pamPersimmon);
-            mapFruit(BlockRegistry.pampistachioSapling, ItemRegistry.pistachioItem, BlockRegistry.pamPistachio);
-            mapFruit(BlockRegistry.pamplumSapling, ItemRegistry.plumItem, BlockRegistry.pamPlum);
-            mapFruit(BlockRegistry.pampomegranateSapling, ItemRegistry.pomegranateItem, BlockRegistry.pamPomegranate);
-            mapFruit(BlockRegistry.pamstarfruitSapling, ItemRegistry.starfruitItem, BlockRegistry.pamStarfruit);
-            mapFruit(BlockRegistry.pamvanillabeanSapling, ItemRegistry.vanillabeanItem, BlockRegistry.pamVanillabean);
-            mapFruit(BlockRegistry.pamwalnutSapling, ItemRegistry.walnutItem, BlockRegistry.pamWalnut);
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.APPLE), Items.APPLE, FruitRegistry.getSapling(FruitRegistry.APPLE).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.ALMOND), FruitRegistry.getFood(FruitRegistry.ALMOND), FruitRegistry.getSapling(FruitRegistry.ALMOND).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.APRICOT), FruitRegistry.getFood(FruitRegistry.APRICOT), FruitRegistry.getSapling(FruitRegistry.APRICOT).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.AVOCADO), FruitRegistry.getFood(FruitRegistry.AVOCADO), FruitRegistry.getSapling(FruitRegistry.AVOCADO).getFruit());
 
-            for (int i = 0; i < ItemRegistry.PamSeeds.length && i < ItemRegistry.PamCropItems.length; i++)
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.BANANA), FruitRegistry.getFood(FruitRegistry.BANANA), FruitRegistry.getSapling(FruitRegistry.BANANA).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.CASHEW), FruitRegistry.getFood(FruitRegistry.CASHEW), FruitRegistry.getSapling(FruitRegistry.CASHEW).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.CHERRY), FruitRegistry.getFood(FruitRegistry.CHERRY), FruitRegistry.getSapling(FruitRegistry.CHERRY).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.CHESTNUT), FruitRegistry.getFood(FruitRegistry.CHESTNUT), FruitRegistry.getSapling(FruitRegistry.CHESTNUT).getFruit());
+
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.CINNAMON), FruitRegistry.getFood(FruitRegistry.CINNAMON), FruitRegistry.getSapling(FruitRegistry.CINNAMON).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.COCONUT), FruitRegistry.getFood(FruitRegistry.COCONUT), FruitRegistry.getSapling(FruitRegistry.COCONUT).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.DATE), FruitRegistry.getFood(FruitRegistry.DATE), FruitRegistry.getSapling(FruitRegistry.DATE).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.DRAGONFRUIT), FruitRegistry.getFood(FruitRegistry.DRAGONFRUIT), FruitRegistry.getSapling(FruitRegistry.DRAGONFRUIT).getFruit());
+
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.DURIAN), FruitRegistry.getFood(FruitRegistry.DURIAN), FruitRegistry.getSapling(FruitRegistry.DURIAN).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.FIG), FruitRegistry.getFood(FruitRegistry.FIG), FruitRegistry.getSapling(FruitRegistry.FIG).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.GRAPEFRUIT), FruitRegistry.getFood(FruitRegistry.GRAPEFRUIT), FruitRegistry.getSapling(FruitRegistry.GRAPEFRUIT).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.LEMON), FruitRegistry.getFood(FruitRegistry.LEMON), FruitRegistry.getSapling(FruitRegistry.LEMON).getFruit());
+
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.LIME), FruitRegistry.getFood(FruitRegistry.LIME), FruitRegistry.getSapling(FruitRegistry.LIME).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.MAPLE), FruitRegistry.getFood(FruitRegistry.MAPLE), FruitRegistry.getSapling(FruitRegistry.MAPLE).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.MANGO), FruitRegistry.getFood(FruitRegistry.MANGO), FruitRegistry.getSapling(FruitRegistry.MANGO).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.NUTMEG), FruitRegistry.getFood(FruitRegistry.NUTMEG), FruitRegistry.getSapling(FruitRegistry.NUTMEG).getFruit());
+
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.OLIVE), FruitRegistry.getFood(FruitRegistry.OLIVE), FruitRegistry.getSapling(FruitRegistry.OLIVE).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.ORANGE), FruitRegistry.getFood(FruitRegistry.ORANGE), FruitRegistry.getSapling(FruitRegistry.ORANGE).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.PAPAYA), FruitRegistry.getFood(FruitRegistry.PAPAYA), FruitRegistry.getSapling(FruitRegistry.PAPAYA).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.PAPERBARK), FruitRegistry.getFood(FruitRegistry.PAPERBARK), FruitRegistry.getSapling(FruitRegistry.PAPERBARK).getFruit());
+
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.PEACH), FruitRegistry.getFood(FruitRegistry.PEACH), FruitRegistry.getSapling(FruitRegistry.PEACH).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.PEAR), FruitRegistry.getFood(FruitRegistry.PEAR), FruitRegistry.getSapling(FruitRegistry.PEAR).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.PECAN), FruitRegistry.getFood(FruitRegistry.PECAN), FruitRegistry.getSapling(FruitRegistry.PECAN).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.PEPPERCORN), FruitRegistry.getFood(FruitRegistry.PEPPERCORN), FruitRegistry.getSapling(FruitRegistry.PEPPERCORN).getFruit());
+
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.PERSIMMON), FruitRegistry.getFood(FruitRegistry.PERSIMMON), FruitRegistry.getSapling(FruitRegistry.PERSIMMON).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.PISTACHIO), FruitRegistry.getFood(FruitRegistry.PISTACHIO), FruitRegistry.getSapling(FruitRegistry.PISTACHIO).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.PLUM), FruitRegistry.getFood(FruitRegistry.PLUM), FruitRegistry.getSapling(FruitRegistry.PLUM).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.POMEGRANATE), FruitRegistry.getFood(FruitRegistry.POMEGRANATE), FruitRegistry.getSapling(FruitRegistry.POMEGRANATE).getFruit());
+
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.STARFRUIT), FruitRegistry.getFood(FruitRegistry.STARFRUIT), FruitRegistry.getSapling(FruitRegistry.STARFRUIT).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.VANILLABEAN), FruitRegistry.getFood(FruitRegistry.VANILLABEAN), FruitRegistry.getSapling(FruitRegistry.VANILLABEAN).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.WALNUT), FruitRegistry.getFood(FruitRegistry.WALNUT), FruitRegistry.getSapling(FruitRegistry.WALNUT).getFruit());
+
+            for (Entry<String, ItemSeedFood> food : CropRegistry.getFoods().entrySet())
             {
-                Item seed = ItemRegistry.PamSeeds[i];
-                Item product = ItemRegistry.PamCropItems[i];
-                productToSeedMap.put(product, seed);
+                productToSeedMap.put(food.getValue(), CropRegistry.getSeed(food.getKey()));
             }
 
             try
             {
-                itemPamSeedFoodSoilBlock = ItemPamSeedFood.class.getDeclaredField("soilId");
+                itemPamSeedFoodSoilBlock = ItemSeedFood.class.getDeclaredField("soilId");
                 itemPamSeedFoodSoilBlock.setAccessible(true);
             }
             catch (Exception e)
@@ -193,6 +200,7 @@ public class PamsModsHelper
     }
 
     // mimics the logic in ItemPamSeedFood.onItemUse
+    @SuppressWarnings("deprecation")
     public static boolean canPlantSeedFoodAt(EntityPlayer player, ItemStack itemStack, World world, BlockPos pos, EnumFacing side)
     {
         if (!player.canPlayerEdit(pos, side, itemStack) || !player.canPlayerEdit(pos.up(), side, itemStack))
@@ -211,9 +219,9 @@ public class PamsModsHelper
             {
                 return true;
             }
-            else if (itemStack.getItem() == ItemRegistry.cranberryItem || itemStack.getItem() == ItemRegistry.riceItem || itemStack.getItem() == ItemRegistry.seaweedItem)
+            else if (itemStack.getItem() == CropRegistry.getFood(CropRegistry.CRANBERRY) || itemStack.getItem() == CropRegistry.getFood(CropRegistry.RICE) || itemStack.getItem() == CropRegistry.getFood(CropRegistry.SEAWEED))
             {
-                return aboveBlock.getMaterial() == Material.water && world.getBlockMetadata(x, y + 1, z) == 0;
+                return aboveBlock.getMaterial(aboveStateBlock) == Material.WATER && world.getBlockState(pos.up()) == null;
             }
         }
         catch (Exception e)

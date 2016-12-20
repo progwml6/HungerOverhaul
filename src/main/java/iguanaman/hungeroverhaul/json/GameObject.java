@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class GameObject
@@ -15,12 +15,12 @@ public class GameObject
 
     public Item toItem()
     {
-        return GameData.getItemRegistry().getObject(new ResourceLocation(name));
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
     }
 
     public Block toBlock()
     {
-        return GameData.getBlockRegistry().getObject(new ResourceLocation(name));
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(name));
     }
 
     public ItemStack toItemStack()

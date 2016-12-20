@@ -4,7 +4,7 @@ import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.EnumDifficulty;
-import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import squeek.applecore.api.AppleCoreAPI;
@@ -146,13 +146,13 @@ public class FoodEventHandler
     }
 
     @SubscribeEvent
-    public void onFoodStartEating(PlayerUseItemEvent.Start event)
+    public void onFoodStartEating(LivingEntityUseItemEvent.Start event)
     {
-        if (IguanaConfig.modifyFoodEatingSpeed && AppleCoreAPI.accessor.isFood(event.item))
+        if (IguanaConfig.modifyFoodEatingSpeed && AppleCoreAPI.accessor.isFood(event.getItem()))
         {
-            int hunger = FoodValues.get(event.item).hunger;
+            int hunger = FoodValues.get(event.getItem()).hunger;
             if (hunger > 0)
-                event.duration = hunger * 8 + 8;
+                event.setDuration(hunger * 8 + 8);
         }
     }
 }

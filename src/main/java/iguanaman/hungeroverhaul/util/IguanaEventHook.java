@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.pam.harvestcraft.item.items.ItemPamSeedFood;
-import com.progwml6.natura.blocks.crops.CropBlock;
 
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
@@ -12,6 +11,7 @@ import iguanaman.hungeroverhaul.module.ModulePlantGrowth;
 import iguanaman.hungeroverhaul.module.PamsModsHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -24,27 +24,30 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -54,6 +57,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodValues;
 
+@SuppressWarnings("deprecation")
 public class IguanaEventHook
 {
     private static long lastRightClickCrop = 0;
@@ -66,6 +70,7 @@ public class IguanaEventHook
         if (Loader.isModLoaded("ExtraUtilities"))
         {
             Block enderLilly = Block.getBlockFromName("ExtraUtilities:plant/ender_lilly");
+
             if (enderLilly != null)
             {
                 rightClickHarvestBlacklist.add(enderLilly);
@@ -76,6 +81,7 @@ public class IguanaEventHook
         if (Loader.isModLoaded("ThaumicTinkerer"))
         {
             Block infusedGrain = Block.getBlockFromName("ThaumicTinkerer:infusedGrainBlock");
+
             if (infusedGrain != null)
             {
                 harvestDropsBlacklist.add(infusedGrain);
@@ -96,6 +102,7 @@ public class IguanaEventHook
             float rndChild = RandomHelper.nextFloat(rand, IguanaConfig.childDurationMultiplier);
             EntityAgeable ageable = (EntityAgeable) event.getEntityLiving();
             int growingAge = ageable.getGrowingAge();
+
             if (growingAge > 0 && rndBreed >= 1)
                 ageable.setGrowingAge(++growingAge);
             else if (growingAge < 0 && rndChild >= 1)
@@ -143,6 +150,7 @@ public class IguanaEventHook
                 int foodLevel = 20;
                 boolean creative = false;
                 boolean isPlayer = false;
+
                 if (event.getEntityLiving() instanceof EntityPlayer)
                 {
                     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
@@ -223,20 +231,27 @@ public class IguanaEventHook
     {
         if (IguanaConfig.modifyHoeUse)
         {
-            IBlockState state = event.getWorld().getBlockState(event.getPos());
+            World world = event.getWorld();
+            BlockPos pos = event.getPos();
+            ItemStack itemStack = event.getCurrent();
+            EntityPlayer player = event.getEntityPlayer();
+            IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
+            //int fortune = itemStack;
 
-            if ((block == Blocks.DIRT || block == Blocks.GRASS) && isWaterNearby(event.getWorld(), event.getPos()))
+            if ((block == Blocks.DIRT || block == Blocks.GRASS) && isWaterNearby(world, pos.getX(), pos.getY(), pos.getZ()))
             {
                 if (IguanaConfig.hoeToolDamageMultiplier > 1)
-                    event.getCurrent().damageItem(IguanaConfig.hoeToolDamageMultiplier - 1, event.getEntityPlayer());
+                    itemStack.damageItem(IguanaConfig.hoeToolDamageMultiplier - 1, player);
             }
-            else if (block == Blocks.GRASS && !isWaterNearby(event.getWorld(), event.getPos()))
+            else if (block == Blocks.GRASS && !isWaterNearby(world, pos.getX(), pos.getY(), pos.getZ()))
             {
-                Block block1 = Blocks.FARMLAND;
+                Block farmland = Blocks.FARMLAND;
+                SoundType soundtype = farmland.getSoundType(farmland.getDefaultState(), world, pos, player);
 
-                event.getWorld().playSoundEffect(event.getPos().getX() + 0.5F, event.getPos().getY() + 0.5F, event.getPos().getZ() + 0.5F, block1.stepSound.soundName, (block1.stepSound.getVolume() + 1.0F) / 2.0F, block1.stepSound.getPitch() * 0.8F);
-                if (!event.getWorld().isRemote && IguanaConfig.seedChance > 0)
+                world.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+
+                if (!world.isRemote && IguanaConfig.seedChance > 0)
                 {
                     int seedChance = IguanaConfig.seedChance;
                     if (event.getWorld().getDifficulty().getDifficultyId() < 2)
@@ -244,13 +259,14 @@ public class IguanaEventHook
                     else if (event.getWorld().getDifficulty().getDifficultyId() == 3)
                         seedChance = Math.max(Math.round(seedChance / 2f), 1);
 
-                    if (event.getWorld().rand.nextInt(100) <= seedChance)
+                    if (world.rand.nextInt(100) <= seedChance)
                     {
-                        ItemStack seed = ModuleGrassSeeds.getSeedFromTillingGrass(event.getWorld());
+                        ItemStack seed = ModuleGrassSeeds.getSeedFromTillingGrass(world.rand);
                         if (seed != null)
-                            block.dropBlockAsItem(event.getWorld(), event.getPos(), seed);
+                            Block.spawnAsEntity(world, pos, seed);
+                        //block.spawnAsEntity(world, pos, seed);
                     }
-                    event.getWorld().setBlockState(event.getPos(), Blocks.DIRT.getDefaultState());
+                    world.setBlockState(pos, Blocks.DIRT.getDefaultState());
                 }
 
                 if (IguanaConfig.hoeToolDamageMultiplier > 1)
@@ -277,41 +293,42 @@ public class IguanaEventHook
                 float healthPercent = player.getHealth() / player.getMaxHealth();
 
                 if (healthPercent <= 0.15F)
-                    event.getLeft().add(EnumChatFormatting.RED + I18n.translateToLocal("hungeroverhaul.dying") + EnumChatFormatting.RESET);
+                    event.getLeft().add(TextFormatting.RED + I18n.translateToLocal("hungeroverhaul.dying") + TextFormatting.RESET);
                 else if (healthPercent <= 0.3F)
-                    event.getLeft().add(EnumChatFormatting.YELLOW + I18n.translateToLocal("hungeroverhaul.injured") + EnumChatFormatting.RESET);
+                    event.getLeft().add(TextFormatting.YELLOW + I18n.translateToLocal("hungeroverhaul.injured") + TextFormatting.RESET);
                 else if (healthPercent < 0.5F)
-                    event.getLeft().add(EnumChatFormatting.WHITE + I18n.translateToLocal("hungeroverhaul.hurt") + EnumChatFormatting.RESET);
+                    event.getLeft().add(TextFormatting.WHITE + I18n.translateToLocal("hungeroverhaul.hurt") + TextFormatting.RESET);
 
                 if (player.getFoodStats().getFoodLevel() <= 6)
-                    event.getLeft().add(EnumChatFormatting.RED + I18n.translateToLocal("hungeroverhaul.starving") + EnumChatFormatting.RESET);
+                    event.getLeft().add(TextFormatting.RED + I18n.translateToLocal("hungeroverhaul.starving") + TextFormatting.RESET);
                 else if (player.getFoodStats().getFoodLevel() <= 10)
-                    event.getLeft().add(EnumChatFormatting.YELLOW + I18n.translateToLocal("hungeroverhaul.hungry") + EnumChatFormatting.RESET);
+                    event.getLeft().add(TextFormatting.YELLOW + I18n.translateToLocal("hungeroverhaul.hungry") + TextFormatting.RESET);
                 else if (player.getFoodStats().getFoodLevel() <= 14)
-                    event.getLeft().add(EnumChatFormatting.WHITE + I18n.translateToLocal("hungeroverhaul.peckish") + EnumChatFormatting.RESET);
+                    event.getLeft().add(TextFormatting.WHITE + I18n.translateToLocal("hungeroverhaul.peckish") + TextFormatting.RESET);
             }
         }
     }
 
     @SubscribeEvent
-    public void onEntityInteractEvent(EntityInteractEvent event)
+    public void onEntityInteractEvent(EntityInteract event)
     {
-        if (IguanaConfig.milkedTimeout > 0 && event.entityPlayer != null && event.target != null && event.target instanceof EntityCow)
+        if (IguanaConfig.milkedTimeout > 0 && event.getEntityPlayer() != null && event.getTarget() != null && event.getTarget() instanceof EntityCow)
         {
-            EntityCow cow = (EntityCow) event.target;
-            EntityPlayer player = event.entityPlayer;
+            EntityCow cow = (EntityCow) event.getTarget();
+            EntityPlayer player = event.getEntityPlayer();
             ItemStack equipped = player.getActiveItemStack();
             if (equipped != null && equipped.getItem() != null)
             {
                 Item item = equipped.getItem();
-                if (item instanceof ItemBucket && ((ItemBucket) item).isFull == Blocks.AIR || cow instanceof EntityMooshroom && item == Items.BOWL)
+                FluidStack.loadFluidStackFromNBT(equipped.getTagCompound());
+                if (item instanceof ItemBucket && FluidStack.loadFluidStackFromNBT(equipped.getTagCompound()) == null || cow instanceof EntityMooshroom && item == Items.BOWL)
                 {
                     NBTTagCompound tags = cow.getEntityData();
                     if (tags.hasKey("Milked"))
                     {
                         event.setCanceled(true);
                         if (!player.world.isRemote)
-                            cow.playSound("mob.cow.hurt", 0.4F, (event.entity.worldObj.rand.nextFloat() - event.entity.worldObj.rand.nextFloat()) * 0.2F + 1.0F);
+                            cow.playSound(SoundEvents.ENTITY_COW_HURT, 0.4F, (event.getEntity().world.rand.nextFloat() - event.getEntity().world.rand.nextFloat()) * 0.2F + 1.0F);
                     }
                     else
                         tags.setInteger("Milked", IguanaConfig.milkedTimeout * 60);
@@ -330,53 +347,38 @@ public class IguanaEventHook
         }
     }
 
-    @SuppressWarnings("deprecation")
-    @SubscribeEvent
-    public void onPlayerInteraction(PlayerInteractEvent event)
+    public void onPlayerInteract(PlayerInteractEvent.RightClickBlock event)
     {
-        // slightly hacky workaround:
-        // if RIGHT_CLICK_BLOCK is canceled or useItem == Result.DENY, then
-        // the right click falls through to RIGHT_CLICK_AIR. To correctly cancel the RIGHT_CLICK_AIR,
-        // we need to make sure that it is happening on the same tick that the right click was performed
-        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR && lastRightClickCrop == event.getWorld().getTotalWorldTime())
-        {
+        if (lastRightClickCrop == event.getWorld().getTotalWorldTime())
             event.setCanceled(true);
-        }
-        if (event.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
+
+        if (event.getEntityPlayer() == null)
+            return;
+        if (event.getHand() != EnumHand.MAIN_HAND)
             return;
 
-        // unplantable harvestcraft foods
-        if (IguanaConfig.foodsUnplantable && Loader.isModLoaded("harvestcraft") && event.getEntityPlayer().getHeldItem(event.getHand()) != null && event.getEntityPlayer().getHeldItem(event.getHand()).getItem() instanceof ItemPamSeedFood)
+        if (IguanaConfig.foodsUnplantable && Loader.isModLoaded("harvestcraft") && event.getEntityPlayer().getHeldItemMainhand() != null && event.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemPamSeedFood)
         {
             if (event.getWorld().isRemote)
             {
-                // hacky workaround:
-                // we need to make the client aware that this is disallowed,
-                // but the client will ignore event.useItem = Result.DENY, and
-                // setCanceled will stop the packet from getting sent to the server,
-                // so we have to manually detect whether or not we are trying to
-                // plant the food and only cancel it then, otherwise you won't be
-                // able to activate any blocks with an ItemPamSeedFood in your hand
-                if (PamsModsHelper.canPlantSeedFoodAt(event.getEntityPlayer(), event.getEntityPlayer().getHeldItem(event.getHand()), event.getWorld(), event.getPos(), event.getFace()))
+                if (PamsModsHelper.canPlantSeedFoodAt(event.getEntityPlayer(), event.getEntityPlayer().getHeldItemMainhand(), event.getWorld(), event.getPos(), event.getFace()))
                 {
                     event.setCanceled(true);
                 }
             }
             else
-                event.useItem = Result.DENY;
+                event.setUseItem(Result.DENY);
             return;
         }
 
-        // right-click to harvest
         if (!IguanaConfig.enableRightClickHarvesting)
             return;
 
-        IBlockState state = event.getWorld().getBlockState(event.getPos());
-        Block clicked = state.getBlock();
-        int meta = clicked.getMetaFromState(state);
+        final IBlockState blockState = event.getWorld().getBlockState(event.getPos());
+        final Block clicked = blockState.getBlock();
+        final int meta = clicked.getMetaFromState(blockState);
         int resultingMeta = -1;
 
-        // certain things we don't want to add right-click harvest support for
         if (rightClickHarvestBlacklist.contains(clicked))
             return;
 
@@ -393,19 +395,16 @@ public class IguanaEventHook
 
         if (resultingMeta >= 0)
         {
-            // BlockEvent.HarvestDropsEvent gets fired from within this function
-            // therefore, the drops will be modified by our onBlockHarvested method
-            // but we re-modify them using the right-click specific config options
-            if (!event.getWorld().isRemote && !event.getWorld().restoringBlockSnapshots) // do not drop items while restoring blockstates, prevents item dupe
+            if (!event.getWorld().isRemote && !event.getWorld().restoringBlockSnapshots)
             {
-                List<ItemStack> drops = clicked.getDrops(event.getWorld(), event.getPos(), state, 0);
-                float odds = ForgeEventFactory.fireBlockHarvesting(drops, event.getWorld(), event.getPos(), state, 0, 1.0f, false, event.getEntityPlayer());
+                List<ItemStack> drops = clicked.getDrops(event.getWorld(), event.getPos(), blockState, 0);
 
-                List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(drops, state, IguanaConfig.seedsPerHarvestRightClickMin, IguanaConfig.seedsPerHarvestRightClickMax, IguanaConfig.producePerHarvestRightClickMin, IguanaConfig.producePerHarvestRightClickMax);
+                List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(drops, blockState, IguanaConfig.seedsPerHarvestRightClickMin, IguanaConfig.seedsPerHarvestRightClickMax, IguanaConfig.producePerHarvestRightClickMin, IguanaConfig.producePerHarvestRightClickMax);
 
                 for (ItemStack drop : modifiedDrops)
                 {
-                    clicked.dropBlockAsItem(event.getWorld(), event.getPos(), drop);
+                    Block.spawnAsEntity(event.getWorld(), event.getPos(), drop);
+                    //clicked.spawnAsEntity(event.getWorld(), event.getPos(), drop);
                 }
             }
 
@@ -413,24 +412,13 @@ public class IguanaEventHook
 
             lastRightClickCrop = event.getWorld().getTotalWorldTime();
 
-            // hacky workaround:
-            // if the client deems it is unable to place the block that is held,
-            // the right click packet will not be sent to the server at all
-            // so, instead, we have to manually send the packet and then
-            // cancel the event (canceling the event will stop the client from
-            // doing any further processing)
-            //
-            // this fixes client desyncs when right clicking a mature crop
-            // while holding an ItemBlock; the crop will get reset on the client
-            // but the packet wouldn't get sent to the server because of the above
-            // so it would remain unharvested on the server
             if (event.getWorld().isRemote)
             {
-                ClientHelper.sendRightClickPacket(event.getPos(), event.getFace(), event.getEntityPlayer().inventory.getCurrentItem(), 0f, 0f, 0f);
+                ClientHelper.sendRightClickPacket(event.getPos(), event.getFace(), EnumHand.MAIN_HAND, 0f, 0f, 0f);
                 event.setCanceled(true);
             }
             else
-                event.useItem = Result.DENY;
+                event.setUseItem(Result.DENY);
         }
     }
 
@@ -447,7 +435,7 @@ public class IguanaEventHook
         if (IguanaEventHook.harvestDropsBlacklist.contains(block))
             return;
 
-        boolean isNaturaCrop = Loader.isModLoaded("Natura") && block instanceof CropBlock;
+        boolean isNaturaCrop = Loader.isModLoaded("Natura");//TODO: FIX && block instanceof CropBlock;
         boolean eligable = isNaturaCrop || block instanceof BlockCrops;
 
         if (!eligable)
@@ -466,7 +454,6 @@ public class IguanaEventHook
         }
     }
 
-    @SuppressWarnings("deprecation")
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void renderTooltips(ItemTooltipEvent event)
     {

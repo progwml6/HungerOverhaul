@@ -80,7 +80,7 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 
     private int getCropMeta(Block block, Random random)
     {
-        return random.nextInt(5);
+        return random.nextInt(4);
     }
 
     public static ComponentVillageCustomField createPiece(StructureVillagePieces.Start start, List<StructureComponent> listIn, Random rand, int structureMinX, int structureMinY, int structureMinZ, EnumFacing facing, int type)
@@ -117,6 +117,7 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
      * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
      * the end, it adds Fences...
      */
+    @SuppressWarnings("deprecation")
     @Override
     public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
     {

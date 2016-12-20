@@ -1,51 +1,55 @@
 package iguanaman.hungeroverhaul.module;
 
-import iguanaman.hungeroverhaul.HungerOverhaul;
-import iguanaman.hungeroverhaul.config.IguanaConfig;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import iguanaman.hungeroverhaul.HungerOverhaul;
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ForgeHooks.SeedEntry;
 
 public class ModuleGrassSeeds
 {
     static class SeedEntry extends WeightedRandom.Item
     {
         public final ItemStack seed;
+
         public SeedEntry(ItemStack seed, int weight)
         {
             super(weight);
             this.seed = seed;
         }
+
         public ItemStack getStack(Random rand, int fortune)
         {
             return seed.copy();
         }
     }
+
     public static List<SeedEntry> hoeSeedList = new ArrayList<SeedEntry>();
 
     public static Class<?> SeedEntry = null;
+
     public static Constructor<?> SeedEntryConstructor = null;
+
     public static Field weightField = null;
+
     public static Field seedListField = null;
+
     public static Field seedField = null;
 
-    public static ItemStack getSeedFromTillingGrass(World world)
+    public static ItemStack getSeedFromTillingGrass(Random rand)
     {
         if (IguanaConfig.removeTallGrassSeeds)
         {
             try
             {
-                Object entry = WeightedRandom.getRandomItem(world.rand, hoeSeedList);
+                Object entry = WeightedRandom.getRandomItem(rand, hoeSeedList);
                 if (entry != null && seedField.get(entry) != null)
                     return ((ItemStack) seedField.get(entry)).copy();
             }
@@ -57,7 +61,7 @@ public class ModuleGrassSeeds
         }
         else
         {
-            return ForgeHooks.getGrassSeed(world);
+            return ForgeHooks.getGrassSeed(rand, 0);
         }
     }
 
@@ -66,10 +70,10 @@ public class ModuleGrassSeeds
     {
         initReflection();
 
-        List<Object> seedList = null;
+        List<SeedEntry> seedList = null;
         try
         {
-            seedList = (List<Object>) seedListField.get(null);
+            seedList = (List<SeedEntry>) seedListField.get(null);
         }
         catch (Exception e)
         {
@@ -80,7 +84,7 @@ public class ModuleGrassSeeds
         {
             try
             {
-                for (Object entry : seedList)
+                for (SeedEntry entry : seedList)
                 {
                     weightField.set(entry, 1);
                 }
@@ -94,7 +98,7 @@ public class ModuleGrassSeeds
         if (IguanaConfig.removeTallGrassSeeds)
         {
             HungerOverhaul.Log.info("Removing tall grass seeds");
-            for (Object seedEntry : seedList)
+            for (SeedEntry seedEntry : seedList)
             {
                 hoeSeedList.add(seedEntry);
             }

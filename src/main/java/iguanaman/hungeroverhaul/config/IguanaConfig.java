@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -43,9 +43,9 @@ public class IguanaConfig
 
     public static final ConfigCategory CATEGORY_FOOD = addCategory("food", "Food related options");
 
-    public static final ConfigCategory CATEGORY_HARVESTCRAFT = addCategory("harvestcraft", "Options related to HarvestCraft.\n" + EnumChatFormatting.RED + "Only works if HarvestCraft is installed!");
+    public static final ConfigCategory CATEGORY_HARVESTCRAFT = addCategory("harvestcraft", "Options related to HarvestCraft.\n" + TextFormatting.RED + "Only works if HarvestCraft is installed!");
 
-    public static final ConfigCategory CATEGORY_NATURA = addCategory("natura", "Options related to Natura.\n" + EnumChatFormatting.RED + "Only works if Natura is installed!");
+    public static final ConfigCategory CATEGORY_NATURA = addCategory("natura", "Options related to Natura.\n" + TextFormatting.RED + "Only works if Natura is installed!");
 
     public static final ConfigCategory CATEGORY_HUNGER = addCategory("hunger", "Options related to hunger");
 

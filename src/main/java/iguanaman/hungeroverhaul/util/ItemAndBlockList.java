@@ -10,7 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemAndBlockList
@@ -50,8 +50,8 @@ public class ItemAndBlockList
     {
         if (objectOrClassName.contains(":"))
         {
-            Item item = GameData.getItemRegistry().getObject(new ResourceLocation(objectOrClassName));
-            Block block = GameData.getBlockRegistry().getObject(new ResourceLocation(objectOrClassName));
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(objectOrClassName));
+            Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(objectOrClassName));
 
             if (item != null)
                 add(item);

@@ -2,11 +2,13 @@ package iguanaman.hungeroverhaul.module;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map.Entry;
 
-import com.pam.harvestcraft.blocks.BlockRegistry;
+import com.pam.harvestcraft.HarvestCraft;
+import com.pam.harvestcraft.blocks.CropRegistry;
+import com.pam.harvestcraft.blocks.FruitRegistry;
 import com.pam.harvestcraft.blocks.growables.BlockPamFruit;
 import com.pam.harvestcraft.blocks.growables.BlockPamSapling;
-import com.pam.harvestcraft.config.ConfigHandler;
 import com.pam.harvestcraft.item.ItemRegistry;
 
 import iguanaman.hungeroverhaul.config.IguanaConfig;
@@ -15,7 +17,9 @@ import iguanaman.hungeroverhaul.util.BonemealModification;
 import iguanaman.hungeroverhaul.util.PlantGrowthModification;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSeedFood;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
@@ -30,62 +34,54 @@ public class ModuleHarvestCraft
         {
             // crop special cases (unsure why these are singled out, exactly; was like this in 1.6.4)
             List<Item> lowerSaturationCrops = Arrays.asList(new Item[] {
-                    ItemRegistry.riceItem,
-                    ItemRegistry.chilipepperItem,
-                    ItemRegistry.bellpepperItem,
-                    ItemRegistry.blackberryItem,
-                    ItemRegistry.blueberryItem,
-                    ItemRegistry.cactusfruitItem,
-                    ItemRegistry.cherryItem,
-                    ItemRegistry.cornItem,
-                    ItemRegistry.cranberryItem,
-                    ItemRegistry.cucumberItem,
-                    ItemRegistry.eggplantItem,
-                    ItemRegistry.grapeItem,
-                    ItemRegistry.kiwiItem,
-                    ItemRegistry.lettuceItem,
-                    ItemRegistry.raspberryItem,
-                    ItemRegistry.spiceleafItem,
-                    ItemRegistry.strawberryItem,
-                    ItemRegistry.tealeafItem,
-                    ItemRegistry.tomatoItem,
-                    ItemRegistry.zucchiniItem,
+                    CropRegistry.getFood(CropRegistry.RICE),
+                    CropRegistry.getFood(CropRegistry.CHILIPEPPER),
+                    CropRegistry.getFood(CropRegistry.BELLPEPPER),
+                    CropRegistry.getFood(CropRegistry.BLACKBERRY),
+                    CropRegistry.getFood(CropRegistry.BLUEBERRY),
+                    CropRegistry.getFood(CropRegistry.CACTUSFRUIT),
+                    FruitRegistry.getFood(FruitRegistry.CHERRY),
+                    CropRegistry.getFood(CropRegistry.CORN),
+                    CropRegistry.getFood(CropRegistry.CRANBERRY),
+                    CropRegistry.getFood(CropRegistry.CUCUMBER),
+                    CropRegistry.getFood(CropRegistry.EGGPLANT),
+                    CropRegistry.getFood(CropRegistry.GRAPE),
+                    CropRegistry.getFood(CropRegistry.KIWI),
+                    CropRegistry.getFood(CropRegistry.LETTUCE),
+                    CropRegistry.getFood(CropRegistry.RASPBERRY),
+                    CropRegistry.getFood(CropRegistry.SPICELEAF),
+                    CropRegistry.getFood(CropRegistry.STRAWBERRY),
+                    CropRegistry.getFood(CropRegistry.TEALEAF),
+                    CropRegistry.getFood(CropRegistry.TOMATO),
+                    CropRegistry.getFood(CropRegistry.ZUCCHINI),
             });
 
-            ConfigHandler.cropfoodRestore = 1;
+            HarvestCraft.config.cropfoodRestore = 1;
 
-            FoodValues cropFoodValues = new FoodValues(ConfigHandler.cropfoodRestore, 0.1F);
-            FoodValues lowerSaturationFoodValues = new FoodValues(ConfigHandler.cropfoodRestore, 0.05F);
+            FoodValues cropFoodValues = new FoodValues(HarvestCraft.config.cropfoodRestore, 0.1F);
+            FoodValues lowerSaturationFoodValues = new FoodValues(HarvestCraft.config.cropfoodRestore, 0.05F);
 
-            // crops
-            for (Item crop : ItemRegistry.PamCropItems)
+            //Crops
+            for (Entry<String, ItemSeedFood> food : CropRegistry.getFoods().entrySet())
             {
-                if (crop == ItemRegistry.cantaloupeItem)
+                if (food.getValue() == CropRegistry.getFood(CropRegistry.CANTALOUPE))
                 {
-                    FoodModifier.setModifiedFoodValues(ItemRegistry.cantaloupeItem, new FoodValues(2, 0.1F));
+                    FoodModifier.setModifiedFoodValues(CropRegistry.getFood(CropRegistry.CANTALOUPE), new FoodValues(2, 0.1F));
                 }
-                else if (lowerSaturationCrops.contains(crop))
+                else if (lowerSaturationCrops.contains(food.getValue()))
                 {
-                    FoodModifier.setModifiedFoodValues(crop, lowerSaturationFoodValues);
+                    FoodModifier.setModifiedFoodValues(food.getValue(), lowerSaturationFoodValues);
                 }
                 else
                 {
-                    FoodModifier.setModifiedFoodValues(crop, cropFoodValues);
+                    FoodModifier.setModifiedFoodValues(food.getValue(), cropFoodValues);
                 }
             }
 
-            // fruits
-            for (Item fruit : ItemRegistry.PamWarmFruits)
+            // Fruit
+            for (BlockPamSapling sapling : FruitRegistry.getSaplings())
             {
-                FoodModifier.setModifiedFoodValues(fruit, lowerSaturationFoodValues);
-            }
-            for (Item fruit : ItemRegistry.PamTemperateFruits)
-            {
-                FoodModifier.setModifiedFoodValues(fruit, lowerSaturationFoodValues);
-            }
-            for (Item fruit : ItemRegistry.PamLogFruits)
-            {
-                FoodModifier.setModifiedFoodValues(fruit, lowerSaturationFoodValues);
+                FoodModifier.setModifiedFoodValues(sapling.getFruitItem(), lowerSaturationFoodValues);
             }
 
             FoodValues fruitJuiceFoodValues = new FoodValues(2, 0.05F);
@@ -380,8 +376,8 @@ public class ModuleHarvestCraft
             FoodModifier.setModifiedFoodValues(ItemRegistry.custardItem, new FoodValues(5, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.sushiItem, new FoodValues(3, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.gardensoupItem, new FoodValues(4, 0.2F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.muttonrawItem, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.muttoncookedItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(Items.MUTTON, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.COOKED_MUTTON, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.calamarirawItem, new FoodValues(1, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.calamaricookedItem, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.applejellyItem, jellyFoodValues);
@@ -519,21 +515,21 @@ public class ModuleHarvestCraft
                 .setGrowthTickProbability(IguanaConfig.saplingRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.FOREST, 1)
                 .setBiomeGrowthModifier(Type.PLAINS, 1);
-        for (Block temperateSapling : BlockRegistry.PamTemperateSaplings)
+        for (Block temperateSapling : FruitRegistry.temperateSaplings.values())
         {
             ModulePlantGrowth.registerPlantGrowthModifier(temperateSapling, temperateSaplingGrowthModification);
         }
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pammapleSapling, temperateSaplingGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(FruitRegistry.getSapling(FruitRegistry.MAPLE), temperateSaplingGrowthModification);
 
         PlantGrowthModification warmSaplingGrowthModification = new PlantGrowthModification()
                 .setGrowthTickProbability(IguanaConfig.saplingRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.JUNGLE, 1)
                 .setBiomeGrowthModifier(Type.SWAMP, 1);
-        for (Block warmSapling : BlockRegistry.PamWarmSaplings)
+        for (Block warmSapling : FruitRegistry.warmSaplings.values())//BlockRegistry.PamWarmSaplings)
         {
             ModulePlantGrowth.registerPlantGrowthModifier(warmSapling, warmSaplingGrowthModification);
         }
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamcinnamonSapling, warmSaplingGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(FruitRegistry.getSapling(FruitRegistry.CINNAMON), warmSaplingGrowthModification);
 
         // FRUIT GROWTH
         PlantGrowthModification genericFruitGrowthModification = new PlantGrowthModification()
@@ -546,24 +542,24 @@ public class ModuleHarvestCraft
                 .setGrowthTickProbability(IguanaConfig.treeCropRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.FOREST, 1)
                 .setBiomeGrowthModifier(Type.PLAINS, 1);
-        for (Block temperateSapling : BlockRegistry.PamTemperateSaplings)
+        for (Block temperateSapling : FruitRegistry.temperateSaplings.values()) //BlockRegistry.PamTemperateSaplings)
         {
             Block fruitBlock = PamsModsHelper.saplingToFruitBlockMap.get(temperateSapling);
             ModulePlantGrowth.registerPlantGrowthModifier(fruitBlock, temperateFruitGrowthModification);
         }
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamMaple, temperateSaplingGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(FruitRegistry.getLog(FruitRegistry.MAPLE), temperateSaplingGrowthModification);
 
         PlantGrowthModification warmFruitGrowthModification = new PlantGrowthModification()
                 .setNeedsSunlight(false)
                 .setGrowthTickProbability(IguanaConfig.treeCropRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.JUNGLE, 1)
                 .setBiomeGrowthModifier(Type.SWAMP, 1);
-        for (Block warmSapling : BlockRegistry.PamWarmSaplings)
+        for (Block warmSapling : FruitRegistry.warmSaplings.values()) //BlockRegistry.PamWarmSaplings)
         {
             Block fruitBlock = PamsModsHelper.saplingToFruitBlockMap.get(warmSapling);
             ModulePlantGrowth.registerPlantGrowthModifier(fruitBlock, warmFruitGrowthModification);
         }
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamCinnamon, warmFruitGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(FruitRegistry.getLog(FruitRegistry.CINNAMON), warmFruitGrowthModification);
 
         // CROP GROWTH
         // only need to register the exceptions here,
@@ -573,27 +569,31 @@ public class ModuleHarvestCraft
                 .setGrowthTickProbability(IguanaConfig.cropRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.JUNGLE, 1)
                 .setBiomeGrowthModifier(Type.SWAMP, 1);
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pampineappleCrop, humidCropGrowthModification);
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamspiceleafCrop, humidCropGrowthModification);
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamcandleberryCrop, humidCropGrowthModification);
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamgrapeCrop, humidCropGrowthModification);
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamkiwiCrop, humidCropGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(CropRegistry.getCrop(CropRegistry.PINEAPPLE), humidCropGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(CropRegistry.getCrop(CropRegistry.SPICELEAF), humidCropGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(CropRegistry.getCrop(CropRegistry.CANDLEBERRY), humidCropGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(CropRegistry.getCrop(CropRegistry.GRAPE), humidCropGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(CropRegistry.getCrop(CropRegistry.KIWI), humidCropGrowthModification);
 
         PlantGrowthModification desertCropGrowthModification = new PlantGrowthModification()
                 .setNeedsSunlight(true)
                 .setGrowthTickProbability(IguanaConfig.cropRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.SANDY, 1);
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamcactusfruitCrop, desertCropGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(CropRegistry.getCrop(CropRegistry.CACTUSFRUIT), desertCropGrowthModification);
 
         /*
          * Bonemeal
          */
         BonemealModification fruitBonemealModification = new BonemealModification()
         {
+            @SuppressWarnings("deprecation")
             @Override
-            public int getNewMeta(World world, BlockPos pos, IBlockState state, int currentMeta)
+            public IBlockState getNewState(World world, BlockPos pos, IBlockState state)
             {
-                return Math.min(currentMeta + 1, 2);
+                Block block = state.getBlock();
+                int currentMeta = block.getMetaFromState(state);
+
+                return block.getStateFromMeta(Math.min(currentMeta + 1, 2));
             }
         };
         ModuleBonemeal.registerBonemealModifier(BlockPamFruit.class, fruitBonemealModification);

@@ -1,22 +1,22 @@
 package iguanaman.hungeroverhaul.module;
 
-import iguanaman.hungeroverhaul.config.IguanaConfig;
-import iguanaman.hungeroverhaul.util.PlantGrowthModification;
-import iguanaman.hungeroverhaul.util.RandomHelper;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import iguanaman.hungeroverhaul.config.IguanaConfig;
+import iguanaman.hungeroverhaul.util.PlantGrowthModification;
+import iguanaman.hungeroverhaul.util.RandomHelper;
 import net.minecraft.block.Block;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
-import squeek.applecore.api.plants.PlantGrowthEvent;
+import net.minecraftforge.event.world.BlockEvent.CropGrowEvent.Pre;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ModulePlantGrowth
 {
     private static HashMap<Class<? extends Block>, PlantGrowthModification> plantGrowthModificationsByBlockClass = new HashMap<Class<? extends Block>, PlantGrowthModification>();
+
     private static HashMap<Block, PlantGrowthModification> plantGrowthModificationsByBlock = new HashMap<Block, PlantGrowthModification>();
 
     public static void registerPlantGrowthModifier(Class<? extends Block> blockClass, PlantGrowthModification growthModification)
@@ -59,15 +59,15 @@ public class ModulePlantGrowth
     }
 
     @SubscribeEvent
-    public void allowGrowthTick(PlantGrowthEvent.AllowGrowthTick event)
+    public void allowGrowthTick(Pre event)
     {
-        PlantGrowthModification growthModification = getPlantGrowthModification(event.block.getClass());
+        PlantGrowthModification growthModification = getPlantGrowthModification(event.getState().getBlock().getClass());
 
         if (growthModification == null)
             return;
 
         // sunlight
-        float sunlightModifier = !growthModification.needsSunlight || (growthModification.needsSunlight && event.world.isDaytime() && event.world.canBlockSeeSky(event.pos)) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
+        float sunlightModifier = !growthModification.needsSunlight || (growthModification.needsSunlight && event.getWorld().isDaytime() && event.getWorld().canBlockSeeSky(event.getPos())) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
         if (sunlightModifier == 0)
         {
             event.setResult(Result.DENY);
@@ -79,7 +79,7 @@ public class ModulePlantGrowth
         if (!growthModification.biomeGrowthModifiers.isEmpty())
         {
             biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
-            Biome biome = event.world.getBiomeForCoordsBody(event.pos);//.getBiomeGenForCoords(event.x, event.z);
+            Biome biome = event.getWorld().getBiomeForCoordsBody(event.getPos());//.getBiomeGenForCoords(event.x, event.z);
             for (BiomeDictionary.Type type : BiomeDictionary.getTypesForBiome(biome))
             {
                 if (growthModification.biomeGrowthModifiers.containsKey(type))
@@ -96,7 +96,7 @@ public class ModulePlantGrowth
         }
 
         // random
-        if (RandomHelper.nextFloat(event.random, growthModification.growthTickProbability * biomeModifier * sunlightModifier) >= 1)
+        if (RandomHelper.nextFloat(event.getWorld().rand, growthModification.growthTickProbability * biomeModifier * sunlightModifier) >= 1)
         {
             event.setResult(Result.DENY);
             return;
