@@ -37,6 +37,10 @@ repositories {
     maven {
         url "http://www.ryanliptak.com/maven/"
     }
+    maven {
+         name "Tehnut Maven FS"
+         url "http://tehnut.info/maven"
+    }
 }
 
 // Define properties file
@@ -81,7 +85,7 @@ minecraft {
     version = config.minecraft_version + "-" + config.forge_version
     runDir = 'run'
     replace '${version}', project.version
-    mappings = config.mappings
+    mappings = config.mappings_version
     useDepAts = true
 
 }
@@ -89,10 +93,15 @@ minecraft {
 dependencies {
     deobfCompile "slimeknights.mantle:Mantle:${config.minecraft_version}-${config.mantle_version}"
     deobfCompile "com.progwml6.natura:natura:${config.minecraft_version}-${config.natura_version}"
-    deobfCompile "slimeknights:TConstruct:${config.minecraft_version}-${config.tcon_version}"
+    deobfCompile "slimeknights:TConstruct:${config.minecraft_version}-${config.tconstruct_version}"
+
     deobfCompile "com.github.glitchfiend.biomesoplenty:BiomesOPlenty:${config.minecraft_version}-${config.bop_version}:universal"
+
     deobfCompile "applecore:AppleCore:${config.minecraft_version}-${config.applecore_version}"
+
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
+
+    deobfCompile "mcp.mobius.waila:Hwyla:${hwyla_version}_${minecraft_version}"
 }
 
 // the single quotes in these filenames seems to cause problems with
@@ -101,12 +110,6 @@ if (System.getenv().BUILD_NUMBER == null) {
     // note: the 'repository' url changes with each version
     repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2341/593/[module] [revision].[ext]" } }//
     dependencies { compile "pam:Pam's HarvestCraft:1.9.4-1.10.2h@jar" }
-    /*repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/431/[module] [revision].[ext]"} }
-    dependencies { compile "pam:Pam's Random Pants:1.7.2a@zip"}
-    repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/430/[module] [revision].[ext]"} }
-    dependencies { compile "pam:Pam's Temperate Plants:1.7.2b@zip"}
-    repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/423/[module] [revision].[ext]"} }
-    dependencies { compile "pam:Pam's WeeeFlowers:1.7.2b@zip"}*/
 }
 
 processResources
