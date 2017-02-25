@@ -7,8 +7,8 @@ import iguanaman.hungeroverhaul.common.config.Config;
 import iguanaman.hungeroverhaul.library.Util;
 import iguanaman.hungeroverhaul.module.biomesoplenty.BiomesOPlentyModule;
 import iguanaman.hungeroverhaul.module.bonemeal.BonemealModule;
+import iguanaman.hungeroverhaul.module.event.HungerOverhaulEventHook;
 import iguanaman.hungeroverhaul.module.event.IMCHandler;
-import iguanaman.hungeroverhaul.module.event.IguanaEventHook;
 import iguanaman.hungeroverhaul.module.food.FoodEventHandler;
 import iguanaman.hungeroverhaul.module.food.FoodModifier;
 import iguanaman.hungeroverhaul.module.growth.PlantGrowthModule;
@@ -18,6 +18,7 @@ import iguanaman.hungeroverhaul.module.hunger.RespawnHungerModule;
 import iguanaman.hungeroverhaul.module.json.JsonModule;
 import iguanaman.hungeroverhaul.module.loot.LootModule;
 import iguanaman.hungeroverhaul.module.natura.NaturaModule;
+import iguanaman.hungeroverhaul.module.reflection.ReflectionModule;
 import iguanaman.hungeroverhaul.module.seed.GrassSeedsModule;
 import iguanaman.hungeroverhaul.module.tinkersconstruct.TinkersConstructModule;
 import iguanaman.hungeroverhaul.module.tweak.TweaksModule;
@@ -81,14 +82,20 @@ public class HungerOverhaul
             HarvestCraftModule.init();
         }
 
-        if (Loader.isModLoaded("TConstruct"))
+        if (Loader.isModLoaded("tconstruct"))
+        {
             TinkersConstructModule.init();
+        }
 
-        if (Loader.isModLoaded("Natura"))
+        if (Loader.isModLoaded("natura"))
+        {
             NaturaModule.init();
+        }
 
-        if (Loader.isModLoaded("BiomesOPlenty"))
+        if (Loader.isModLoaded("biomesoplenty"))
+        {
             BiomesOPlentyModule.init();
+        }
 
         JsonModule.init();
 
@@ -99,13 +106,16 @@ public class HungerOverhaul
     public void postInit(FMLPostInitializationEvent event)
     {
         if (Config.removeTallGrassSeeds || Config.allSeedsEqual)
+        {
             GrassSeedsModule.postInit();
+        }
 
+        ReflectionModule.postInit();
         TweaksModule.postInit();
         VillageModule.postInit();
         LootModule.postInit();
 
-        MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
+        MinecraftForge.EVENT_BUS.register(new HungerOverhaulEventHook());
         MinecraftForge.EVENT_BUS.register(new RespawnHungerModule());
         MinecraftForge.EVENT_BUS.register(new LootModule());
 

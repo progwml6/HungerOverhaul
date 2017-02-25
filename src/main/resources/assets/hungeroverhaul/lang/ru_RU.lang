@@ -1,0 +1,37 @@
+###############
+#   Potions   #
+###############
+potion.wellfedPotion=Сытость
+
+################
+#   Tooltips   #
+################
+tooltip.meal.crop_grows_best_in=Растёт лучше в:
+tooltip.meal.hearty=здоровый %s
+tooltip.meal.wholesome=полезный %s
+tooltip.meal.nourishing=сытный %s
+tooltip.meal.unfulfilling=не полезный %s
+tooltip.meal.morsel=лёгкая закуска
+tooltip.meal.snack=закуска
+tooltip.meal.lightmeal=лёгкий завтрак
+tooltip.meal.meal=завтрак
+tooltip.meal.largemeal=большой завтрак
+tooltip.meal.feast=пир
+tooltip.meal.hearty_morsel=здоровая лёгкая закуска
+tooltip.meal.wholesome_morsel=полезная лёгкая закуска
+tooltip.meal.nourishing_morsel=сытная лёгкая закуска
+tooltip.meal.unfulfilling_morsel=не полезная лёгкая закуска
+tooltip.meal.hearty_snack=здоровая закуска
+tooltip.meal.wholesome_snack=полезная закуска
+tooltip.meal.nourishing_snack=сытная закуска
+tooltip.meal.unfulfilling_snack=не полезная закуска
+
+##################
+#   UI Strings   #
+##################
+ui.health.dying=Вы умираете
+ui.health.injured=Вы травмированы
+ui.health.hurt=Вы ранены
+ui.hunger.starving=Вы умираете от голода
+ui.hunger.hungry=Вы голодны
+ui.hunger.peckish=Вы проголодались

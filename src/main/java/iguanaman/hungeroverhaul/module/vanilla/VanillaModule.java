@@ -6,10 +6,13 @@ import iguanaman.hungeroverhaul.module.bonemeal.modification.BonemealModificatio
 import iguanaman.hungeroverhaul.module.food.FoodModifier;
 import iguanaman.hungeroverhaul.module.growth.PlantGrowthModule;
 import iguanaman.hungeroverhaul.module.growth.modification.PlantGrowthModification;
+import net.minecraft.block.BlockBeetroot;
 import net.minecraft.block.BlockCactus;
+import net.minecraft.block.BlockCarrot;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockNetherWart;
+import net.minecraft.block.BlockPotato;
 import net.minecraft.block.BlockReed;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockStem;
@@ -61,6 +64,9 @@ public class VanillaModule
          */
         PlantGrowthModification cropGrowthModification = new PlantGrowthModification().setNeedsSunlight(true).setGrowthTickProbability(Config.cropRegrowthMultiplier).setBiomeGrowthModifier(Type.FOREST, 1).setBiomeGrowthModifier(Type.PLAINS, 1);
         PlantGrowthModule.registerPlantGrowthModifier(BlockCrops.class, cropGrowthModification);
+        PlantGrowthModule.registerPlantGrowthModifier(BlockCarrot.class, cropGrowthModification);
+        PlantGrowthModule.registerPlantGrowthModifier(BlockPotato.class, cropGrowthModification);
+        PlantGrowthModule.registerPlantGrowthModifier(BlockBeetroot.class, cropGrowthModification);
 
         PlantGrowthModification reedGrowthModification = new PlantGrowthModification().setNeedsSunlight(true).setGrowthTickProbability(Config.sugarcaneRegrowthMultiplier).setBiomeGrowthModifier(Type.JUNGLE, 1).setBiomeGrowthModifier(Type.SWAMP, 1).setWrongBiomeMultiplier(Config.wrongBiomeRegrowthMultiplierSugarcane);
         PlantGrowthModule.registerPlantGrowthModifier(BlockReed.class, reedGrowthModification);
@@ -105,5 +111,30 @@ public class VanillaModule
             }
         };
         BonemealModule.registerBonemealModifier(BlockCrops.class, cropBonemealModification);
+        BonemealModule.registerBonemealModifier(BlockCarrot.class, cropBonemealModification);
+        BonemealModule.registerBonemealModifier(BlockPotato.class, cropBonemealModification);
+
+        BonemealModification beetrootBonemealModification = new BonemealModification()
+        {
+            @Override
+            public IBlockState getNewState(World world, BlockPos pos, IBlockState currentState)
+            {
+                if (currentState.getBlock() instanceof BlockBeetroot)
+                {
+                    int currentMeta = currentState.getValue(BlockBeetroot.BEETROOT_AGE);
+                    int metaIncrease = 1;
+
+                    if (Config.difficultyScalingBoneMeal && world.getDifficulty().getDifficultyId() < EnumDifficulty.EASY.getDifficultyId())
+                        metaIncrease = world.rand.nextInt(2);
+
+                    return currentState.withProperty(BlockBeetroot.BEETROOT_AGE, Math.min(currentMeta + metaIncrease, 3));
+                }
+                else
+                {
+                    return currentState;
+                }
+            }
+        };
+        BonemealModule.registerBonemealModifier(BlockBeetroot.class, beetrootBonemealModification);
     }
 }

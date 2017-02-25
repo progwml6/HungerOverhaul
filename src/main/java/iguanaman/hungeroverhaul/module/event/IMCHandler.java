@@ -23,11 +23,11 @@ public class IMCHandler
 
             if (message.key.equalsIgnoreCase(BLACKLIST_RIGHT_CLICK))
             {
-                blacklist = IguanaEventHook.rightClickHarvestBlacklist;
+                blacklist = HungerOverhaulEventHook.rightClickHarvestBlacklist;
             }
             else if (message.key.equalsIgnoreCase(BLACKLIST_DROPS))
             {
-                blacklist = IguanaEventHook.harvestDropsBlacklist;
+                blacklist = HungerOverhaulEventHook.harvestDropsBlacklist;
             }
             else if (message.key.equalsIgnoreCase(BLACKLIST_FOOD))
             {

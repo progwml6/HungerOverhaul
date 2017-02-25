@@ -3,6 +3,9 @@ package iguanaman.hungeroverhaul.module.event;
 import java.util.List;
 import java.util.Random;
 
+import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
+import com.pam.harvestcraft.blocks.growables.BlockPamFruit;
+import com.pam.harvestcraft.blocks.growables.BlockPamFruitLog;
 import com.pam.harvestcraft.item.items.ItemPamSeedFood;
 import com.progwml6.natura.overworld.block.crops.BlockNaturaBarley;
 import com.progwml6.natura.overworld.block.crops.BlockNaturaCotton;
@@ -15,9 +18,13 @@ import iguanaman.hungeroverhaul.library.ItemAndBlockList;
 import iguanaman.hungeroverhaul.module.growth.PlantGrowthModule;
 import iguanaman.hungeroverhaul.module.growth.modification.PlantGrowthModification;
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
+import iguanaman.hungeroverhaul.module.reflection.ReflectionModule;
 import iguanaman.hungeroverhaul.module.seed.GrassSeedsModule;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBeetroot;
+import net.minecraft.block.BlockCarrot;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockPotato;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -53,7 +60,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickEmpty;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fluids.FluidStack;
@@ -67,7 +73,7 @@ import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodValues;
 
 @SuppressWarnings("deprecation")
-public class IguanaEventHook
+public class HungerOverhaulEventHook
 {
     private static long lastRightClickCrop = 0;
 
@@ -260,6 +266,7 @@ public class IguanaEventHook
                 if (!event.getWorld().isRemote && Config.seedChance > 0)
                 {
                     int seedChance = Config.seedChance;
+
                     if (world.getDifficulty().getDifficultyId() < 2)
                         seedChance *= 2;
                     else if (world.getDifficulty().getDifficultyId() == 3)
@@ -268,6 +275,7 @@ public class IguanaEventHook
                     if (event.getWorld().rand.nextInt(100) <= seedChance)
                     {
                         ItemStack seed = GrassSeedsModule.getSeedFromTillingGrass(event.getWorld().rand);
+
                         if (seed != null)
                         {
                             EntityItem ei = new EntityItem(world, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, seed.copy());
@@ -299,22 +307,21 @@ public class IguanaEventHook
 
             if (!player.isDead && !player.capabilities.isCreativeMode && !mc.gameSettings.showDebugInfo)
             {
-
                 float healthPercent = player.getHealth() / player.getMaxHealth();
 
                 if (healthPercent <= 0.15F)
-                    event.getLeft().add(TextFormatting.RED + I18n.translateToLocal("hungeroverhaul.dying") + TextFormatting.RESET);
+                    event.getLeft().add(TextFormatting.RED + I18n.translateToLocal("ui.health.dying") + TextFormatting.RESET);
                 else if (healthPercent <= 0.3F)
-                    event.getLeft().add(TextFormatting.YELLOW + I18n.translateToLocal("hungeroverhaul.injured") + TextFormatting.RESET);
+                    event.getLeft().add(TextFormatting.YELLOW + I18n.translateToLocal("ui.health.injured") + TextFormatting.RESET);
                 else if (healthPercent < 0.5F)
-                    event.getLeft().add(TextFormatting.WHITE + I18n.translateToLocal("hungeroverhaul.hurt") + TextFormatting.RESET);
+                    event.getLeft().add(TextFormatting.WHITE + I18n.translateToLocal("ui.health.hurt") + TextFormatting.RESET);
 
                 if (player.getFoodStats().getFoodLevel() <= 6)
-                    event.getRight().add(TextFormatting.RED + I18n.translateToLocal("hungeroverhaul.starving") + TextFormatting.RESET);
+                    event.getRight().add(TextFormatting.RED + I18n.translateToLocal("ui.hunger.starving") + TextFormatting.RESET);
                 else if (player.getFoodStats().getFoodLevel() <= 10)
-                    event.getRight().add(TextFormatting.YELLOW + I18n.translateToLocal("hungeroverhaul.hungry") + TextFormatting.RESET);
+                    event.getRight().add(TextFormatting.YELLOW + I18n.translateToLocal("ui.hunger.hungry") + TextFormatting.RESET);
                 else if (player.getFoodStats().getFoodLevel() <= 14)
-                    event.getRight().add(TextFormatting.WHITE + I18n.translateToLocal("hungeroverhaul.peckish") + TextFormatting.RESET);
+                    event.getRight().add(TextFormatting.WHITE + I18n.translateToLocal("ui.hunger.peckish") + TextFormatting.RESET);
             }
         }
     }
@@ -362,6 +369,11 @@ public class IguanaEventHook
     @SubscribeEvent
     public void onRightClickBlock(RightClickBlock event)
     {
+        if (lastRightClickCrop == event.getWorld().getTotalWorldTime())
+        {
+            event.setCanceled(true);
+        }
+
         if (Config.foodsUnplantable && Loader.isModLoaded("harvestcraft") && event.getEntityPlayer().getHeldItem(event.getHand()) != null && event.getEntityPlayer().getHeldItem(event.getHand()).getItem() instanceof ItemPamSeedFood)
         {
             if (event.getWorld().isRemote)
@@ -369,10 +381,14 @@ public class IguanaEventHook
                 if (PamsModsHelper.canPlantSeedFoodAt(event.getEntityPlayer().getHeldItem(event.getHand()), event.getEntityPlayer(), event.getWorld(), event.getPos(), event.getFace()))
                 {
                     event.setCanceled(true);
+                    return;
                 }
             }
             else
+            {
                 event.setUseItem(Result.DENY);
+            }
+
             return;
         }
 
@@ -389,19 +405,41 @@ public class IguanaEventHook
         if (rightClickHarvestBlacklist.contains(clicked_block))
             return;
 
-        if (Loader.isModLoaded("Natura") && clicked_block instanceof BlockNaturaCotton)
+        if (Loader.isModLoaded("natura") && clicked_block.getClass() == BlockNaturaCotton.class)
         {
             if (real_state.getValue(BlockNaturaCotton.AGE) == 4)
                 resultingState = real_state.withProperty(BlockNaturaCotton.AGE, 0);
         }
-        else if (Loader.isModLoaded("Natura") && clicked_block instanceof BlockNaturaBarley)
+        else if (Loader.isModLoaded("natura") && clicked_block.getClass() == BlockNaturaBarley.class)
         {
             if (real_state.getValue(BlockNaturaBarley.AGE) == 3)
                 resultingState = real_state.withProperty(BlockNaturaBarley.AGE, 0);
         }
-        else if (clicked_block instanceof BlockCrops && real_state.getValue(BlockCrops.AGE) >= 7)
+        else if (clicked_block.getClass() == BlockCrops.class || clicked_block.getClass() == BlockCarrot.class || clicked_block.getClass() == BlockPotato.class)
         {
-            resultingState = real_state.withProperty(BlockCrops.AGE, 0);
+            if (real_state.getValue(BlockCrops.AGE) >= 7)
+                resultingState = real_state.withProperty(BlockCrops.AGE, 0);
+        }
+        else if (clicked_block.getClass() == BlockBeetroot.class)
+        {
+            if (real_state.getValue(BlockBeetroot.BEETROOT_AGE) >= 3)
+                resultingState = real_state.withProperty(BlockBeetroot.BEETROOT_AGE, 0);
+        }
+        //TODO: REMOVE REFLECTION HELPER IN 1.11
+        else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamCrop.class)
+        {
+            if (ReflectionModule.pamCropAgeFound && real_state.getValue(ReflectionModule.pamCropAge) >= 3)
+                resultingState = real_state.withProperty(ReflectionModule.pamCropAge, 0);
+        }
+        else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamFruit.class)
+        {
+            if (ReflectionModule.pamFruitAgeFound && real_state.getValue(ReflectionModule.pamFruitAge) >= 2)
+                resultingState = real_state.withProperty(ReflectionModule.pamFruitAge, 0);
+        }
+        else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamFruitLog.class)
+        {
+            if (ReflectionModule.pamFruitLogAgeFound && real_state.getValue(ReflectionModule.pamFruitLogAge) >= 2)
+                resultingState = real_state.withProperty(ReflectionModule.pamFruitLogAge, 0);
         }
 
         if (resultingState != null)
@@ -428,42 +466,50 @@ public class IguanaEventHook
                 event.setCanceled(true);
             }
             else
+            {
                 event.setUseItem(Result.DENY);
-        }
-    }
-
-    @SubscribeEvent
-    public void onRightClickEmpty(RightClickEmpty event)
-    {
-        if (lastRightClickCrop == event.getWorld().getTotalWorldTime())
-        {
-            event.setCanceled(true);
+            }
         }
     }
 
     @SubscribeEvent
     public void onBlockHarvested(HarvestDropsEvent event)
     {
+        //TODO: REMOVE REFLECTION HELPER IN 1.11
+
         if (!Config.modifyCropDropsBreak)
             return;
 
         // certain things we don't want to modify the drops of
-        if (IguanaEventHook.harvestDropsBlacklist.contains(event.getState().getBlock()))
+        if (HungerOverhaulEventHook.harvestDropsBlacklist.contains(event.getState().getBlock()))
             return;
 
         IBlockState state = event.getState();
         Block block = state.getBlock();
 
-        boolean isCottonCrop = Loader.isModLoaded("Natura") && block instanceof BlockNaturaCotton;
-        boolean isBarleyCrop = Loader.isModLoaded("Natura") && block instanceof BlockNaturaBarley;
-        boolean isVanillaCrop = block instanceof BlockCrops;
+        boolean isPamCrop = Loader.isModLoaded("harvestcraft") && block.getClass() == BlockPamCrop.class;
+        boolean isPamFruit = Loader.isModLoaded("harvestcraft") && block.getClass() == BlockPamFruit.class;
+        boolean isPamFruitLog = Loader.isModLoaded("harvestcraft") && block.getClass() == BlockPamFruitLog.class;
 
-        boolean eligable = isCottonCrop || isBarleyCrop || isVanillaCrop;
+        boolean isCottonCrop = Loader.isModLoaded("natura") && block.getClass() == BlockNaturaCotton.class;
+        boolean isBarleyCrop = Loader.isModLoaded("natura") && block.getClass() == BlockNaturaBarley.class;
+
+        boolean isBeetrootCrop = block.getClass() == BlockBeetroot.class;
+
+        boolean isVanillaCrop = block.getClass() == BlockCrops.class || block.getClass() == BlockCarrot.class || block.getClass() == BlockPotato.class;
+
+        boolean eligable = isCottonCrop || isBarleyCrop || isVanillaCrop || isBeetrootCrop || isPamCrop || isPamFruit || isPamFruitLog;
 
         if (!eligable)
             return;
 
-        boolean fullyGrown = (isVanillaCrop && state.getValue(BlockCrops.AGE) >= 7) || (isCottonCrop && state.getValue(BlockNaturaCotton.AGE) == 4) || (isBarleyCrop && state.getValue(BlockNaturaBarley.AGE) == 3);
+        boolean fullyGrown = (isVanillaCrop && state.getValue(BlockCrops.AGE) >= 7)
+                || (isBeetrootCrop && state.getValue(BlockBeetroot.BEETROOT_AGE) >= 3)
+                || (isCottonCrop && state.getValue(BlockNaturaCotton.AGE) == 4)
+                || (isBarleyCrop && state.getValue(BlockNaturaBarley.AGE) == 3)
+                || (ReflectionModule.pamCropAgeFound && (isPamCrop && state.getValue(ReflectionModule.pamCropAge) == 3))
+                || (ReflectionModule.pamFruitAgeFound && (isPamFruit && state.getValue(ReflectionModule.pamFruitAge) == 2))
+                || (ReflectionModule.pamFruitLogAgeFound && (isPamFruitLog && state.getValue(ReflectionModule.pamFruitLogAge) == 2));
 
         if (!fullyGrown)
             return;
@@ -511,16 +557,16 @@ public class IguanaEventHook
             else if (satiation < 0.0F)
                 adjective = "unfulfilling";
 
-            if (adjective != null && I18n.canTranslate("hungeroverhaul." + adjective + "." + noun))
+            if (adjective != null && I18n.canTranslate("tooltip.meal." + adjective + "_" + noun))
             {
-                mealDescriptor = I18n.translateToLocal("hungeroverhaul." + adjective + "." + noun);
+                mealDescriptor = I18n.translateToLocal("tooltip.meal." + adjective + "_" + noun);
             }
             else
             {
-                mealDescriptor = I18n.translateToLocal("hungeroverhaul." + noun);
+                mealDescriptor = I18n.translateToLocal("tooltip.meal." + noun);
                 if (adjective != null)
                 {
-                    mealDescriptor = I18n.translateToLocalFormatted(I18n.translateToLocal("hungeroverhaul." + adjective), mealDescriptor);
+                    mealDescriptor = I18n.translateToLocalFormatted(I18n.translateToLocal("tooltip.meal." + adjective), mealDescriptor);
                 }
             }
 
@@ -552,7 +598,7 @@ public class IguanaEventHook
                 String tooltip = "";
                 for (BiomeDictionary.Type biomeType : growthModification.biomeGrowthModifiers.keySet())
                     tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
-                event.getToolTip().add(I18n.translateToLocal("hungeroverhaul.crop.grows.best.in"));
+                event.getToolTip().add(I18n.translateToLocal("tooltip.meal.crop_grows_best_in"));
                 event.getToolTip().add(tooltip.substring(0, tooltip.length() - 2));
             }
         }

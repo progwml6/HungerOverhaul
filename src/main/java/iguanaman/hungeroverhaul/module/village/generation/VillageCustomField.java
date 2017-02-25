@@ -34,6 +34,10 @@ public class VillageCustomField extends Village
 
     private int groundLevel = -1;
 
+    public VillageCustomField()
+    {
+    }
+
     public VillageCustomField(Start villagePiece, int par2, Random par3Random, StructureBoundingBox par4StructureBoundingBox, EnumFacing facing)
     {
         super(villagePiece, par2);

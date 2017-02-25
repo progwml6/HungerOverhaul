@@ -12,7 +12,7 @@ import com.google.gson.GsonBuilder;
 
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.library.ItemAndBlockList;
-import iguanaman.hungeroverhaul.module.event.IguanaEventHook;
+import iguanaman.hungeroverhaul.module.event.HungerOverhaulEventHook;
 import iguanaman.hungeroverhaul.module.food.FoodModifier;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -90,14 +90,14 @@ public class JsonModule
             {
                 for (GameObject gameObj : h.dropsBlacklist)
                 {
-                    addGameObjectToList(IguanaEventHook.harvestDropsBlacklist, gameObj);
+                    addGameObjectToList(HungerOverhaulEventHook.harvestDropsBlacklist, gameObj);
                 }
             }
             if (h.harvestBlacklist != null)
             {
                 for (GameObject gameObj : h.harvestBlacklist)
                 {
-                    addGameObjectToList(IguanaEventHook.rightClickHarvestBlacklist, gameObj);
+                    addGameObjectToList(HungerOverhaulEventHook.rightClickHarvestBlacklist, gameObj);
                 }
             }
         }

@@ -132,20 +132,10 @@ processResources
     }
 }
 
-// Add Coremod Manifest
-jar {
-    manifest {
-        attributes 'FMLAT': 'HungerOverhaul_at.cfg'
-    }
-}
-
 // Create deobf dev jars
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'deobf'
-    manifest {
-        attributes 'FMLAT': 'HungerOverhaul_at.cfg'
-    }
 }
 
 artifacts {
