@@ -80,24 +80,16 @@ public class HungerOverhaulEventHook
     public static ItemAndBlockList rightClickHarvestBlacklist = new ItemAndBlockList();
 
     public static ItemAndBlockList harvestDropsBlacklist = new ItemAndBlockList();
+
     static
     {
-        if (Loader.isModLoaded("ExtraUtilities"))
+        if (Loader.isModLoaded("extrautils2"))
         {
-            Block enderLilly = Block.getBlockFromName("ExtraUtilities:plant/ender_lilly");
+            Block enderLilly = Block.getBlockFromName("extrautils2:enderlilly");
             if (enderLilly != null)
             {
                 rightClickHarvestBlacklist.add(enderLilly);
                 harvestDropsBlacklist.add(enderLilly);
-            }
-        }
-
-        if (Loader.isModLoaded("ThaumicTinkerer"))
-        {
-            Block infusedGrain = Block.getBlockFromName("ThaumicTinkerer:infusedGrainBlock");
-            if (infusedGrain != null)
-            {
-                harvestDropsBlacklist.add(infusedGrain);
             }
         }
     }
@@ -117,16 +109,22 @@ public class HungerOverhaulEventHook
             int growingAge = ageable.getGrowingAge();
 
             if (growingAge > 0 && rndBreed >= 1)
+            {
                 ageable.setGrowingAge(++growingAge);
+            }
             else if (growingAge < 0 && rndChild >= 1)
+            {
                 ageable.setGrowingAge(--growingAge);
+            }
 
             if (Config.eggTimeoutMultiplier > 1 && event.getEntityLiving() instanceof EntityChicken)
             {
                 float rnd = RandomHelper.nextFloat(rand, Config.eggTimeoutMultiplier);
                 EntityChicken chicken = (EntityChicken) event.getEntityLiving();
                 if (chicken.timeUntilNextEgg > 0 && rnd >= 1)
+                {
                     chicken.timeUntilNextEgg += 1;
+                }
             }
 
             // Reduced milked value every second
@@ -138,9 +136,13 @@ public class HungerOverhaulEventHook
                     int milked = tags.getInteger("Milked");
 
                     if (--milked <= 0)
+                    {
                         tags.removeTag("Milked");
+                    }
                     else
+                    {
                         tags.setInteger("Milked", milked);
+                    }
                 }
             }
         }
@@ -154,9 +156,13 @@ public class HungerOverhaulEventHook
             {
                 int lastCheck = tags.getInteger("HungerOverhaulCheck");
                 if (--lastCheck <= 0)
+                {
                     tags.removeTag("HungerOverhaulCheck");
+                }
                 else
+                {
                     tags.setInteger("HungerOverhaulCheck", lastCheck);
+                }
             }
             else
             {
@@ -172,13 +178,17 @@ public class HungerOverhaulEventHook
                     isPlayer = true;
                 }
                 else
+                {
                     healthPercent /= 2;
+                }
 
                 if (event.getEntityLiving() instanceof EntityPlayer && Config.constantHungerLoss)
                 {
                     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
                     if (!player.capabilities.isCreativeMode && !player.isDead)
+                    {
                         player.addExhaustion(0.01F);
+                    }
                 }
 
                 if (Config.addLowStatEffects)
@@ -189,7 +199,9 @@ public class HungerOverhaulEventHook
                         difficultyModifierEffects = event.getEntityLiving().world.getDifficulty().getDifficultyId();
 
                         if (!(event.getEntityLiving() instanceof EntityPlayer))
+                        {
                             difficultyModifierEffects = difficultyModifierEffects * -1 + 3;
+                        }
                     }
 
                     // low stat effects
@@ -197,40 +209,74 @@ public class HungerOverhaulEventHook
                     {
 
                         if (Config.addLowHealthSlowness || Config.addLowHungerSlowness)
+                        {
                             if ((Config.addLowHungerSlowness && foodLevel <= 1) || (Config.addLowHealthSlowness && healthPercent <= 0.05F))
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 19, 1 + difficultyModifierEffects, true, true));
+                            }
                             else if ((Config.addLowHungerSlowness && foodLevel <= 2) || (Config.addLowHealthSlowness && healthPercent <= 0.10F))
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 19, difficultyModifierEffects, true, true));
+                            }
                             else if (((Config.addLowHungerSlowness && foodLevel <= 3) || (Config.addLowHealthSlowness && healthPercent <= 0.15F)) && difficultyModifierEffects >= 1)
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 19, -1 + difficultyModifierEffects, true, true));
+                            }
                             else if (((Config.addLowHungerSlowness && foodLevel <= 4) || (Config.addLowHealthSlowness && healthPercent <= 0.20F)) && difficultyModifierEffects >= 2)
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 19, -2 + difficultyModifierEffects, true, true));
+                            }
                             else if (((Config.addLowHungerSlowness && foodLevel <= 5) || (Config.addLowHealthSlowness && healthPercent <= 0.25F)) && difficultyModifierEffects >= 3)
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 19, -3 + difficultyModifierEffects, true, true));
+                            }
+                        }
 
                         if (Config.addLowHealthMiningSlowdown || Config.addLowHungerMiningSlowdown)
+                        {
                             if ((Config.addLowHungerMiningSlowdown && foodLevel <= 1) || (Config.addLowHealthMiningSlowdown && healthPercent <= 0.05F))
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 19, 1 + difficultyModifierEffects, true, true));
+                            }
                             else if ((Config.addLowHungerMiningSlowdown && foodLevel <= 2) || (Config.addLowHealthMiningSlowdown && healthPercent <= 0.10F))
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 19, difficultyModifierEffects, true, true));
+                            }
                             else if (((Config.addLowHungerMiningSlowdown && foodLevel <= 3) || (Config.addLowHealthMiningSlowdown && healthPercent <= 0.15F)) && difficultyModifierEffects >= 1)
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 19, -1 + difficultyModifierEffects, true, true));
+                            }
                             else if (((Config.addLowHungerMiningSlowdown && foodLevel <= 4) || (Config.addLowHealthMiningSlowdown && healthPercent <= 0.20F)) && difficultyModifierEffects >= 2)
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 19, -2 + difficultyModifierEffects, true, true));
+                            }
                             else if (((Config.addLowHungerMiningSlowdown && foodLevel <= 5) || (Config.addLowHealthMiningSlowdown && healthPercent <= 0.25F)) && difficultyModifierEffects >= 3)
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 19, -3 + difficultyModifierEffects, true, true));
+                            }
+                        }
 
                         if (Config.addLowHealthWeakness || Config.addLowHungerWeakness)
+                        {
                             //Weakness effect
                             if (((Config.addLowHungerWeakness && foodLevel <= 1) || (Config.addLowHealthWeakness && healthPercent <= 0.05F)) && difficultyModifierEffects >= 1)
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 19, -1 + difficultyModifierEffects, true, true));
+                            }
                             else if (((Config.addLowHungerWeakness && foodLevel <= 2) || (Config.addLowHealthWeakness && healthPercent <= 0.10F)) && difficultyModifierEffects >= 2)
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 19, -2 + difficultyModifierEffects, true, true));
+                            }
                             else if (((Config.addLowHungerWeakness && foodLevel <= 3) || (Config.addLowHealthWeakness && healthPercent <= 0.15F)) && difficultyModifierEffects >= 3)
+                            {
                                 event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 19, -3 + difficultyModifierEffects, true, true));
+                            }
+                        }
 
                         if ((Config.addLowHungerNausea && foodLevel <= 1) || (Config.addLowHealthNausea && healthPercent <= 0.05F))
+                        {
                             event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 19, 0, true, true));
+                        }
                     }
                 }
 
@@ -251,12 +297,14 @@ public class HungerOverhaulEventHook
             IBlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
 
-            if ((block == Blocks.DIRT || block == Blocks.GRASS) && isWaterNearby(world, pos))
+            if ((block == Blocks.DIRT || block == Blocks.GRASS) && this.isWaterNearby(world, pos))
             {
                 if (Config.hoeToolDamageMultiplier > 1)
+                {
                     itemStack.damageItem(Config.hoeToolDamageMultiplier - 1, player);
+                }
             }
-            else if (block == Blocks.GRASS && !isWaterNearby(world, pos))
+            else if (block == Blocks.GRASS && !this.isWaterNearby(world, pos))
             {
                 Block farmland = Blocks.FARMLAND;
                 SoundType soundtype = farmland.getSoundType(farmland.getDefaultState(), world, pos, player);
@@ -268,9 +316,13 @@ public class HungerOverhaulEventHook
                     int seedChance = Config.seedChance;
 
                     if (world.getDifficulty().getDifficultyId() < 2)
+                    {
                         seedChance *= 2;
+                    }
                     else if (world.getDifficulty().getDifficultyId() == 3)
+                    {
                         seedChance = Math.max(Math.round(seedChance / 2f), 1);
+                    }
 
                     if (event.getWorld().rand.nextInt(100) <= seedChance)
                     {
@@ -288,11 +340,15 @@ public class HungerOverhaulEventHook
                 }
 
                 if (Config.hoeToolDamageMultiplier > 1)
+                {
                     itemStack.damageItem(Config.hoeToolDamageMultiplier - 1, player);
+                }
                 event.setResult(Result.ALLOW);
             }
             else
+            {
                 event.setCanceled(true);
+            }
         }
     }
 
@@ -310,18 +366,30 @@ public class HungerOverhaulEventHook
                 float healthPercent = player.getHealth() / player.getMaxHealth();
 
                 if (healthPercent <= 0.15F)
+                {
                     event.getLeft().add(TextFormatting.RED + I18n.translateToLocal("ui.health.dying") + TextFormatting.RESET);
+                }
                 else if (healthPercent <= 0.3F)
+                {
                     event.getLeft().add(TextFormatting.YELLOW + I18n.translateToLocal("ui.health.injured") + TextFormatting.RESET);
+                }
                 else if (healthPercent < 0.5F)
+                {
                     event.getLeft().add(TextFormatting.WHITE + I18n.translateToLocal("ui.health.hurt") + TextFormatting.RESET);
+                }
 
                 if (player.getFoodStats().getFoodLevel() <= 6)
+                {
                     event.getRight().add(TextFormatting.RED + I18n.translateToLocal("ui.hunger.starving") + TextFormatting.RESET);
+                }
                 else if (player.getFoodStats().getFoodLevel() <= 10)
+                {
                     event.getRight().add(TextFormatting.YELLOW + I18n.translateToLocal("ui.hunger.hungry") + TextFormatting.RESET);
+                }
                 else if (player.getFoodStats().getFoodLevel() <= 14)
+                {
                     event.getRight().add(TextFormatting.WHITE + I18n.translateToLocal("ui.hunger.peckish") + TextFormatting.RESET);
+                }
             }
         }
     }
@@ -347,10 +415,14 @@ public class HungerOverhaulEventHook
                     {
                         event.setCanceled(true);
                         if (!player.world.isRemote)
+                        {
                             cow.playSound(SoundEvents.ENTITY_COW_HURT, 0.4F, (event.getEntity().world.rand.nextFloat() - event.getEntity().world.rand.nextFloat()) * 0.2F + 1.0F);
+                        }
                     }
                     else
+                    {
                         tags.setInteger("Milked", Config.milkedTimeout * 60);
+                    }
                 }
             }
         }
@@ -393,7 +465,9 @@ public class HungerOverhaulEventHook
         }
 
         if (!Config.enableRightClickHarvesting)
+        {
             return;
+        }
 
         IBlockState clicked_state = event.getWorld().getBlockState(event.getPos());
         IBlockState real_state = clicked_state.getBlock().getActualState(clicked_state, event.getWorld(), event.getPos());
@@ -403,43 +477,59 @@ public class HungerOverhaulEventHook
         IBlockState resultingState = null;
 
         if (rightClickHarvestBlacklist.contains(clicked_block))
+        {
             return;
+        }
 
         if (Loader.isModLoaded("natura") && clicked_block.getClass() == BlockNaturaCotton.class)
         {
             if (real_state.getValue(BlockNaturaCotton.AGE) == 4)
+            {
                 resultingState = real_state.withProperty(BlockNaturaCotton.AGE, 0);
+            }
         }
         else if (Loader.isModLoaded("natura") && clicked_block.getClass() == BlockNaturaBarley.class)
         {
             if (real_state.getValue(BlockNaturaBarley.AGE) == 3)
+            {
                 resultingState = real_state.withProperty(BlockNaturaBarley.AGE, 0);
+            }
         }
         else if (clicked_block.getClass() == BlockCrops.class || clicked_block.getClass() == BlockCarrot.class || clicked_block.getClass() == BlockPotato.class)
         {
             if (real_state.getValue(BlockCrops.AGE) >= 7)
+            {
                 resultingState = real_state.withProperty(BlockCrops.AGE, 0);
+            }
         }
         else if (clicked_block.getClass() == BlockBeetroot.class)
         {
             if (real_state.getValue(BlockBeetroot.BEETROOT_AGE) >= 3)
+            {
                 resultingState = real_state.withProperty(BlockBeetroot.BEETROOT_AGE, 0);
+            }
         }
         //TODO: REMOVE REFLECTION HELPER IN 1.11
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamCrop.class)
         {
             if (ReflectionModule.pamCropAgeFound && real_state.getValue(ReflectionModule.pamCropAge) >= 3)
+            {
                 resultingState = real_state.withProperty(ReflectionModule.pamCropAge, 0);
+            }
         }
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamFruit.class)
         {
             if (ReflectionModule.pamFruitAgeFound && real_state.getValue(ReflectionModule.pamFruitAge) >= 2)
+            {
                 resultingState = real_state.withProperty(ReflectionModule.pamFruitAge, 0);
+            }
         }
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamFruitLog.class)
         {
             if (ReflectionModule.pamFruitLogAgeFound && real_state.getValue(ReflectionModule.pamFruitLogAge) >= 2)
+            {
                 resultingState = real_state.withProperty(ReflectionModule.pamFruitLogAge, 0);
+            }
         }
 
         if (resultingState != null)
@@ -478,11 +568,15 @@ public class HungerOverhaulEventHook
         //TODO: REMOVE REFLECTION HELPER IN 1.11
 
         if (!Config.modifyCropDropsBreak)
+        {
             return;
+        }
 
         // certain things we don't want to modify the drops of
         if (HungerOverhaulEventHook.harvestDropsBlacklist.contains(event.getState().getBlock()))
+        {
             return;
+        }
 
         IBlockState state = event.getState();
         Block block = state.getBlock();
@@ -501,7 +595,9 @@ public class HungerOverhaulEventHook
         boolean eligable = isCottonCrop || isBarleyCrop || isVanillaCrop || isBeetrootCrop || isPamCrop || isPamFruit || isPamFruitLog;
 
         if (!eligable)
+        {
             return;
+        }
 
         boolean fullyGrown = (isVanillaCrop && state.getValue(BlockCrops.AGE) >= 7)
                 || (isBeetrootCrop && state.getValue(BlockBeetroot.BEETROOT_AGE) >= 3)
@@ -512,7 +608,9 @@ public class HungerOverhaulEventHook
                 || (ReflectionModule.pamFruitLogAgeFound && (isPamFruitLog && state.getValue(ReflectionModule.pamFruitLogAge) == 2));
 
         if (!fullyGrown)
+        {
             return;
+        }
 
         List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(event.getDrops(), state, Config.seedsPerHarvestBreakMin, Config.seedsPerHarvestBreakMax, Config.producePerHarvestBreakMin, Config.producePerHarvestBreakMax);
         event.getDrops().clear();
@@ -536,26 +634,46 @@ public class HungerOverhaulEventHook
             String adjective = null;
 
             if (hungerFill <= 1)
+            {
                 noun = "morsel";
+            }
             else if (hungerFill <= 2)
+            {
                 noun = "snack";
+            }
             else if (hungerFill <= 5)
+            {
                 noun = "lightmeal";
+            }
             else if (hungerFill <= 8)
+            {
                 noun = "meal";
+            }
             else if (hungerFill <= 11)
+            {
                 noun = "largemeal";
+            }
             else
+            {
                 noun = "feast";
+            }
 
             if (satiation >= 3.0F)
+            {
                 adjective = "hearty";
+            }
             else if (satiation >= 2.0F)
+            {
                 adjective = "wholesome";
+            }
             else if (satiation > 0.0F)
+            {
                 adjective = "nourishing";
+            }
             else if (satiation < 0.0F)
+            {
                 adjective = "unfulfilling";
+            }
 
             if (adjective != null && I18n.canTranslate("tooltip.meal." + adjective + "_" + noun))
             {
@@ -584,20 +702,26 @@ public class HungerOverhaulEventHook
             {
                 Block block = Block.getBlockFromItem(event.getItemStack().getItem());
                 if (block != null)
+                {
                     growthModification = PlantGrowthModule.getPlantGrowthModification(block);
+                }
             }
             else
             {
                 Block block = PamsModsHelper.fruitItemToBlockMap.get(event.getItemStack().getItem());
                 if (block != null)
+                {
                     growthModification = PlantGrowthModule.getPlantGrowthModification(block);
+                }
             }
 
             if (growthModification != null && !growthModification.biomeGrowthModifiers.isEmpty())
             {
                 String tooltip = "";
                 for (BiomeDictionary.Type biomeType : growthModification.biomeGrowthModifiers.keySet())
+                {
                     tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+                }
                 event.getToolTip().add(I18n.translateToLocal("tooltip.meal.crop_grows_best_in"));
                 event.getToolTip().add(tooltip.substring(0, tooltip.length() - 2));
             }

@@ -32,14 +32,20 @@ public class PlantGrowthModule
     public static PlantGrowthModification getPlantGrowthModification(Block block)
     {
         if (block == null)
+        {
             return null;
+        }
 
         PlantGrowthModification growthModification = plantGrowthModificationsByBlock.get(block);
 
         if (growthModification != null)
+        {
             return growthModification;
+        }
         else
+        {
             return getPlantGrowthModification(block.getClass());
+        }
     }
 
     public static PlantGrowthModification getPlantGrowthModification(Class<? extends Block> blockClass)
@@ -52,7 +58,9 @@ public class PlantGrowthModule
             for (Map.Entry<Class<? extends Block>, PlantGrowthModification> entry : plantGrowthModificationsByBlockClass.entrySet())
             {
                 if (entry.getKey().isAssignableFrom(blockClass))
+                {
                     return entry.getValue();
+                }
             }
         }
         return growthModifier;
@@ -64,7 +72,9 @@ public class PlantGrowthModule
         PlantGrowthModification growthModification = getPlantGrowthModification(event.getState().getBlock().getClass());
 
         if (growthModification == null)
+        {
             return;
+        }
 
         // sunlight
         float sunlightModifier = !growthModification.needsSunlight || (growthModification.needsSunlight && event.getWorld().isDaytime() && event.getWorld().canSeeSky(event.getPos())) ? 1 : Config.noSunlightRegrowthMultiplier;

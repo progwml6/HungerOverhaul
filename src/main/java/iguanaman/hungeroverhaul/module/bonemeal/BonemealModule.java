@@ -32,9 +32,13 @@ public class BonemealModule
     {
         BonemealModification bonemealModification = bonemealModificationsByBlock.get(block);
         if (bonemealModification != null)
+        {
             return bonemealModification;
+        }
         else
+        {
             return getBonemealModification(block.getClass());
+        }
     }
 
     public static BonemealModification getBonemealModification(Class<? extends Block> blockClass)
@@ -47,7 +51,9 @@ public class BonemealModule
             for (Map.Entry<Class<? extends Block>, BonemealModification> entry : bonemealModificationsByBlockClass.entrySet())
             {
                 if (entry.getKey().isInstance(blockClass))
+                {
                     return entry.getValue();
+                }
             }
         }
         return bonemealModification;
@@ -60,16 +66,22 @@ public class BonemealModule
         // can't simulate this on the client because the client
         // generates different random numbers, causing visual desyncing
         if (event.getWorld().isRemote)
+        {
             return;
+        }
 
         // do nothing if effectiveness is normal
         if (event.getResult() != Result.DEFAULT || event.isCanceled() || Config.bonemealEffectiveness == 1.0f)
+        {
             return;
+        }
 
         BonemealModification bonemealModification = getBonemealModification(event.getBlock().getBlock());
 
         if (bonemealModification == null)
+        {
             return;
+        }
 
         // bonemeal doesn't do anything to the registered plants when
         // effectiveness is 0

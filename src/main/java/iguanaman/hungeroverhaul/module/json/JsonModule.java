@@ -34,12 +34,16 @@ public class JsonModule
         GSON = builder.create();
         File hoFolder = new File(configFolder, "HungerOverhaul");
         if (!hoFolder.exists())
+        {
             hoFolder.mkdirs();
+        }
 
         for (File potentialConfigFile : hoFolder.listFiles())
         {
             if (!FilenameUtils.getExtension(potentialConfigFile.getName()).equalsIgnoreCase("json"))
+            {
                 continue;
+            }
 
             hojsons.add(potentialConfigFile);
         }
@@ -67,7 +71,9 @@ public class JsonModule
         for (HOJsonData h : hoData)
         {
             if (h == null)
+            {
                 continue;
+            }
 
             if (h.foods != null)
             {
@@ -76,7 +82,9 @@ public class JsonModule
                     ItemStack itemStack = f.toItemStack();
                     FoodValues foodValues = f.toFoodValues();
                     if (itemStack != null && itemStack.getItem() != null && foodValues != null)
+                    {
                         FoodModifier.setModifiedFoodValues(itemStack, foodValues);
+                    }
                 }
             }
             if (h.foodsBlacklist != null)

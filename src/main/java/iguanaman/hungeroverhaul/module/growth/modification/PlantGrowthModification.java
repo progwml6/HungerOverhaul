@@ -24,7 +24,7 @@ public class PlantGrowthModification
 
     public float getBiomeGrowthModifier(Type biomeType)
     {
-        return biomeGrowthModifiers.get(biomeType);
+        return this.biomeGrowthModifiers.get(biomeType);
     }
 
     public PlantGrowthModification setBiomeGrowthModifier(Type biomeType, float growthModifier)

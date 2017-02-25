@@ -22,14 +22,20 @@ public class FoodModifier
     public void getModifiedFoodValues(FoodEvent.GetFoodValues event)
     {
         if (!Config.modifyFoodValues)
+        {
             return;
+        }
 
         if (blacklist.contains(event.food))
+        {
             return;
+        }
 
         FoodValues modifiedFoodValues = lookupModifiedFoodValues(event.food);
         if (modifiedFoodValues != null)
+        {
             event.foodValues = modifiedFoodValues;
+        }
         else
         {
             int hunger = Math.max(Math.round(event.foodValues.hunger / Config.foodHungerDivider), 1);

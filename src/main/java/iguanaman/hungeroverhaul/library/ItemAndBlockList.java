@@ -31,19 +31,21 @@ public class ItemAndBlockList
     public void add(Item item)
     {
         items.add(item);
-        add(new ItemStack(item));
+        this.add(new ItemStack(item));
     }
 
     public void add(Block block)
     {
         blocks.add(block);
-        add(new ItemStack(block));
+        this.add(new ItemStack(block));
     }
 
     public void add(ItemStack itemStack)
     {
         if (itemStack != null && itemStack.getItem() != null)
+        {
             itemStacks.add(itemStack);
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -55,28 +57,36 @@ public class ItemAndBlockList
             Block block = GameData.getBlockRegistry().getObject(new ResourceLocation(objectOrClassName));
 
             if (item != null)
-                add(item);
+            {
+                this.add(item);
+            }
             if (block != null)
-                add(block);
+            {
+                this.add(block);
+            }
         }
         else
         {
             Class<?> clazz = Class.forName(objectOrClassName);
-            add(clazz);
+            this.add(clazz);
         }
     }
 
     public boolean contains(Class<?> clazz)
     {
         if (classes.contains(clazz))
+        {
             return true;
+        }
 
         Iterator<Class<?>> itr = classes.iterator();
         while (itr.hasNext())
         {
             Class<?> testClass = itr.next();
             if (testClass.isAssignableFrom(clazz))
+            {
                 return true;
+            }
         }
 
         return false;
@@ -89,7 +99,9 @@ public class ItemAndBlockList
             for (ItemStack curItemStack : itemStacks)
             {
                 if (OreDictionary.itemMatches(curItemStack, itemStack, false))
+                {
                     return true;
+                }
             }
         }
         return false;
@@ -98,13 +110,19 @@ public class ItemAndBlockList
     public boolean contains(Item item)
     {
         if (items.contains(item))
+        {
             return true;
+        }
 
-        if (contains(new ItemStack(item)))
+        if (this.contains(new ItemStack(item)))
+        {
             return true;
+        }
 
-        if (contains(item.getClass()))
+        if (this.contains(item.getClass()))
+        {
             return true;
+        }
 
         return false;
     }
@@ -112,13 +130,19 @@ public class ItemAndBlockList
     public boolean contains(Block block)
     {
         if (blocks.contains(block))
+        {
             return true;
+        }
 
-        if (contains(new ItemStack(block)))
+        if (this.contains(new ItemStack(block)))
+        {
             return true;
+        }
 
-        if (contains(block.getClass()))
+        if (this.contains(block.getClass()))
+        {
             return true;
+        }
 
         return false;
     }

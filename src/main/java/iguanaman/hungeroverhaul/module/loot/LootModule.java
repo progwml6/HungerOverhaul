@@ -55,7 +55,9 @@ public class LootModule
                     if (values.hunger > 9)
                     {
                         if (Config.addHarvestCraftChestLoot)
+                        {
                             addChestLoot(item, stack, values);
+                        }
                     }
                 }
             }
@@ -68,7 +70,9 @@ public class LootModule
         if (LOOT_LOCATIONS.contains(event.getName().toString()))
         {
             for (LootPool pool : lootPools)
+            {
                 event.getTable().addPool(pool);
+            }
         }
     }
 

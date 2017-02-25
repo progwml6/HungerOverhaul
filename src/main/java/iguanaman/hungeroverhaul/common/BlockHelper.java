@@ -37,10 +37,14 @@ public class BlockHelper
 
         // only add seeds if they are different from produce
         if (produceIsNotSeed && seedItem.stackSize > 0)
+        {
             modifiedDrops.add(seedItem);
+        }
 
         if (produceItem.stackSize > 0)
+        {
             modifiedDrops.add(produceItem);
+        }
 
         return modifiedDrops;
     }
@@ -77,7 +81,9 @@ public class BlockHelper
         {
             Item seedForProduct = PamsModsHelper.productToSeedMap.get(itemDropped);
             if (seedForProduct != null)
+            {
                 return seedForProduct;
+            }
         }
 
         return itemDropped;

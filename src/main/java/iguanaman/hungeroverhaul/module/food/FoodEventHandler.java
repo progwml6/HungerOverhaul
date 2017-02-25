@@ -29,7 +29,9 @@ public class FoodEventHandler
                 {
                     PotionEffect currentEffect = event.player.getActivePotionEffect(HungerOverhaul.potionWellFed);
                     if (currentEffect != null)
+                    {
                         duration += currentEffect.getDuration();
+                    }
                     event.player.addPotionEffect(new PotionEffect(HungerOverhaul.potionWellFed, duration, 0, true, true));
                 }
             }
@@ -40,9 +42,13 @@ public class FoodEventHandler
             float toHeal = Math.round(event.foodValues.hunger / (float) Config.foodHealDivider);
             float canHeal = event.player.getMaxHealth() - event.player.getHealth();
             if (toHeal > canHeal)
+            {
                 toHeal = canHeal;
+            }
             if (toHeal > 0f)
+            {
                 event.player.heal(toHeal);
+            }
         }
     }
 
@@ -66,9 +72,13 @@ public class FoodEventHandler
         if (Config.difficultyScalingHunger)
         {
             if (difficulty == EnumDifficulty.PEACEFUL)
+            {
                 hungerLossRate *= 5F / 3F;
+            }
             else if (difficulty == EnumDifficulty.EASY)
+            {
                 hungerLossRate *= 4F / 3F;
+            }
         }
         event.maxExhaustionLevel = hungerLossRate;
     }
@@ -78,7 +88,9 @@ public class FoodEventHandler
     {
         // decrease hunger in peaceful
         if (event.player.getFoodStats().getSaturationLevel() <= 0)
+        {
             event.deltaHunger = -1;
+        }
     }
 
     @SubscribeEvent
@@ -89,7 +101,9 @@ public class FoodEventHandler
             event.setResult(Result.ALLOW);
         }
         else
+        {
             event.setResult(Result.DENY);
+        }
     }
 
     @SubscribeEvent
@@ -97,16 +111,22 @@ public class FoodEventHandler
     {
         float wellfedModifier = 1.0F;
         if (event.player.isPotionActive(HungerOverhaul.potionWellFed))
+        {
             wellfedModifier = 0.75F;
+        }
 
         EnumDifficulty difficulty = event.player.world.getDifficulty();
         float difficultyModifierHealing = 1.0F;
         if (Config.difficultyScalingHealing)
         {
             if (difficulty.getDifficultyId() <= EnumDifficulty.EASY.getDifficultyId())
+            {
                 difficultyModifierHealing = 0.75F;
+            }
             else if (difficulty == EnumDifficulty.HARD)
+            {
                 difficultyModifierHealing = 1.5F;
+            }
         }
 
         float lowHealthModifier = 1.0F;
@@ -125,7 +145,9 @@ public class FoodEventHandler
     public void onHealthRegen(HealthRegenEvent.Regen event)
     {
         if (Config.disableHealingHungerDrain)
+        {
             event.deltaExhaustion = 0;
+        }
     }
 
     @SubscribeEvent
@@ -138,7 +160,9 @@ public class FoodEventHandler
     public void onFoodStatsAddition(FoodEvent.FoodStatsAddition event)
     {
         if (Config.hungerLossRatePercentage == 0)
+        {
             event.setCanceled(true);
+        }
     }
 
     @SubscribeEvent
@@ -148,7 +172,9 @@ public class FoodEventHandler
         {
             int hunger = FoodValues.get(event.getItem()).hunger;
             if (hunger > 0)
+            {
                 event.setDuration(hunger * 8 + 8);
+            }
         }
     }
 }

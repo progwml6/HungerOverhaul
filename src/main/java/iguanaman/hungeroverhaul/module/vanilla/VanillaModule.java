@@ -31,7 +31,9 @@ public class VanillaModule
     public static void init()
     {
         if (Config.addSeedsCraftingRecipe)
+        {
             GameRegistry.addRecipe(new ShapelessOreRecipe(Items.WHEAT_SEEDS, Items.WHEAT));
+        }
 
         /*
          * Food values
@@ -100,7 +102,9 @@ public class VanillaModule
                     int metaIncrease = 1;
 
                     if (Config.difficultyScalingBoneMeal && world.getDifficulty().getDifficultyId() < EnumDifficulty.EASY.getDifficultyId())
+                    {
                         metaIncrease = world.rand.nextInt(3);
+                    }
 
                     return currentState.withProperty(BlockCrops.AGE, Math.min(currentMeta + metaIncrease, 7));
                 }
@@ -125,7 +129,9 @@ public class VanillaModule
                     int metaIncrease = 1;
 
                     if (Config.difficultyScalingBoneMeal && world.getDifficulty().getDifficultyId() < EnumDifficulty.EASY.getDifficultyId())
+                    {
                         metaIncrease = world.rand.nextInt(2);
+                    }
 
                     return currentState.withProperty(BlockBeetroot.BEETROOT_AGE, Math.min(currentMeta + metaIncrease, 3));
                 }

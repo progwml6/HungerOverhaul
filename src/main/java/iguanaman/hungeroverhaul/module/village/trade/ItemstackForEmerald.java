@@ -33,18 +33,20 @@ public class ItemstackForEmerald implements EntityVillager.ITradeList
     {
         int i = 1;
         if (this.priceInfo != null)
+        {
             i = this.priceInfo.getPrice(random);
+        }
         ItemStack itemstack;
         ItemStack itemstack1;
         if (i < 0)
         {
             itemstack = new ItemStack(Items.EMERALD);
-            itemstack1 = Util.copyStackWithAmount(sellingItem, -i);
+            itemstack1 = Util.copyStackWithAmount(this.sellingItem, -i);
         }
         else
         {
             itemstack = new ItemStack(Items.EMERALD, i, 0);
-            itemstack1 = Util.copyStackWithAmount(sellingItem, 1);
+            itemstack1 = Util.copyStackWithAmount(this.sellingItem, 1);
         }
         recipeList.add(new MerchantRecipe(itemstack, itemstack1));
     }

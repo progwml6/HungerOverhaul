@@ -170,9 +170,13 @@ public class NaturaModule
                     {
                         int setMeta = world.rand.nextInt(2) + 1 + currentMeta / 4;
                         if (setMeta > 2)
+                        {
                             setMeta = 2;
+                        }
                         if (Config.difficultyScalingBoneMeal && world.getDifficulty().ordinal() >= EnumDifficulty.NORMAL.ordinal())
+                        {
                             setMeta = 1;
+                        }
                         resultingMeta = currentMeta % 4 + setMeta * 4;
                     }
                 }
@@ -189,7 +193,9 @@ public class NaturaModule
                 {
                     int randomRange = state.getBlock() instanceof BlockNetherBerryBush ? 6 : 3;
                     if (world.rand.nextInt(randomRange) == 0)
+                    {
                         world.setBlockState(posUp, state.withProperty(BlockEnumBerryBush.AGE, resultingState.getValue(BlockEnumBerryBush.AGE) % 4), 3);
+                    }
                 }
             }
         };

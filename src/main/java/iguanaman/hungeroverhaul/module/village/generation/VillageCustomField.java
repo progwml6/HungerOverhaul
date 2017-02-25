@@ -49,22 +49,24 @@ public class VillageCustomField extends Village
     @Override
     public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
     {
-        if (groundLevel < 0)
+        if (this.groundLevel < 0)
         {
-            groundLevel = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
+            this.groundLevel = this.getAverageGroundLevel(worldIn, structureBoundingBoxIn);
 
-            if (groundLevel < 0)
+            if (this.groundLevel < 0)
+            {
                 return true;
+            }
 
-            boundingBox.offset(0, groundLevel - boundingBox.maxY + 4 - 1, 0);
+            this.boundingBox.offset(0, this.groundLevel - this.boundingBox.maxY + 4 - 1, 0);
         }
 
         BlockPos center = new BlockPos(this.boundingBox.getCenter());
 
         Biome biome = worldIn.getBiome(center);
 
-        typeA = randomFieldType(biome, randomIn);
-        typeB = randomFieldType(biome, randomIn);
+        this.typeA = this.randomFieldType(biome, randomIn);
+        this.typeB = this.randomFieldType(biome, randomIn);
 
         IBlockState blockStateOutA = Blocks.FARMLAND.getDefaultState();
         IBlockState blockStateInA = Blocks.FLOWING_WATER.getDefaultState();
@@ -79,16 +81,20 @@ public class VillageCustomField extends Village
         Block crop1B;
         Block crop2B;
 
-        if (typeA == FieldType.REED)
+        if (this.typeA == FieldType.REED)
         {
             if (BiomeDictionary.isBiomeOfType(biome, Type.SANDY))
+            {
                 blockStateOutA = Blocks.SAND.getDefaultState();
+            }
             else
+            {
                 blockStateOutA = Blocks.DIRT.getDefaultState();
+            }
             crop1A = Blocks.REEDS;
             crop2A = Blocks.REEDS;
         }
-        else if (typeA == FieldType.STEM)
+        else if (this.typeA == FieldType.STEM)
         {
             crop1A = this.getRandomStemCrop(randomIn);
             crop2A = this.getRandomStemCrop(randomIn);
@@ -99,16 +105,20 @@ public class VillageCustomField extends Village
             crop2A = this.getRandomCrop(randomIn);
         }
 
-        if (typeB == FieldType.REED)
+        if (this.typeB == FieldType.REED)
         {
             if (BiomeDictionary.isBiomeOfType(biome, Type.SANDY))
+            {
                 blockStateOutB = Blocks.SAND.getDefaultState();
+            }
             else
+            {
                 blockStateOutB = Blocks.DIRT.getDefaultState();
+            }
             crop1B = Blocks.REEDS;
             crop2B = Blocks.REEDS;
         }
-        else if (typeA == FieldType.STEM)
+        else if (this.typeA == FieldType.STEM)
         {
             crop1B = this.getRandomStemCrop(randomIn);
             crop2B = this.getRandomStemCrop(randomIn);
@@ -119,10 +129,10 @@ public class VillageCustomField extends Village
             crop2B = this.getRandomCrop(randomIn);
         }
 
-        int cropMeta1A = getCropMeta(crop1A, randomIn);
-        int cropMeta2A = getCropMeta(crop2A, randomIn);
-        int cropMeta1B = getCropMeta(crop1B, randomIn);
-        int cropMeta2B = getCropMeta(crop2B, randomIn);
+        int cropMeta1A = this.getCropMeta(crop1A, randomIn);
+        int cropMeta2A = this.getCropMeta(crop2A, randomIn);
+        int cropMeta1B = this.getCropMeta(crop1B, randomIn);
+        int cropMeta2B = this.getCropMeta(crop2B, randomIn);
 
         //BASE
         this.fillWithBlocks(worldIn, structureBoundingBoxIn, 0, 1, 0, 12, 4, 8, AIR, AIR, false);
@@ -145,22 +155,30 @@ public class VillageCustomField extends Village
         //CROPS
         for (int i = 1; i <= 7; i++)
         {
-            if (typeA == FieldType.NORMAL)
+            if (this.typeA == FieldType.NORMAL)
+            {
                 this.placeCropAtCurrentPosition(worldIn, crop1A.getStateFromMeta(cropMeta1A), 1, 1, i, structureBoundingBoxIn);
+            }
 
             this.placeCropAtCurrentPosition(worldIn, crop1A.getStateFromMeta(cropMeta1A), 2, 1, i, structureBoundingBoxIn);
             this.placeCropAtCurrentPosition(worldIn, crop2A.getStateFromMeta(cropMeta2A), 4, 1, i, structureBoundingBoxIn);
 
-            if (typeA == FieldType.NORMAL)
+            if (this.typeA == FieldType.NORMAL)
+            {
                 this.placeCropAtCurrentPosition(worldIn, crop2A.getStateFromMeta(cropMeta2A), 5, 1, i, structureBoundingBoxIn);
-            if (typeA == FieldType.NORMAL)
+            }
+            if (this.typeA == FieldType.NORMAL)
+            {
                 this.placeCropAtCurrentPosition(worldIn, crop1B.getStateFromMeta(cropMeta1B), 7, 1, i, structureBoundingBoxIn);
+            }
 
             this.placeCropAtCurrentPosition(worldIn, crop1B.getStateFromMeta(cropMeta1B), 8, 1, i, structureBoundingBoxIn);
             this.placeCropAtCurrentPosition(worldIn, crop2B.getStateFromMeta(cropMeta2B), 10, 1, i, structureBoundingBoxIn);
 
-            if (typeA == FieldType.NORMAL)
+            if (this.typeA == FieldType.NORMAL)
+            {
                 this.placeCropAtCurrentPosition(worldIn, crop2B.getStateFromMeta(cropMeta2B), 11, 1, i, structureBoundingBoxIn);
+            }
         }
 
         //FILLER
@@ -238,20 +256,30 @@ public class VillageCustomField extends Village
         int rnd = random.nextInt(weights);
 
         if (rnd < reedWeight)
+        {
             return FieldType.REED;
+        }
         else if (rnd < reedWeight + stemWeight)
+        {
             return FieldType.STEM;
+        }
         else
+        {
             return FieldType.NORMAL;
+        }
 
     }
 
     private void placeCropAtCurrentPosition(World worldIn, IBlockState blockstateIn, int x, int y, int z, StructureBoundingBox boundingboxIn)
     {
         if (Loader.isModLoaded("harvestcraft"))
+        {
             this.placeHarvestCraftCropAtCurrentPosition(worldIn, blockstateIn, x, y, z, boundingboxIn);
+        }
         else
+        {
             this.replaceAirAndLiquidDownwards(worldIn, blockstateIn, x, y, z, boundingboxIn);
+        }
     }
 
     private void placeHarvestCraftCropAtCurrentPosition(World worldIn, IBlockState blockstateIn, int x, int y, int z, StructureBoundingBox boundingboxIn)

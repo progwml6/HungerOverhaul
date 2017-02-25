@@ -35,7 +35,9 @@ public class GrassSeedsModule
             {
                 WeightedRandom.Item entry = WeightedRandom.getRandomItem(rand, hoeSeedList);
                 if (entry != null && seedField.get(entry) != null)
+                {
                     return ((ItemStack) seedField.get(entry)).copy();
+                }
             }
             catch (Exception e)
             {

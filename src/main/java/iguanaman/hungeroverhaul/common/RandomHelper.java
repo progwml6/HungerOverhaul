@@ -13,9 +13,9 @@ public class RandomHelper
 
     /**
      * Like {@link Random#nextInt(int)}, but for floats.
-     * 
+     *
      * Can be used with a {@code >= 1} check to emulate {@code nextInt(bound) != 0}.
-     * 
+     *
      * @return float with bounds {@code 0f} (inclusive) and {@code bound} (exclusive)
      */
     public static float nextFloat(Random random, float bound)

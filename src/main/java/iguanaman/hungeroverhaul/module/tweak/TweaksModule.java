@@ -23,7 +23,9 @@ public class TweaksModule
                     FoodValues values = FoodValues.get(stack);
 
                     if (Config.modifyFoodStackSize)
+                    {
                         modifyStackSize(item, stack, values);
+                    }
                 }
             }
         }
@@ -35,17 +37,29 @@ public class TweaksModule
         int newStackSize = curStackSize;
 
         if (values.hunger <= 2)
+        {
             newStackSize = 16 * Config.foodStackSizeMultiplier;
+        }
         else if (values.hunger <= 5)
+        {
             newStackSize = 8 * Config.foodStackSizeMultiplier;
+        }
         else if (values.hunger <= 8)
+        {
             newStackSize = 4 * Config.foodStackSizeMultiplier;
+        }
         else if (values.hunger <= 11)
+        {
             newStackSize = 2 * Config.foodStackSizeMultiplier;
+        }
         else
+        {
             newStackSize = Config.foodStackSizeMultiplier;
+        }
 
         if (curStackSize > newStackSize)
+        {
             item.setMaxStackSize(newStackSize);
+        }
     }
 }

@@ -15,10 +15,14 @@ public class RespawnHungerModule
         int respawnHunger = Config.respawnHungerValue;
 
         if (Config.difficultyScalingRespawnHunger && event.player.world.getDifficulty().getDifficultyId() > EnumDifficulty.EASY.getDifficultyId())
+        {
             respawnHunger -= (event.player.world.getDifficulty().getDifficultyId() - 1) * Config.respawnHungerDifficultyModifier;
+        }
 
         AppleCoreAPI.mutator.setHunger(event.player, Math.min(Math.max(respawnHunger, 1), 20));
         if (event.player.getFoodStats().getSaturationLevel() > event.player.getFoodStats().getFoodLevel())
+        {
             AppleCoreAPI.mutator.setSaturation(event.player, event.player.getFoodStats().getFoodLevel());
+        }
     }
 }

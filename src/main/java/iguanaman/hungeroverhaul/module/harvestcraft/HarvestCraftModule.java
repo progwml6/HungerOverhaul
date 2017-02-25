@@ -66,16 +66,24 @@ public class HarvestCraftModule
             for (Item crop : CropRegistry.getFoods().values())
             {
                 if (crop == CropRegistry.getFood(CropRegistry.CANTALOUPE))
+                {
                     FoodModifier.setModifiedFoodValues(CropRegistry.getFood(CropRegistry.CANTALOUPE), new FoodValues(2, 0.1F));
+                }
                 else if (lowerSaturationCrops.contains(crop))
+                {
                     FoodModifier.setModifiedFoodValues(crop, lowerSaturationFoodValues);
+                }
                 else
+                {
                     FoodModifier.setModifiedFoodValues(crop, cropFoodValues);
+                }
             }
 
             // fruits
             for (BlockPamSapling sapling : FruitRegistry.getSaplings())
+            {
                 FoodModifier.setModifiedFoodValues(sapling.getFruitItem(), lowerSaturationFoodValues);
+            }
 
             FoodValues fruitJuiceFoodValues = new FoodValues(2, 0.05F);
             FoodValues jellyFoodValues = new FoodValues(2, 0.1F);

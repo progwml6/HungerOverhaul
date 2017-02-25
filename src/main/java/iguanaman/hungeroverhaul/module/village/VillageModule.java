@@ -52,7 +52,9 @@ public class VillageModule
                     if (values.hunger > 9)
                     {
                         if (Config.addTradesButcher)
+                        {
                             addButcherTrade(item, stack, values);
+                        }
                     }
                     if (Loader.isModLoaded("harvestcraft") && Config.addTradesFarmer && item instanceof ItemPamSeedFood)
                     {
@@ -63,7 +65,9 @@ public class VillageModule
                 {
                     Block block = Block.getBlockFromItem(item);
                     if (block instanceof BlockPamSapling)
+                    {
                         addSaplingTrade(block);
+                    }
                 }
             }
         }
