@@ -25,8 +25,6 @@ import iguanaman.hungeroverhaul.module.tweak.TweaksModule;
 import iguanaman.hungeroverhaul.module.vanilla.VanillaModule;
 import iguanaman.hungeroverhaul.module.vanilla.potion.PotionWellFed;
 import iguanaman.hungeroverhaul.module.village.VillageModule;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
@@ -37,7 +35,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import slimeknights.mantle.util.RecipeRemover;
 
 @Mod(modid = HungerOverhaul.modID, name = HungerOverhaul.modName, version = HungerOverhaul.modVersion, dependencies = "required-after:Forge@[12.18.0.1993,);required-after:AppleCore;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura;after:IC2;after:*")
 public class HungerOverhaul
@@ -110,6 +107,7 @@ public class HungerOverhaul
             GrassSeedsModule.postInit();
         }
 
+        VanillaModule.postInit();
         ReflectionModule.postInit();
         TweaksModule.postInit();
         VillageModule.postInit();
@@ -118,12 +116,6 @@ public class HungerOverhaul
         MinecraftForge.EVENT_BUS.register(new HungerOverhaulEventHook());
         MinecraftForge.EVENT_BUS.register(new RespawnHungerModule());
         MinecraftForge.EVENT_BUS.register(new LootModule());
-
-        if (Config.removeHoeRecipes)
-        {
-            RecipeRemover.removeAnyRecipe(new ItemStack(Items.WOODEN_HOE));
-            RecipeRemover.removeAnyRecipe(new ItemStack(Items.STONE_HOE));
-        }
     }
 
     @EventHandler

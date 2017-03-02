@@ -2,7 +2,9 @@ package iguanaman.hungeroverhaul.module.natura;
 
 import java.util.Random;
 
+import com.progwml6.natura.Natura;
 import com.progwml6.natura.common.block.BlockEnumBerryBush;
+import com.progwml6.natura.nether.NaturaNether;
 import com.progwml6.natura.nether.block.bush.BlockNetherBerryBush;
 import com.progwml6.natura.overworld.NaturaOverworld;
 import com.progwml6.natura.overworld.block.bush.BlockOverworldBerryBush;
@@ -32,6 +34,10 @@ public class NaturaModule
 {
     public static Random random = new Random();
 
+    private static Boolean isNaturaOverworldLoaded = Natura.pulseManager.isPulseLoaded(NaturaOverworld.PulseId);
+
+    private static Boolean isNaturaNetherLoaded = Natura.pulseManager.isPulseLoaded(NaturaNether.PulseId);
+
     public static void init()
     {
         random.setSeed(2 ^ 16 + 2 ^ 8 + (4 * 3 * 271));
@@ -41,7 +47,7 @@ public class NaturaModule
         ItemStack barleyFlour = NaturaCommons.barleyFlour.copy();
         ItemStack wheatFlour = NaturaCommons.wheatFlour.copy();
 
-        if (Config.addSeedsCraftingRecipe)
+        if (Config.addSeedsCraftingRecipe && isNaturaOverworldLoaded)
         {
             GameRegistry.addRecipe(new ShapelessOreRecipe(barleySeeds, barley));
         }
@@ -52,11 +58,13 @@ public class NaturaModule
             RecipeRemover.removeAnyRecipe(barleyFlour);
             RecipeRemover.removeAnyRecipe(wheatFlour);
         }
+
         if (Config.removeNaturaFlourSmeltingRecipe)
         {
             RecipeRemover.removeFurnaceRecipe(barleyFlour);
             RecipeRemover.removeFurnaceRecipe(wheatFlour);
         }
+
         if (Config.addAlternateNaturaFlourCraftingRecipes)
         {
             GameRegistry.addRecipe(new ShapelessOreRecipe(barleyFlour, barley, barley));
@@ -68,17 +76,26 @@ public class NaturaModule
          */
         if (Config.modifyFoodValues && Config.useHOFoodValues)
         {
-            FoodModifier.setModifiedFoodValues(NaturaCommons.raspberry, new FoodValues(1, 0.1F));
-            FoodModifier.setModifiedFoodValues(NaturaCommons.blueberry, new FoodValues(1, 0.1F));
-            FoodModifier.setModifiedFoodValues(NaturaCommons.blackberry, new FoodValues(1, 0.1F));
-            FoodModifier.setModifiedFoodValues(NaturaCommons.maloberry, new FoodValues(1, 0.1F));
+            if (isNaturaOverworldLoaded)
+            {
+                FoodModifier.setModifiedFoodValues(NaturaCommons.raspberry, new FoodValues(1, 0.1F));
+                FoodModifier.setModifiedFoodValues(NaturaCommons.blueberry, new FoodValues(1, 0.1F));
+                FoodModifier.setModifiedFoodValues(NaturaCommons.blackberry, new FoodValues(1, 0.1F));
+                FoodModifier.setModifiedFoodValues(NaturaCommons.maloberry, new FoodValues(1, 0.1F));
+            }
 
-            FoodModifier.setModifiedFoodValues(NaturaCommons.blightberry, new FoodValues(1, 0.1F));
-            FoodModifier.setModifiedFoodValues(NaturaCommons.duskberry, new FoodValues(1, 0.1F));
-            FoodModifier.setModifiedFoodValues(NaturaCommons.skyberry, new FoodValues(1, 0.1F));
-            FoodModifier.setModifiedFoodValues(NaturaCommons.stingberry, new FoodValues(1, 0.1F));
+            if (isNaturaNetherLoaded)
+            {
+                FoodModifier.setModifiedFoodValues(NaturaCommons.blightberry, new FoodValues(1, 0.1F));
+                FoodModifier.setModifiedFoodValues(NaturaCommons.duskberry, new FoodValues(1, 0.1F));
+                FoodModifier.setModifiedFoodValues(NaturaCommons.skyberry, new FoodValues(1, 0.1F));
+                FoodModifier.setModifiedFoodValues(NaturaCommons.stingberry, new FoodValues(1, 0.1F));
+            }
 
-            FoodModifier.setModifiedFoodValues(NaturaCommons.berryMedley, new FoodValues(3, 0.15F));
+            if (isNaturaOverworldLoaded)
+            {
+                FoodModifier.setModifiedFoodValues(NaturaCommons.berryMedley, new FoodValues(3, 0.15F));
+            }
         }
 
         /*
@@ -169,6 +186,7 @@ public class NaturaModule
                     if (!(currentState.getBlock() instanceof BlockNetherBerryBush) || world.rand.nextBoolean())
                     {
                         int setMeta = world.rand.nextInt(2) + 1 + currentMeta / 4;
+
                         if (setMeta > 2)
                         {
                             setMeta = 2;
@@ -177,6 +195,7 @@ public class NaturaModule
                         {
                             setMeta = 1;
                         }
+
                         resultingMeta = currentMeta % 4 + setMeta * 4;
                     }
                 }
@@ -192,6 +211,7 @@ public class NaturaModule
                 if (stateAbove == null || stateAbove.getBlock().isAir(stateAbove, world, posUp))
                 {
                     int randomRange = state.getBlock() instanceof BlockNetherBerryBush ? 6 : 3;
+
                     if (world.rand.nextInt(randomRange) == 0)
                     {
                         world.setBlockState(posUp, state.withProperty(BlockEnumBerryBush.AGE, resultingState.getValue(BlockEnumBerryBush.AGE) % 4), 3);

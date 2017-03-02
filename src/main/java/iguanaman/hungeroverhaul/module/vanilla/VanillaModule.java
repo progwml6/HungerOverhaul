@@ -18,12 +18,14 @@ import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import slimeknights.mantle.util.RecipeRemover;
 import squeek.applecore.api.food.FoodValues;
 
 public class VanillaModule
@@ -142,5 +144,14 @@ public class VanillaModule
             }
         };
         BonemealModule.registerBonemealModifier(BlockBeetroot.class, beetrootBonemealModification);
+    }
+
+    public static void postInit()
+    {
+        if (Config.removeHoeRecipes)
+        {
+            RecipeRemover.removeAnyRecipe(new ItemStack(Items.WOODEN_HOE));
+            RecipeRemover.removeAnyRecipe(new ItemStack(Items.STONE_HOE));
+        }
     }
 }
