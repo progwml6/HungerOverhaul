@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul.module.vanilla;
 
 import iguanaman.hungeroverhaul.common.config.Config;
+import iguanaman.hungeroverhaul.library.RecipeRemover;
 import iguanaman.hungeroverhaul.module.bonemeal.BonemealModule;
 import iguanaman.hungeroverhaul.module.bonemeal.modification.BonemealModification;
 import iguanaman.hungeroverhaul.module.food.FoodModifier;
@@ -25,7 +26,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import slimeknights.mantle.util.RecipeRemover;
 import squeek.applecore.api.food.FoodValues;
 
 public class VanillaModule

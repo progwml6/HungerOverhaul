@@ -7,6 +7,7 @@ import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
 import com.progwml6.natura.overworld.NaturaOverworld;
 
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
+import iguanaman.hungeroverhaul.module.natura.helper.NaturaHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -75,11 +76,17 @@ public class BlockHelper
 
         if (Loader.isModLoaded("natura") && (state.getBlock() == NaturaOverworld.barleyCrop || state.getBlock() == NaturaOverworld.cottonCrop))
         {
-            return NaturaOverworld.overworldSeeds;
+            Item seedForProduct = NaturaHelper.cropToSeedMap.get(state.getBlock());
+
+            if (seedForProduct != null)
+            {
+                return seedForProduct;
+            }
         }
         else if (Loader.isModLoaded("harvestcraft") && state.getBlock() instanceof BlockPamCrop)
         {
             Item seedForProduct = PamsModsHelper.productToSeedMap.get(itemDropped);
+
             if (seedForProduct != null)
             {
                 return seedForProduct;

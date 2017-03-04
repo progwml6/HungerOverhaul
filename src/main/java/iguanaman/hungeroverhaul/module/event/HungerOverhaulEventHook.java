@@ -614,6 +614,7 @@ public class HungerOverhaulEventHook
 
         List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(event.getDrops(), state, Config.seedsPerHarvestBreakMin, Config.seedsPerHarvestBreakMax, Config.producePerHarvestBreakMin, Config.producePerHarvestBreakMax);
         event.getDrops().clear();
+
         for (ItemStack drop : modifiedDrops)
         {
             event.getDrops().add(drop);
@@ -689,11 +690,13 @@ public class HungerOverhaulEventHook
             }
 
             int topIndex = event.getToolTip().size() > 0 ? 1 : 0;
+
             event.getToolTip().add(topIndex, mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
         }
         if (Config.wrongBiomeRegrowthMultiplier > 1)
         {
             PlantGrowthModification growthModification = null;
+
             if (event.getItemStack().getItem() instanceof IPlantable)
             {
                 growthModification = PlantGrowthModule.getPlantGrowthModification(((IPlantable) event.getItemStack().getItem()).getPlant(event.getEntityPlayer().world, BlockPos.ORIGIN).getBlock());
@@ -701,6 +704,7 @@ public class HungerOverhaulEventHook
             else if (event.getItemStack().getItem() instanceof ItemBlock)
             {
                 Block block = Block.getBlockFromItem(event.getItemStack().getItem());
+
                 if (block != null)
                 {
                     growthModification = PlantGrowthModule.getPlantGrowthModification(block);
@@ -708,20 +712,26 @@ public class HungerOverhaulEventHook
             }
             else
             {
-                Block block = PamsModsHelper.fruitItemToBlockMap.get(event.getItemStack().getItem());
-                if (block != null)
+                if (Loader.isModLoaded("harvestcraft"))
                 {
-                    growthModification = PlantGrowthModule.getPlantGrowthModification(block);
+                    Block block = PamsModsHelper.fruitItemToBlockMap.get(event.getItemStack().getItem());
+
+                    if (block != null)
+                    {
+                        growthModification = PlantGrowthModule.getPlantGrowthModification(block);
+                    }
                 }
             }
 
             if (growthModification != null && !growthModification.biomeGrowthModifiers.isEmpty())
             {
                 String tooltip = "";
+
                 for (BiomeDictionary.Type biomeType : growthModification.biomeGrowthModifiers.keySet())
                 {
                     tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
                 }
+
                 event.getToolTip().add(I18n.translateToLocal("tooltip.meal.crop_grows_best_in"));
                 event.getToolTip().add(tooltip.substring(0, tooltip.length() - 2));
             }

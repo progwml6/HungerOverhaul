@@ -18,6 +18,7 @@ import iguanaman.hungeroverhaul.module.hunger.RespawnHungerModule;
 import iguanaman.hungeroverhaul.module.json.JsonModule;
 import iguanaman.hungeroverhaul.module.loot.LootModule;
 import iguanaman.hungeroverhaul.module.natura.NaturaModule;
+import iguanaman.hungeroverhaul.module.natura.helper.NaturaHelper;
 import iguanaman.hungeroverhaul.module.reflection.ReflectionModule;
 import iguanaman.hungeroverhaul.module.seed.GrassSeedsModule;
 import iguanaman.hungeroverhaul.module.tinkersconstruct.TinkersConstructModule;
@@ -36,7 +37,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = HungerOverhaul.modID, name = HungerOverhaul.modName, version = HungerOverhaul.modVersion, dependencies = "required-after:Forge@[12.18.0.1993,);required-after:AppleCore;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura;after:IC2;after:*")
+@Mod(modid = HungerOverhaul.modID, name = HungerOverhaul.modName, version = HungerOverhaul.modVersion, dependencies = "required-after:Forge@[12.18.0.1993,);required-after:AppleCore;after:tconstruct;after:harvestcraft;after:natura@[4.1.0.24,);after:ic2;after:*", acceptedMinecraftVersions = "[1.10.2, 1.11)")
 public class HungerOverhaul
 {
     public static final String modID = Util.MODID;
@@ -86,6 +87,7 @@ public class HungerOverhaul
 
         if (Loader.isModLoaded("natura"))
         {
+            NaturaHelper.loadNatura();
             NaturaModule.init();
         }
 
