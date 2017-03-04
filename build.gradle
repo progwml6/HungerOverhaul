@@ -101,7 +101,7 @@ dependencies {
 
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
 
-    deobfCompile "mcp.mobius.waila:Hwyla:${hwyla_version}_${minecraft_version}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla_version}_${config.minecraft_version}"
 }
 
 // the single quotes in these filenames seems to cause problems with
