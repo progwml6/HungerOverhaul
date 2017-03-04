@@ -181,9 +181,11 @@ task("signJar", dependsOn: "build")
         )
     }
 }
+
+if(project.hasProperty("local_maven")) {
+apply plugin: 'maven'
 uploadArchives {
     repositories {
-        if(project.hasProperty("local_maven")) {
             mavenDeployer {
             repository(url: "file://${local_maven}")
             }
