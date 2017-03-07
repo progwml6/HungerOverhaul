@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = HungerOverhaul.modID, name = HungerOverhaul.modName, version = HungerOverhaul.modVersion, dependencies = "required-after:Forge@[12.18.0.1993,);required-after:AppleCore;after:tconstruct;after:harvestcraft;after:natura@[4.1.0.24,);after:ic2;after:*", acceptedMinecraftVersions = "[1.10.2, 1.11)")
+@Mod(modid = HungerOverhaul.modID, name = HungerOverhaul.modName, version = HungerOverhaul.modVersion, dependencies = "required-after:Forge@[12.18.0.1993,);required-after:AppleCore;after:tconstruct;after:harvestcraft;after:natura@[1.10.2-4.1.0.24,);after:ic2;after:*", acceptedMinecraftVersions = "[1.10.2, 1.11)")
 public class HungerOverhaul
 {
     public static final String modID = Util.MODID;
