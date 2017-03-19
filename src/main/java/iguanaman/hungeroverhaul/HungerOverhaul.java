@@ -20,7 +20,6 @@ import iguanaman.hungeroverhaul.module.loot.LootModule;
 import iguanaman.hungeroverhaul.module.natura.NaturaModule;
 import iguanaman.hungeroverhaul.module.natura.helper.NaturaHelper;
 import iguanaman.hungeroverhaul.module.reflection.ReflectionModule;
-import iguanaman.hungeroverhaul.module.seed.GrassSeedsModule;
 import iguanaman.hungeroverhaul.module.tinkersconstruct.TinkersConstructModule;
 import iguanaman.hungeroverhaul.module.tweak.TweaksModule;
 import iguanaman.hungeroverhaul.module.vanilla.VanillaModule;
@@ -104,10 +103,10 @@ public class HungerOverhaul
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        if (Config.removeTallGrassSeeds || Config.allSeedsEqual)
-        {
-            GrassSeedsModule.postInit();
-        }
+        //if (Config.removeTallGrassSeeds || Config.allSeedsEqual)
+        //{
+        //    GrassSeedsModule.postInit();
+        //}
 
         VanillaModule.postInit();
         ReflectionModule.postInit();
