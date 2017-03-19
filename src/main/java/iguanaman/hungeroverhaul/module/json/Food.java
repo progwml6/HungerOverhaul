@@ -15,7 +15,7 @@ import squeek.applecore.api.food.FoodValues;
 public class Food
 {
     //Registry Name
-    public ResourceLocation name;
+    public String name;
 
     public String oreName;
 
@@ -36,11 +36,13 @@ public class Food
     @SuppressWarnings("deprecation")
     public ItemStack toItemStack()
     {
-        Item item = GameData.getItemRegistry().getObject(this.name);
+        ResourceLocation loc = new ResourceLocation(this.name);
+
+        Item item = GameData.getItemRegistry().getObject(loc);
 
         if (item == null)
         {
-            Block block = GameData.getBlockRegistry().getObject(this.name);
+            Block block = GameData.getBlockRegistry().getObject(loc);
 
             if (block != null)
             {
@@ -48,7 +50,7 @@ public class Food
             }
         }
 
-        return item == null ? null : new ItemStack(GameData.getItemRegistry().getObject(this.name), this.count, this.meta);
+        return item == null ? null : new ItemStack(GameData.getItemRegistry().getObject(loc), this.count, this.meta);
     }
 
     public FoodValues toFoodValues()
@@ -66,11 +68,11 @@ public class Food
     {
         Food fd = new Food();
 
-        fd.name = GameData.getItemRegistry().getNameForObject(is.getItem());
+        fd.name = GameData.getItemRegistry().getNameForObject(is.getItem()).toString();
 
         if (fd.name == null || fd.name.toString().isEmpty())
         {
-            fd.name = GameData.getBlockRegistry().getNameForObject(Block.getBlockFromItem(is.getItem()));
+            fd.name = GameData.getBlockRegistry().getNameForObject(Block.getBlockFromItem(is.getItem())).toString();
         }
 
         if (fd.name == null || fd.name.toString().isEmpty())
