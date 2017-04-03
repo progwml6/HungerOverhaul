@@ -85,6 +85,7 @@ minecraft {
     version = config.minecraft_version + "-" + config.forge_version
     runDir = 'run'
     replace '${version}', project.version
+    replace '${natura_version}', config.minecraft_version + "-" + config.natura_version
     mappings = config.mappings_version
     useDepAts = true
 
