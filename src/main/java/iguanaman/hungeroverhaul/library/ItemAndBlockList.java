@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -42,7 +43,7 @@ public class ItemAndBlockList
 
     public void add(ItemStack itemStack)
     {
-        if (itemStack != null && itemStack.getItem() != null)
+        if (!itemStack.isEmpty() && itemStack.getItem() != Items.AIR)
         {
             itemStacks.add(itemStack);
         }
@@ -56,7 +57,7 @@ public class ItemAndBlockList
             Item item = GameData.getItemRegistry().getObject(new ResourceLocation(objectOrClassName));
             Block block = GameData.getBlockRegistry().getObject(new ResourceLocation(objectOrClassName));
 
-            if (item != null)
+            if (item != Items.AIR)
             {
                 this.add(item);
             }
@@ -94,7 +95,7 @@ public class ItemAndBlockList
 
     public boolean contains(ItemStack itemStack)
     {
-        if (itemStack != null && itemStack.getItem() != null)
+        if (!itemStack.isEmpty() && itemStack.getItem() != Items.AIR)
         {
             for (ItemStack curItemStack : itemStacks)
             {

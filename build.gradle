@@ -94,7 +94,7 @@ minecraft {
 dependencies {
     deobfCompile "slimeknights.mantle:Mantle:${config.minecraft_version}-${config.mantle_version}"
     deobfCompile "com.progwml6.natura:natura:${config.minecraft_version}-${config.natura_version}"
-    deobfCompile "slimeknights:TConstruct:${config.minecraft_version}-${config.tconstruct_version}"
+    //deobfCompile "slimeknights:TConstruct:${config.minecraft_version}-${config.tconstruct_version}"
 
     deobfCompile "com.github.glitchfiend.biomesoplenty:BiomesOPlenty:${config.minecraft_version}-${config.bop_version}:universal"
 
@@ -102,15 +102,15 @@ dependencies {
 
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
 
-    deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla_version}_${config.minecraft_version}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla_version}_1.11"
 }
 
 // the single quotes in these filenames seems to cause problems with
 // the jenkins server, so skip this for jenkins builds
 if (System.getenv().BUILD_NUMBER == null) {
     // note: the 'repository' url changes with each version
-    repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2341/593/[module] [revision].[ext]" } }//
-    dependencies { compile "pam:Pam's HarvestCraft:1.9.4-1.10.2h@jar" }
+    repositories { ivy { artifactPattern "https://addons-origin.cursecdn.com/files/2395/571[module] [revision].[ext]" } }//
+    dependencies { compile "pam:Pam's HarvestCraft:1.11.2g@jar" }
 }
 
 processResources

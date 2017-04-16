@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul.module.json;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -40,7 +41,7 @@ public class Food
 
         Item item = GameData.getItemRegistry().getObject(loc);
 
-        if (item == null)
+        if (item == Items.AIR)
         {
             Block block = GameData.getBlockRegistry().getObject(loc);
 
@@ -81,9 +82,10 @@ public class Food
         }
 
         fd.meta = is.getItemDamage();
-        fd.count = is.stackSize;
+        fd.count = is.getCount();
 
         int[] oreIds = OreDictionary.getOreIDs(is);
+
         if (oreIds.length > 0)
         {
             fd.oreName = OreDictionary.getOreName(oreIds[0]);

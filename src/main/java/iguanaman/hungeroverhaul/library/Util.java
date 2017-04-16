@@ -44,12 +44,15 @@ public class Util
 
     public static ItemStack copyStackWithAmount(ItemStack stack, int amount)
     {
-        if (stack == null)
+        if (stack.isEmpty())
         {
-            return null;
+            return ItemStack.EMPTY;
         }
+
         ItemStack s2 = stack.copy();
-        s2.stackSize = amount;
+
+        s2.setCount(amount);
+
         return s2;
     }
 }

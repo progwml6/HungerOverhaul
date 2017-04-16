@@ -14,6 +14,7 @@ import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.library.ItemAndBlockList;
 import iguanaman.hungeroverhaul.module.event.HungerOverhaulEventHook;
 import iguanaman.hungeroverhaul.module.food.FoodModifier;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import squeek.applecore.api.food.FoodValues;
@@ -29,10 +30,14 @@ public class JsonModule
     public static void preinit(File configFolder)
     {
         GsonBuilder builder = new GsonBuilder();
+
         builder.enableComplexMapKeySerialization();
         builder.setPrettyPrinting();
+
         GSON = builder.create();
+
         File hoFolder = new File(configFolder, "HungerOverhaul");
+
         if (!hoFolder.exists())
         {
             hoFolder.mkdirs();
@@ -52,7 +57,9 @@ public class JsonModule
     public static void init()
     {
         HungerOverhaul.log.info("Loading JSON Files");
+
         HOJsonData hod;
+
         for (File j : hojsons)
         {
             try
@@ -60,6 +67,7 @@ public class JsonModule
                 FileReader reader = new FileReader(j);
                 hod = GSON.fromJson(reader, HOJsonData.class);
                 reader.close();
+
                 hoData.add(hod);
             }
             catch (Exception e)
@@ -67,7 +75,9 @@ public class JsonModule
                 HungerOverhaul.log.warn("Error Loading json files: ", e);
             }
         }
+
         HungerOverhaul.log.info("Loading data from json");
+
         for (HOJsonData h : hoData)
         {
             if (h == null)
@@ -87,6 +97,7 @@ public class JsonModule
                     }
                 }
             }
+
             if (h.foodsBlacklist != null)
             {
                 for (GameObject gameObj : h.foodsBlacklist)
@@ -94,6 +105,7 @@ public class JsonModule
                     addGameObjectToList(FoodModifier.blacklist, gameObj);
                 }
             }
+
             if (h.dropsBlacklist != null)
             {
                 for (GameObject gameObj : h.dropsBlacklist)
@@ -101,6 +113,7 @@ public class JsonModule
                     addGameObjectToList(HungerOverhaulEventHook.harvestDropsBlacklist, gameObj);
                 }
             }
+
             if (h.harvestBlacklist != null)
             {
                 for (GameObject gameObj : h.harvestBlacklist)
@@ -109,6 +122,7 @@ public class JsonModule
                 }
             }
         }
+
         HungerOverhaul.log.info("Loaded all data from JSON");
     }
 
@@ -125,7 +139,7 @@ public class JsonModule
             {
                 list.add(gameObj.toBlock());
             }
-            if (gameObj.toItem() != null)
+            if (gameObj.toItem() != Items.AIR)
             {
                 list.add(gameObj.toItem());
             }
@@ -133,7 +147,8 @@ public class JsonModule
         else
         {
             ItemStack itemStack = gameObj.toItemStack();
-            if (itemStack != null)
+
+            if (!itemStack.isEmpty())
             {
                 list.add(itemStack);
             }

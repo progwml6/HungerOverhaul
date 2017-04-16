@@ -20,7 +20,6 @@ import iguanaman.hungeroverhaul.module.loot.LootModule;
 import iguanaman.hungeroverhaul.module.natura.NaturaModule;
 import iguanaman.hungeroverhaul.module.natura.helper.NaturaHelper;
 import iguanaman.hungeroverhaul.module.reflection.ReflectionModule;
-import iguanaman.hungeroverhaul.module.tinkersconstruct.TinkersConstructModule;
 import iguanaman.hungeroverhaul.module.tweak.TweaksModule;
 import iguanaman.hungeroverhaul.module.vanilla.VanillaModule;
 import iguanaman.hungeroverhaul.module.vanilla.potion.PotionWellFed;
@@ -79,10 +78,11 @@ public class HungerOverhaul
             HarvestCraftModule.init();
         }
 
-        if (Loader.isModLoaded("tconstruct"))
+        // Temp disable until tcon is updated
+        /*if (Loader.isModLoaded("tconstruct"))
         {
             TinkersConstructModule.init();
-        }
+        }*/
 
         if (Loader.isModLoaded("natura"))
         {

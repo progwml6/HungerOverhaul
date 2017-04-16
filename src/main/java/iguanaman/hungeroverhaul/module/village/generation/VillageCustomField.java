@@ -14,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
@@ -61,7 +62,7 @@ public class VillageCustomField extends Village
             this.boundingBox.offset(0, this.groundLevel - this.boundingBox.maxY + 4 - 1, 0);
         }
 
-        BlockPos center = new BlockPos(this.boundingBox.getCenter());
+        BlockPos center = new BlockPos(getCenter(this.boundingBox));
 
         Biome biome = worldIn.getBiome(center);
 
@@ -83,7 +84,7 @@ public class VillageCustomField extends Village
 
         if (this.typeA == FieldType.REED)
         {
-            if (BiomeDictionary.isBiomeOfType(biome, Type.SANDY))
+            if (BiomeDictionary.hasType(biome, Type.SANDY))
             {
                 blockStateOutA = Blocks.SAND.getDefaultState();
             }
@@ -107,7 +108,7 @@ public class VillageCustomField extends Village
 
         if (this.typeB == FieldType.REED)
         {
-            if (BiomeDictionary.isBiomeOfType(biome, Type.SANDY))
+            if (BiomeDictionary.hasType(biome, Type.SANDY))
             {
                 blockStateOutB = Blocks.SAND.getDefaultState();
             }
@@ -194,6 +195,11 @@ public class VillageCustomField extends Village
         return true;
     }
 
+    public Vec3i getCenter(StructureBoundingBox boundingBox)
+    {
+        return new BlockPos(boundingBox.minX + (boundingBox.maxX - boundingBox.minX + 1) / 2, boundingBox.minY + (boundingBox.maxY - boundingBox.minY + 1) / 2, boundingBox.minZ + (boundingBox.maxZ - boundingBox.minZ + 1) / 2);
+    }
+
     private enum FieldType
     {
         NORMAL, REED, STEM
@@ -246,7 +252,7 @@ public class VillageCustomField extends Village
         int reedWeight = Config.fieldReedWeight;
         int stemWeight = Config.fieldStemWeight;
 
-        if (BiomeDictionary.isBiomeOfType(biome, Type.JUNGLE) || BiomeDictionary.isBiomeOfType(biome, Type.SWAMP))
+        if (BiomeDictionary.hasType(biome, Type.JUNGLE) || BiomeDictionary.hasType(biome, Type.SWAMP))
         {
             reedWeight *= 2;
             stemWeight *= 2;

@@ -28,10 +28,12 @@ public class FoodEventHandler
                 if (duration >= 30)
                 {
                     PotionEffect currentEffect = event.player.getActivePotionEffect(HungerOverhaul.potionWellFed);
+
                     if (currentEffect != null)
                     {
                         duration += currentEffect.getDuration();
                     }
+
                     event.player.addPotionEffect(new PotionEffect(HungerOverhaul.potionWellFed, duration, 0, true, true));
                 }
             }
@@ -41,10 +43,12 @@ public class FoodEventHandler
         {
             float toHeal = Math.round(event.foodValues.hunger / (float) Config.foodHealDivider);
             float canHeal = event.player.getMaxHealth() - event.player.getHealth();
+
             if (toHeal > canHeal)
             {
                 toHeal = canHeal;
             }
+
             if (toHeal > 0f)
             {
                 event.player.heal(toHeal);
@@ -60,6 +64,7 @@ public class FoodEventHandler
             AppleCoreAPI.mutator.setHunger(event.player, 19);
             AppleCoreAPI.mutator.setSaturation(event.player, 0f);
             AppleCoreAPI.mutator.setExhaustion(event.player, 0f);
+
             event.setResult(Result.DENY);
         }
     }
@@ -69,6 +74,7 @@ public class FoodEventHandler
     {
         EnumDifficulty difficulty = event.player.world.getDifficulty();
         float hungerLossRate = event.maxExhaustionLevel / (Config.hungerLossRatePercentage / 100F);
+
         if (Config.difficultyScalingHunger)
         {
             if (difficulty == EnumDifficulty.PEACEFUL)
@@ -80,6 +86,7 @@ public class FoodEventHandler
                 hungerLossRate *= 4F / 3F;
             }
         }
+
         event.maxExhaustionLevel = hungerLossRate;
     }
 
@@ -110,6 +117,7 @@ public class FoodEventHandler
     public void onHealthRegenTick(HealthRegenEvent.GetRegenTickPeriod event)
     {
         float wellfedModifier = 1.0F;
+
         if (event.player.isPotionActive(HungerOverhaul.potionWellFed))
         {
             wellfedModifier = 0.75F;
@@ -117,6 +125,7 @@ public class FoodEventHandler
 
         EnumDifficulty difficulty = event.player.world.getDifficulty();
         float difficultyModifierHealing = 1.0F;
+
         if (Config.difficultyScalingHealing)
         {
             if (difficulty.getDifficultyId() <= EnumDifficulty.EASY.getDifficultyId())
@@ -130,6 +139,7 @@ public class FoodEventHandler
         }
 
         float lowHealthModifier = 1.0F;
+
         if (Config.modifyRegenRateOnLowHealth)
         {
             lowHealthModifier = event.player.getMaxHealth() - event.player.getHealth();
@@ -171,6 +181,7 @@ public class FoodEventHandler
         if (Config.modifyFoodEatingSpeed && AppleCoreAPI.accessor.isFood(event.getItem()))
         {
             int hunger = FoodValues.get(event.getItem()).hunger;
+
             if (hunger > 0)
             {
                 event.setDuration(hunger * 8 + 8);

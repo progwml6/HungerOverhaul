@@ -91,7 +91,7 @@ public class PlantGrowthModule
             biomeModifier = Config.wrongBiomeRegrowthMultiplier;
             Biome biome = event.getWorld().getBiome(event.getPos());
 
-            for (BiomeDictionary.Type type : BiomeDictionary.getTypesForBiome(biome))
+            for (BiomeDictionary.Type type : BiomeDictionary.getTypes(biome))
             {
                 if (growthModification.biomeGrowthModifiers.containsKey(type))
                 {

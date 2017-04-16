@@ -32,6 +32,7 @@ public class FoodModifier
         }
 
         FoodValues modifiedFoodValues = lookupModifiedFoodValues(event.food);
+
         if (modifiedFoodValues != null)
         {
             event.foodValues = modifiedFoodValues;
@@ -40,10 +41,12 @@ public class FoodModifier
         {
             int hunger = Math.max(Math.round(event.foodValues.hunger / Config.foodHungerDivider), 1);
             float saturation = event.foodValues.saturationModifier;
+
             if (Config.foodHungerToSaturationDivider != 0)
             {
                 saturation = hunger / Config.foodHungerToSaturationDivider;
             }
+
             saturation /= Config.foodSaturationDivider;
             event.foodValues = new FoodValues(hunger, saturation);
         }
@@ -57,16 +60,19 @@ public class FoodModifier
     public static void setModifiedFoodValues(ItemStack stack, FoodValues values)
     {
         ItemStack foundMatchingFood = findMatchingFood(stack);
-        if (foundMatchingFood != null)
+
+        if (!foundMatchingFood.isEmpty())
         {
             modifiedFoodValues.remove(foundMatchingFood);
         }
+
         modifiedFoodValues.put(stack, values);
     }
 
     private static FoodValues lookupModifiedFoodValues(ItemStack stack)
     {
         ItemStack foundMatchingFood = findMatchingFood(stack);
+
         return foundMatchingFood != null ? modifiedFoodValues.get(foundMatchingFood) : null;
     }
 
@@ -79,6 +85,7 @@ public class FoodModifier
                 return entry.getKey();
             }
         }
+
         return null;
     }
 }

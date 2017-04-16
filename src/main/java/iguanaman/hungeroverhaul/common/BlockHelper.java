@@ -9,6 +9,7 @@ import com.progwml6.natura.overworld.NaturaOverworld;
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
 import iguanaman.hungeroverhaul.module.natura.helper.NaturaHelper;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
@@ -37,12 +38,12 @@ public class BlockHelper
         }
 
         // only add seeds if they are different from produce
-        if (produceIsNotSeed && seedItem.stackSize > 0)
+        if (produceIsNotSeed && seedItem.getCount() > 0)
         {
             modifiedDrops.add(seedItem);
         }
 
-        if (produceItem.stackSize > 0)
+        if (produceItem.getCount() > 0)
         {
             modifiedDrops.add(produceItem);
         }
@@ -78,7 +79,7 @@ public class BlockHelper
         {
             Item seedForProduct = NaturaHelper.cropToSeedMap.get(state.getBlock());
 
-            if (seedForProduct != null)
+            if (seedForProduct != Items.AIR)
             {
                 return seedForProduct;
             }
@@ -87,7 +88,7 @@ public class BlockHelper
         {
             Item seedForProduct = PamsModsHelper.productToSeedMap.get(itemDropped);
 
-            if (seedForProduct != null)
+            if (seedForProduct != Items.AIR)
             {
                 return seedForProduct;
             }

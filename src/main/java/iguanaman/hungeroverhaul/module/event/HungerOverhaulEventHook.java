@@ -87,6 +87,7 @@ public class HungerOverhaulEventHook
         if (Loader.isModLoaded("extrautils2"))
         {
             Block enderLilly = Block.getBlockFromName("extrautils2:enderlilly");
+
             if (enderLilly != null)
             {
                 rightClickHarvestBlacklist.add(enderLilly);
@@ -334,12 +335,12 @@ public class HungerOverhaulEventHook
                     {
                         ItemStack seed = GrassSeedsModule.getSeedFromTillingGrass(event.getWorld().rand);
 
-                        if (seed != null)
+                        if (!seed.isEmpty())
                         {
                             EntityItem ei = new EntityItem(world, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, seed.copy());
                             ei.motionY = 0.025000000372529D;
 
-                            world.spawnEntityInWorld(ei);
+                            world.spawnEntity(ei);
                         }
                     }
                     world.setBlockState(pos, Blocks.DIRT.getDefaultState());
@@ -410,7 +411,7 @@ public class HungerOverhaulEventHook
             EnumHand hand = event.getHand();
             ItemStack equipped = player.getHeldItem(hand);
 
-            if (equipped != null && equipped.getItem() != null)
+            if (!equipped.isEmpty() && equipped.getItem() != Items.AIR)
             {
                 Item item = equipped.getItem();
 
@@ -455,7 +456,7 @@ public class HungerOverhaulEventHook
             event.setCanceled(true);
         }
 
-        if (Config.foodsUnplantable && Loader.isModLoaded("harvestcraft") && event.getEntityPlayer().getHeldItem(event.getHand()) != null && event.getEntityPlayer().getHeldItem(event.getHand()).getItem() instanceof ItemPamSeedFood)
+        if (Config.foodsUnplantable && Loader.isModLoaded("harvestcraft") && !event.getEntityPlayer().getHeldItem(event.getHand()).isEmpty() && event.getEntityPlayer().getHeldItem(event.getHand()).getItem() instanceof ItemPamSeedFood)
         {
             if (event.getWorld().isRemote)
             {
@@ -692,6 +693,7 @@ public class HungerOverhaulEventHook
             else
             {
                 mealDescriptor = I18n.translateToLocal("tooltip.meal." + noun);
+
                 if (adjective != null)
                 {
                     mealDescriptor = I18n.translateToLocalFormatted(I18n.translateToLocal("tooltip.meal." + adjective), mealDescriptor);
@@ -702,6 +704,7 @@ public class HungerOverhaulEventHook
 
             event.getToolTip().add(topIndex, mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
         }
+
         if (Config.wrongBiomeRegrowthMultiplier > 1)
         {
             PlantGrowthModification growthModification = null;

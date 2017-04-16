@@ -34,6 +34,7 @@ public class GrassSeedsModule
             try
             {
                 WeightedRandom.Item entry = WeightedRandom.getRandomItem(rand, hoeSeedList);
+
                 if (entry != null && seedField.get(entry) != null)
                 {
                     return ((ItemStack) seedField.get(entry)).copy();
@@ -43,7 +44,8 @@ public class GrassSeedsModule
             {
                 e.printStackTrace();
             }
-            return null;
+
+            return ItemStack.EMPTY;
         }
         else
         {
@@ -84,12 +86,15 @@ public class GrassSeedsModule
         if (Config.removeTallGrassSeeds)
         {
             HungerOverhaul.log.info("Removing tall grass seeds");
+
             for (WeightedRandom.Item seedEntry : seedList)
             {
                 hoeSeedList.add(seedEntry);
             }
+
             seedList.clear();
-            MinecraftForge.addGrassSeed(null, 10);
+
+            MinecraftForge.addGrassSeed(ItemStack.EMPTY, 10);
         }
     }
 

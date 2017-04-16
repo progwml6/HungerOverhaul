@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul.module.json;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -29,7 +30,7 @@ public class GameObject
     {
         Item item = this.toItem();
 
-        if (item != null)
+        if (item != Items.AIR)
         {
             return new ItemStack(item, 1, this.meta);
         }
