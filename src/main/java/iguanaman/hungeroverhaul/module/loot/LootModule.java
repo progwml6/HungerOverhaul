@@ -78,8 +78,6 @@ public class LootModule
 
     public static void addChestLoot(Item item, ItemStack stack, FoodValues values)
     {
-        System.out.println("unlocalized Name: " + stack.getUnlocalizedName());
-
         int maxStackSize = Math.min(Config.chestLootMaxStackSize, item.getItemStackLimit(stack));
 
         LootCondition[] lootConditions = new LootCondition[0];

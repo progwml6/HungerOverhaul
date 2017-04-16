@@ -46,6 +46,7 @@ import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -121,6 +122,7 @@ public class HungerOverhaulEventHook
             {
                 float rnd = RandomHelper.nextFloat(rand, Config.eggTimeoutMultiplier);
                 EntityChicken chicken = (EntityChicken) event.getEntityLiving();
+
                 if (chicken.timeUntilNextEgg > 0 && rnd >= 1)
                 {
                     chicken.timeUntilNextEgg += 1;
@@ -131,6 +133,7 @@ public class HungerOverhaulEventHook
             if (Config.milkedTimeout > 0 && event.getEntityLiving() instanceof EntityCow && event.getEntityLiving().world.getTotalWorldTime() % 20 == 0)
             {
                 NBTTagCompound tags = event.getEntityLiving().getEntityData();
+
                 if (tags.hasKey("Milked"))
                 {
                     int milked = tags.getInteger("Milked");
@@ -155,6 +158,7 @@ public class HungerOverhaulEventHook
             if (tags.hasKey("HungerOverhaulCheck"))
             {
                 int lastCheck = tags.getInteger("HungerOverhaulCheck");
+
                 if (--lastCheck <= 0)
                 {
                     tags.removeTag("HungerOverhaulCheck");
@@ -170,6 +174,7 @@ public class HungerOverhaulEventHook
                 int foodLevel = 20;
                 boolean creative = false;
                 boolean isPlayer = false;
+
                 if (event.getEntityLiving() instanceof EntityPlayer)
                 {
                     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
@@ -185,6 +190,7 @@ public class HungerOverhaulEventHook
                 if (event.getEntityLiving() instanceof EntityPlayer && Config.constantHungerLoss)
                 {
                     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+
                     if (!player.capabilities.isCreativeMode && !player.isDead)
                     {
                         player.addExhaustion(0.01F);
@@ -194,6 +200,7 @@ public class HungerOverhaulEventHook
                 if (Config.addLowStatEffects)
                 {
                     int difficultyModifierEffects = 2;
+
                     if (Config.difficultyScalingEffects && event.getEntityLiving().world.getDifficulty() != null)
                     {
                         difficultyModifierEffects = event.getEntityLiving().world.getDifficulty().getDifficultyId();
@@ -207,7 +214,6 @@ public class HungerOverhaulEventHook
                     // low stat effects
                     if (!creative && isPlayer && !event.getEntityLiving().isDead && healthPercent > 0f)
                     {
-
                         if (Config.addLowHealthSlowness || Config.addLowHungerSlowness)
                         {
                             if ((Config.addLowHungerSlowness && foodLevel <= 1) || (Config.addLowHealthSlowness && healthPercent <= 0.05F))
@@ -401,7 +407,8 @@ public class HungerOverhaulEventHook
         {
             EntityCow cow = (EntityCow) event.getTarget();
             EntityPlayer player = event.getEntityPlayer();
-            ItemStack equipped = player.getActiveItemStack();
+            EnumHand hand = event.getHand();
+            ItemStack equipped = player.getHeldItem(hand);
 
             if (equipped != null && equipped.getItem() != null)
             {
@@ -414,6 +421,7 @@ public class HungerOverhaulEventHook
                     if (tags.hasKey("Milked"))
                     {
                         event.setCanceled(true);
+
                         if (!player.world.isRemote)
                         {
                             cow.playSound(SoundEvents.ENTITY_COW_HURT, 0.4F, (event.getEntity().world.rand.nextFloat() - event.getEntity().world.rand.nextFloat()) * 0.2F + 1.0F);
@@ -434,6 +442,7 @@ public class HungerOverhaulEventHook
         if (event.getEntityLiving() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+
             AppleCoreAPI.mutator.setHealthRegenTickCounter(player, 0);
         }
     }
