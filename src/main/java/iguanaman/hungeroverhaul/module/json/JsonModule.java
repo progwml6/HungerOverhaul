@@ -32,7 +32,9 @@ public class JsonModule
         builder.enableComplexMapKeySerialization();
         builder.setPrettyPrinting();
         GSON = builder.create();
-        File hoFolder = new File(configFolder, "HungerOverhaul");
+
+        File hoFolder = new File(configFolder, HungerOverhaul.modID);
+
         if (!hoFolder.exists())
         {
             hoFolder.mkdirs();
@@ -53,6 +55,7 @@ public class JsonModule
     {
         HungerOverhaul.log.info("Loading JSON Files");
         HOJsonData hod;
+
         for (File j : hojsons)
         {
             try
@@ -67,7 +70,9 @@ public class JsonModule
                 HungerOverhaul.log.warn("Error Loading json files: ", e);
             }
         }
+
         HungerOverhaul.log.info("Loading data from json");
+
         for (HOJsonData h : hoData)
         {
             if (h == null)
@@ -81,12 +86,14 @@ public class JsonModule
                 {
                     ItemStack itemStack = f.toItemStack();
                     FoodValues foodValues = f.toFoodValues();
+
                     if (itemStack != null && itemStack.getItem() != null && foodValues != null)
                     {
                         FoodModifier.setModifiedFoodValues(itemStack, foodValues);
                     }
                 }
             }
+
             if (h.foodsBlacklist != null)
             {
                 for (GameObject gameObj : h.foodsBlacklist)
@@ -94,6 +101,7 @@ public class JsonModule
                     addGameObjectToList(FoodModifier.blacklist, gameObj);
                 }
             }
+
             if (h.dropsBlacklist != null)
             {
                 for (GameObject gameObj : h.dropsBlacklist)
@@ -101,6 +109,7 @@ public class JsonModule
                     addGameObjectToList(HungerOverhaulEventHook.harvestDropsBlacklist, gameObj);
                 }
             }
+
             if (h.harvestBlacklist != null)
             {
                 for (GameObject gameObj : h.harvestBlacklist)
@@ -109,6 +118,7 @@ public class JsonModule
                 }
             }
         }
+
         HungerOverhaul.log.info("Loaded all data from JSON");
     }
 
@@ -125,6 +135,7 @@ public class JsonModule
             {
                 list.add(gameObj.toBlock());
             }
+
             if (gameObj.toItem() != null)
             {
                 list.add(gameObj.toItem());
@@ -133,6 +144,7 @@ public class JsonModule
         else
         {
             ItemStack itemStack = gameObj.toItemStack();
+
             if (itemStack != null)
             {
                 list.add(itemStack);
