@@ -1,5 +1,7 @@
 package iguanaman.hungeroverhaul;
 
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -7,6 +9,7 @@ import iguanaman.hungeroverhaul.common.config.Config;
 import iguanaman.hungeroverhaul.library.Util;
 import iguanaman.hungeroverhaul.module.biomesoplenty.BiomesOPlentyModule;
 import iguanaman.hungeroverhaul.module.bonemeal.BonemealModule;
+import iguanaman.hungeroverhaul.module.commands.HOCommand;
 import iguanaman.hungeroverhaul.module.event.HungerOverhaulEventHook;
 import iguanaman.hungeroverhaul.module.event.IMCHandler;
 import iguanaman.hungeroverhaul.module.food.FoodEventHandler;
@@ -35,6 +38,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = HungerOverhaul.modID, name = HungerOverhaul.modName, version = HungerOverhaul.modVersion, dependencies = "required-after:Forge@[12.18.0.1993,);required-after:AppleCore;after:tconstruct;after:harvestcraft;after:natura@[${natura_version},);after:ic2;after:*", acceptedMinecraftVersions = "[1.10.2, 1.11)")
 public class HungerOverhaul
@@ -53,12 +57,16 @@ public class HungerOverhaul
 
     public static Potion potionWellFed;
 
+    public static File configPath;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         Config.load(event);
 
-        JsonModule.preinit(event.getModConfigurationDirectory());
+        configPath = event.getModConfigurationDirectory();
+
+        JsonModule.preinit(configPath);
 
         potionWellFed = new PotionWellFed();
     }
@@ -117,6 +125,12 @@ public class HungerOverhaul
         MinecraftForge.EVENT_BUS.register(new HungerOverhaulEventHook());
         MinecraftForge.EVENT_BUS.register(new RespawnHungerModule());
         MinecraftForge.EVENT_BUS.register(new LootModule());
+    }
+
+    @EventHandler
+    private void serverStarting(final FMLServerStartingEvent evt)
+    {
+        evt.registerServerCommand(new HOCommand(evt.getServer()));
     }
 
     @EventHandler

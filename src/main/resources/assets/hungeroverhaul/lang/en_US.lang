@@ -31,3 +31,11 @@ ui.health.hurt=Hurt
 ui.hunger.starving=Starving
 ui.hunger.hungry=Hungry
 ui.hunger.peckish=Peckish
+
+#######################
+#   Command Strings   #
+#######################
+commands.hungeroverhaul.usage=Commands provided by Hunger Overhaul - use /hungeroverhaul list for a list, and /hungeroverhaul help _____ for help with a command.
+commands.hungeroverhaul.permissions=You do not have adequate permissions to run this command.
+commands.hungeroverhaul.ReloadJson=Reloads the json's to test modifications to food without having to restart your client ( OP )
+commands.hungeroverhaul.JsonReloaded=Json module has been reloaded!
