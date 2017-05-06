@@ -61,6 +61,9 @@ public class VanillaModule
             FoodModifier.setModifiedFoodValues(Items.MUSHROOM_STEW, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(Items.CARROT, new FoodValues(1, 0.05F));
             FoodModifier.setModifiedFoodValues(Items.POTATO, new FoodValues(1, 0.05F));
+
+            FoodModifier.setModifiedFoodValues(Items.MUTTON, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(Items.COOKED_MUTTON, new FoodValues(2, 0.1F));
         }
 
         /*
