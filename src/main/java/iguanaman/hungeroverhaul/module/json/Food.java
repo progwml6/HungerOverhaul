@@ -51,7 +51,7 @@ public class Food
             }
         }
 
-        return item == null ? null : new ItemStack(GameData.getItemRegistry().getObject(loc), this.count, this.meta);
+        return item == null ? ItemStack.EMPTY : new ItemStack(GameData.getItemRegistry().getObject(loc), this.count, this.meta);
     }
 
     public FoodValues toFoodValues()

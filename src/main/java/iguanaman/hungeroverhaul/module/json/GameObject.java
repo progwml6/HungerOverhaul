@@ -42,6 +42,6 @@ public class GameObject
             return new ItemStack(block, 1, this.meta);
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 }

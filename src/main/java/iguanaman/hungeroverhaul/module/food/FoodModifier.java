@@ -86,6 +86,6 @@ public class FoodModifier
             }
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 }

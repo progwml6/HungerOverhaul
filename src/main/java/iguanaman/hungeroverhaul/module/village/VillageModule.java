@@ -64,6 +64,7 @@ public class VillageModule
                 else if (Loader.isModLoaded("harvestcraft") && Config.addSaplingTradesFarmer && item instanceof ItemBlock)
                 {
                     Block block = Block.getBlockFromItem(item);
+
                     if (block instanceof BlockPamSapling)
                     {
                         addSaplingTrade(block);
