@@ -36,7 +36,7 @@ public class JsonModule
 
         GSON = builder.create();
 
-        File hoFolder = new File(configFolder, "HungerOverhaul");
+        File hoFolder = new File(configFolder, HungerOverhaul.modID);
 
         if (!hoFolder.exists())
         {
@@ -91,7 +91,8 @@ public class JsonModule
                 {
                     ItemStack itemStack = f.toItemStack();
                     FoodValues foodValues = f.toFoodValues();
-                    if (itemStack != null && itemStack.getItem() != null && foodValues != null)
+
+                    if (itemStack != ItemStack.EMPTY && itemStack.getItem() != Items.AIR && foodValues != null)
                     {
                         FoodModifier.setModifiedFoodValues(itemStack, foodValues);
                     }

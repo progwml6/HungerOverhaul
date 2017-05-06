@@ -19,7 +19,6 @@ import iguanaman.hungeroverhaul.module.growth.modification.PlantGrowthModificati
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -90,23 +89,65 @@ public class HarvestCraftModule
             FoodValues yogurtFoodValues = new FoodValues(2, 0.1F);
             FoodValues jellySandwichFoodValues = new FoodValues(8, 0.45F);
             FoodValues smoothieFoodValues = new FoodValues(3, 0.1F);
+            FoodValues fishFoodValues = new FoodValues(1, 0.25F);
 
             // foods
+            FoodModifier.setModifiedFoodValues(ItemRegistry.ediblerootItem, new FoodValues(1, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sunflowerseedsItem, new FoodValues(1, 0.1F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.calamarirawItem, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.calamaricookedItem, new FoodValues(2, 0.1F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.grilledasparagusItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.bakedsweetpotatoItem, new FoodValues(2, 0.15F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.grilledeggplantItem, new FoodValues(2, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.toastItem, new FoodValues(4, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.cheeseItem, new FoodValues(1, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.icecreamItem, new FoodValues(2, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.grilledcheeseItem, new FoodValues(7, 0.5F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.applejuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.applesauceItem, new FoodValues(2, 0.05F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.applepieItem, new FoodValues(5, 0.25F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.caramelappleItem, new FoodValues(3, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.pumpkinbreadItem, new FoodValues(5, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.caramelappleItem, new FoodValues(3, 0.1F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.applepieItem, new FoodValues(5, 0.25F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.teaItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.coffeeItem, new FoodValues(0, 0.0F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.popcornItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.raisinsItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.ricecakeItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.toastedcoconutItem, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.roastedpumpkinseedsItem, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.pumpkinsoupItem, new FoodValues(4, 0.1F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.applejuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.melonjuiceItem, fruitJuiceFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.melonsmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.carrotjuiceItem, fruitJuiceFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.carrotcakeItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.strawberryjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.grapejuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.blueberryjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cherryjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.papayajuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.starfruitjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.orangejuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.peachjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.limejuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.mangojuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pomegranatejuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.blackberryjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.raspberryjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.kiwijuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cranberryjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cactusfruitjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.plumjuiceItem, new FoodValues(2, 0.15F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pearjuiceItem, new FoodValues(2, 0.15F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.apricotjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.figjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.grapefruitjuiceItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.persimmonjuiceItem, fruitJuiceFoodValues);
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pumpkinsoupItem, new FoodValues(4, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.melonsmoothieItem, smoothieFoodValues);
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.carrotsoupItem, new FoodValues(4, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.glazedcarrotsItem, new FoodValues(3, 0.15F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.butteredpotatoItem, new FoodValues(4, 0.35F));
@@ -130,6 +171,7 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.fishsandwichItem, new FoodValues(7, 0.4F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.fishsticksItem, new FoodValues(4, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.fishandchipsItem, new FoodValues(8, 0.45F));
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.friedeggItem, new FoodValues(1, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.scrambledeggItem, new FoodValues(1, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.boiledeggItem, new FoodValues(1, 0.05F));
@@ -138,6 +180,7 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.taffyItem, new FoodValues(2, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.spidereyesoupItem, new FoodValues(3, 0.15F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.zombiejerkyItem, new FoodValues(1, 0.05F));
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.chocolatebarItem, new FoodValues(2, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.hotchocolateItem, new FoodValues(2, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.chocolateicecreamItem, new FoodValues(3, 0.1F));
@@ -147,6 +190,7 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.spagettiItem, new FoodValues(7, 0.35F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.spagettiandmeatballsItem, new FoodValues(10, 0.5F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.tomatosoupItem, new FoodValues(3, 0.1F));
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.chickenparmasanItem, new FoodValues(5, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.pizzaItem, new FoodValues(8, 0.5F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.springsaladItem, new FoodValues(4, 0.2F));
@@ -163,6 +207,7 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.braisedonionsItem, new FoodValues(4, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.heartybreakfastItem, new FoodValues(15, 0.8F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.cornonthecobItem, new FoodValues(3, 0.15F));
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.cornbreadItem, new FoodValues(5, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.tortillaItem, new FoodValues(3, 0.15F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.nachoesItem, new FoodValues(5, 0.3F));
@@ -172,13 +217,12 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.strawberrysmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.strawberrypieItem, new FoodValues(6, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.strawberrysaladItem, new FoodValues(4, 0.2F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.strawberryjuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.chocolatestrawberryItem, new FoodValues(3, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.peanutbutterItem, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.trailmixItem, new FoodValues(5, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.pbandjItem, new FoodValues(7, 0.4F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.peanutbuttercookiesItem, new FoodValues(3, 0.15F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.grapejuiceItem, fruitJuiceFoodValues);
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.grapejellyItem, jellyFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.grapesaladItem, new FoodValues(4, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.raisincookiesItem, new FoodValues(3, 0.15F));
@@ -216,15 +260,13 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.blueberrysmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.blueberrypieItem, new FoodValues(6, 0.35F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.blueberrymuffinItem, new FoodValues(4, 0.25F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.blueberryjuiceItem, fruitJuiceFoodValues);
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.pancakesItem, new FoodValues(4, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.blueberrypancakesItem, new FoodValues(6, 0.35F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.cherryjuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.cherrypieItem, new FoodValues(6, 0.35F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.chocolatecherryItem, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.cherrysmoothieItem, smoothieFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.cheesecakeItem, new FoodValues(5, 0.25F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.cherrycheesecakeItem, new FoodValues(7, 0.35F));
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.stuffedeggplantItem, new FoodValues(6, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.eggplantparmItem, new FoodValues(8, 0.45F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.raspberryicedteaItem, new FoodValues(1, 0.0F));
@@ -244,7 +286,7 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.mashedsweetpotatoesItem, new FoodValues(3, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.steamedpeasItem, new FoodValues(3, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.splitpeasoupItem, new FoodValues(5, 0.25F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.pineappleupsidedowncakeItem, new FoodValues(6, 0.3F));
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.pineapplehamItem, new FoodValues(6, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.pineappleyogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.turnipsoupItem, new FoodValues(5, 0.25F));
@@ -253,6 +295,7 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.gingerbreadItem, new FoodValues(6, 0.35F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.gingersnapsItem, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.candiedgingerItem, new FoodValues(2, 0.1F));
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.softpretzelandmustardItem, new FoodValues(6, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.spicymustardporkItem, new FoodValues(5, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.spicygreensItem, new FoodValues(6, 0.3F));
@@ -274,10 +317,8 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.walnutraisinbreadItem, new FoodValues(5, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.candiedwalnutsItem, new FoodValues(4, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.brownieItem, new FoodValues(7, 0.4F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.papayajuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.papayasmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.papayayogurtItem, yogurtFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.starfruitjuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.starfruitsmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.starfruityogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.guacamoleItem, new FoodValues(6, 0.3F));
@@ -295,22 +336,17 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.chickencurryItem, new FoodValues(9, 0.5F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.coconutshrimpItem, new FoodValues(6, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.coconutyogurtItem, yogurtFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.orangejuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.orangechickenItem, new FoodValues(6, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.orangesmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.orangeyogurtItem, yogurtFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.peachjuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.peachcobblerItem, new FoodValues(6, 0.35F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.peachsmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.peachyogurtItem, yogurtFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.limejuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.keylimepieItem, new FoodValues(7, 0.4F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.limesmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.limeyogurtItem, yogurtFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.mangojuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.mangosmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.mangoyogurtItem, yogurtFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.pomegranatejuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.pomegranatesmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.pomegranateyogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.vanillayogurtItem, yogurtFoodValues);
@@ -331,8 +367,7 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.creamcookieItem, new FoodValues(6, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.jaffaItem, new FoodValues(6, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.friedchickenItem, new FoodValues(7, 0.35F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.chocolatesprinklecakeItem, new FoodValues(6, 0.35F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.redvelvetcakeItem, new FoodValues(7, 0.35F));
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.footlongItem, new FoodValues(9, 0.55F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.blueberryyogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.lemonyogurtItem, yogurtFoodValues);
@@ -340,19 +375,16 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.strawberryyogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.grapeyogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.chocolateyogurtItem, yogurtFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.blackberryjuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.blackberrycobblerItem, new FoodValues(5, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.blackberrysmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.blackberryyogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.chocolatemilkItem, new FoodValues(2, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.pumpkinyogurtItem, yogurtFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.raspberryjuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.raspberrypieItem, new FoodValues(6, 0.35F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.raspberrysmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.raspberryyogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.cinnamonsugardonutItem, new FoodValues(5, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.melonyogurtItem, yogurtFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.kiwijuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.kiwismoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.kiwiyogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.plainyogurtItem, yogurtFoodValues);
@@ -360,11 +392,10 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.saltedsunflowerseedsItem, new FoodValues(1, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.sunflowerwheatrollsItem, new FoodValues(6, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.sunflowerbroccolisaladItem, new FoodValues(5, 0.25F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.cranberryjuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.cranberrysauceItem, new FoodValues(2, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.cranberrybarItem, new FoodValues(5, 0.3F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.peppermintItem, new FoodValues(2, 0.05F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.cactusfruitjuiceItem, fruitJuiceFoodValues);
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.baklavaItem, new FoodValues(7, 0.45F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.gummybearsItem, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.baconmushroomburgerItem, new FoodValues(10, 0.65F));
@@ -372,15 +403,12 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.meatystewItem, new FoodValues(6, 0.45F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.mixedsaladItem, new FoodValues(5, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.pinacoladaItem, new FoodValues(2, 0.15F));
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.shepardspieItem, new FoodValues(6, 0.4F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.eggnogItem, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.custardItem, new FoodValues(5, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.sushiItem, new FoodValues(3, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.gardensoupItem, new FoodValues(4, 0.2F));
-            FoodModifier.setModifiedFoodValues(Items.MUTTON, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(Items.COOKED_MUTTON, new FoodValues(2, 0.1F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.calamarirawItem, new FoodValues(1, 0.05F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.calamaricookedItem, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.applejellyItem, jellyFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.applejellysandwichItem, jellySandwichFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.blackberryjellyItem, jellyFoodValues);
@@ -415,6 +443,7 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.strawberryjellysandwichItem, jellySandwichFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.watermelonjellyItem, jellyFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.watermelonjellysandwichItem, jellySandwichFoodValues);
+
             FoodModifier.setModifiedFoodValues(ItemRegistry.cherrysodaItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.colasodaItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.gingersodaItem, fruitJuiceFoodValues);
@@ -427,7 +456,6 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.mintchocolatechipicemcreamItem, new FoodValues(5, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.strawberryicecreamItem, new FoodValues(4, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.vanillaicecreamItem, new FoodValues(4, 0.2F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.ediblerootItem, new FoodValues(1, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.gingerchickenItem, new FoodValues(6, 0.35F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.oldworldveggiesoupItem, new FoodValues(4, 0.15F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.spicebunItem, new FoodValues(4, 0.2F));
@@ -436,8 +464,6 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.honeylemonlambItem, new FoodValues(4, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.pumpkinoatsconesItem, new FoodValues(3, 0.15F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.beefjerkyItem, new FoodValues(3, 0.2F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.plumjuiceItem, new FoodValues(2, 0.15F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.pearjuiceItem, new FoodValues(2, 0.15F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.ovenroastedcauliflowerItem, new FoodValues(5, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.leekbaconsoupItem, new FoodValues(6, 0.25F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.herbbutterparsnipsItem, new FoodValues(4, 0.2F));
@@ -445,20 +471,10 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.soymilkItem, new FoodValues(2, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.firmtofuItem, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.silkentofuItem, new FoodValues(3, 0.15F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.bakedsweetpotatoItem, new FoodValues(2, 0.15F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.grilledasparagusItem, new FoodValues(2, 0.1F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.toastedcoconutItem, new FoodValues(2, 0.1F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.coffeeItem, new FoodValues(0, 0.0F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.popcornItem, new FoodValues(2, 0.1F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.grilledeggplantItem, new FoodValues(2, 0.05F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.raisinsItem, new FoodValues(2, 0.1F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.ricecakeItem, new FoodValues(2, 0.1F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.teaItem, new FoodValues(2, 0.1F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.bamboosteamedriceItem, new FoodValues(4, 0.15F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.roastedchestnutItem, new FoodValues(2, 0.05F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.sweetpotatosouffleItem, new FoodValues(5, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.cashewchickenItem, new FoodValues(6, 0.25F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.apricotjuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.apricotyogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.apricotglazedporkItem, new FoodValues(4, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.apricotjellyItem, jellyFoodValues);
@@ -469,8 +485,6 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.figjellysandwichItem, jellySandwichFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.figsmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.figyogurtItem, yogurtFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.figjuiceItem, fruitJuiceFoodValues);
-            FoodModifier.setModifiedFoodValues(ItemRegistry.grapefruitjuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.grapefruitjellyItem, jellyFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.grapefruitjellysandwichItem, jellySandwichFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.grapefruitsmoothieItem, smoothieFoodValues);
@@ -479,7 +493,6 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.citrussaladItem, new FoodValues(4, 0.2F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.pecanpieItem, new FoodValues(7, 0.4F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.pralinesItem, new FoodValues(2, 0.1F));
-            FoodModifier.setModifiedFoodValues(ItemRegistry.persimmonjuiceItem, fruitJuiceFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.persimmonyogurtItem, yogurtFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.persimmonsmoothieItem, smoothieFoodValues);
             FoodModifier.setModifiedFoodValues(ItemRegistry.persimmonjellyItem, jellyFoodValues);
@@ -503,6 +516,257 @@ public class HarvestCraftModule
             FoodModifier.setModifiedFoodValues(ItemRegistry.beefwellingtonItem, new FoodValues(16, 0.8F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.epicbaconItem, new FoodValues(16, 0.8F));
             FoodModifier.setModifiedFoodValues(ItemRegistry.manjuuItem, new FoodValues(4, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chickengumboItem, new FoodValues(10, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.generaltsochickenItem, new FoodValues(6, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.californiarollItem, new FoodValues(4, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.futomakiItem, new FoodValues(7, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.beansontoastItem, new FoodValues(4, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.vegemiteItem, new FoodValues(7, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.honeycombchocolatebarItem, new FoodValues(5, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cherrycoconutchocolatebarItem, new FoodValues(7, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.fairybreadItem, new FoodValues(2, 0.05F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.timtamItem, new FoodValues(3, 0.15F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.meatpieItem, new FoodValues(7, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chikorollItem, new FoodValues(9, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.damperItem, new FoodValues(4, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.beetburgerItem, new FoodValues(16, 0.8F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.gherkinItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.mcpamItem, new FoodValues(10, 0.6F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.ceasarsaladItem, new FoodValues(5, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chaoscookieItem, new FoodValues(3, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chocolatebaconItem, new FoodValues(7, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.lambkebabItem, new FoodValues(9, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.nutellaItem, new FoodValues(5, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.snickersbarItem, new FoodValues(5, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.spinachpieItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.steamedspinachItem, new FoodValues(2, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.vegemiteontoastItem, new FoodValues(3, 0.15F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.anchovyrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.bassrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.carprawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.catfishrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.charrrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.clamrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.crabrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.crayfishrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.eelrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.frograwItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.grouperrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.herringrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.jellyfishrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.mudfishrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.octopusrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.perchrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.scalloprawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.shrimprawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.snailrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.snapperrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.tilapiarawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.troutrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.tunarawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.turtlerawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.walleyerawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.greenheartfishItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sardinerawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.musselrawItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.rawtofishItem, fishFoodValues);
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.clamcookedItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.crabcookedItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.crayfishcookedItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.frogcookedItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.octopuscookedItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.scallopcookedItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.shrimpcookedItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.snailcookedItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.turtlecookedItem, fishFoodValues);
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.appleciderItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.bangersandmashItem, new FoodValues(9, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.batteredsausageItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chorizoItem, new FoodValues(8, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.coleslawItem, new FoodValues(4, 0.15F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.energydrinkItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.friedonionsItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.meatfeastpizzaItem, new FoodValues(16, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.mincepieItem, new FoodValues(6, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.onionhamburgerItem, new FoodValues(9, 0.6F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pepperoniItem, new FoodValues(8, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pickledonionsItem, new FoodValues(4, 0.15F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.porksausageItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.raspberrytrifleItem, new FoodValues(6, 0.35F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pumpkinmuffinItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.suaderoItem, new FoodValues(7, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.randomtacoItem, new FoodValues(13, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.turkeyrawItem, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.turkeycookedItem, new FoodValues(3, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.venisonrawItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.venisoncookedItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.strawberrymilkshakeItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chocolatemilkshakeItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.bananamilkshakeItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cornflakesItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.coleslawburgerItem, new FoodValues(10, 0.6F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.roastchickenItem, new FoodValues(7, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.roastpotatoesItem, new FoodValues(3, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sundayroastItem, new FoodValues(7, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.bbqpulledporkItem, new FoodValues(9, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.lambwithmintsauceItem, new FoodValues(7, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.steakandchipsItem, new FoodValues(9, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cherryicecreamItem, new FoodValues(4, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pistachioicecreamItem, new FoodValues(4, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.neapolitanicecreamItem, new FoodValues(4, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.spumoniicecreamItem, new FoodValues(4, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.almondbutterItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cashewbutterItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chestnutbutterItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cornishpastyItem, new FoodValues(6, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cottagepieItem, new FoodValues(6, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.croissantItem, new FoodValues(4, 0.25F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.dimsumItem, new FoodValues(6, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.friedpecanokraItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.gooseberryjellyItem, jellyFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.gooseberryjellysandwichItem, jellySandwichFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.gooseberrymilkshakeItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.gooseberrypieItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.gooseberrysmoothieItem, smoothieFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.gooseberryyogurtItem, yogurtFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.hamsweetpicklesandwichItem, new FoodValues(5, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.hushpuppiesItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.kimchiItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.mochiItem, new FoodValues(3, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.museliItem, new FoodValues(4, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.naanItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.okrachipsItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.okracreoleItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pistachiobutterItem, new FoodValues(3, 0.15F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.ploughmanslunchItem, new FoodValues(9, 0.55F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.porklomeinItem, new FoodValues(9, 0.55F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.salmonpattiesItem, new FoodValues(6, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sausageItem, new FoodValues(3, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sausagerollItem, new FoodValues(6, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sesameballItem, new FoodValues(4, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sesamesnapsItem, new FoodValues(1, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.shrimpokrahushpuppiesItem, new FoodValues(6, 0.3F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sweetpickleItem, new FoodValues(3, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.veggiestripsItem, new FoodValues(4, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.vindalooItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.applesmoothieItem, smoothieFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.coconutsmoothieItem, smoothieFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cranberrysmoothieItem, smoothieFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cranberryyogurtItem, yogurtFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.grapesmoothieItem, smoothieFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pearsmoothieItem, smoothieFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pearjellyItem, jellyFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pearjellysandwichItem, jellySandwichFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.plumsmoothieItem, smoothieFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.plumjellyItem, jellyFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.plumjellysandwichItem, jellySandwichFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.honeysandwichItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cheeseontoastItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.tunapotatoItem, new FoodValues(7, 0.6F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chocolaterollItem, new FoodValues(5, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.jamrollItem, new FoodValues(4, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.coconutcreamItem, fruitJuiceFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.crackerItem, new FoodValues(3, 0.2F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.paneerItem, new FoodValues(1, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.deluxechickencurryItem, new FoodValues(16, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.gravyItem, new FoodValues(3, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.mangochutneyItem, new FoodValues(3, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.marzipanItem, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.paneertikkamasalaItem, new FoodValues(4, 0.15F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.peaandhamsoupItem, new FoodValues(6, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.potatoandleeksoupItem, new FoodValues(3, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.yorkshirepuddingItem, new FoodValues(2, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.toadintheholeItem, new FoodValues(6, 0.35F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.hotandsoursoupItem, new FoodValues(4, 0.15F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chickenchowmeinItem, new FoodValues(8, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.kungpaochickenItem, new FoodValues(9, 0.5F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.charsiuItem, new FoodValues(9, 0.5F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sweetandsourchickenItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.baconandeggsItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.biscuitsandgravyItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.applefritterItem, new FoodValues(7, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sweetteaItem, new FoodValues(1, 0.0F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.creepercookieItem, new FoodValues(3, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.patreonpieItem, new FoodValues(5, 0.25F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.honeybreadItem, new FoodValues(4, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.honeybunItem, new FoodValues(4, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.honeyglazedcarrotsItem, new FoodValues(3, 0.15F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.honeyglazedhamItem, new FoodValues(6, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.honeysoyribsItem, new FoodValues(9, 0.55F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.anchovypepperonipizzaItem, new FoodValues(9, 0.6F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chocovoxelsItem, new FoodValues(3, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cinnamontoastItem, jellySandwichFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cornedbeefhashItem, new FoodValues(16, 0.8F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cornedbeefItem, new FoodValues(6, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cottoncandyItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.crackersItem, new FoodValues(4, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.creeperwingsItem, new FoodValues(6, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.dhalItem, new FoodValues(7, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.durianmilkshakeItem, new FoodValues(4, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.durianmuffinItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.homestylelunchItem, new FoodValues(9, 0.6F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.hummusItem, new FoodValues(4, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.ironbrewItem, new FoodValues(7, 0.45F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.lasagnaItem, new FoodValues(7, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.lemondrizzlecakeItem, new FoodValues(6, 0.4F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.meatloafItem, new FoodValues(9, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.montecristosandwichItem, new FoodValues(8, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.mushroomlasagnaItem, new FoodValues(8, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.musselcookedItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.netherwingsItem, new FoodValues(7, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pizzasoupItem, new FoodValues(7, 0.1F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.poutineItem, new FoodValues(4, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.salsaItem, new FoodValues(4, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.sardinesinhotsauceItem, new FoodValues(3, 0.15F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.teriyakichickenItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.toastedwesternItem, new FoodValues(9, 0.5F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.turkishdelightItem, new FoodValues(2, 0.1F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.rawtofeakItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.rawtofaconItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.rawtofeegItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.rawtofuttonItem, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.rawtofickenItem, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.rawtofabbitItem, new FoodValues(2, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.rawtofurkeyItem, new FoodValues(1, 0.05F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.rawtofenisonItem, new FoodValues(2, 0.05F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cookedtofeakItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cookedtofaconItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cookedtofishItem, new FoodValues(3, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cookedtofeegItem, fishFoodValues);
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cookedtofuttonItem, new FoodValues(3, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cookedtofickenItem, new FoodValues(3, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cookedtofabbitItem, new FoodValues(3, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cookedtofurkeyItem, new FoodValues(3, 0.2F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cookedtofenisonItem, new FoodValues(6, 0.35F));
+
+            FoodModifier.setModifiedFoodValues(ItemRegistry.carrotcakeItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.holidaycakeItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pumpkincheesecakeItem, new FoodValues(7, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pavlovaItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.lamingtonItem, new FoodValues(4, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cheesecakeItem, new FoodValues(5, 0.25F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.cherrycheesecakeItem, new FoodValues(7, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.pineappleupsidedowncakeItem, new FoodValues(6, 0.3F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.chocolatesprinklecakeItem, new FoodValues(6, 0.35F));
+            FoodModifier.setModifiedFoodValues(ItemRegistry.redvelvetcakeItem, new FoodValues(7, 0.35F));
         }
 
         // Sapling Growth
