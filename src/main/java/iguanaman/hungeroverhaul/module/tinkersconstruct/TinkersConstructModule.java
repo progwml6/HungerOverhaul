@@ -1,11 +1,6 @@
 package iguanaman.hungeroverhaul.module.tinkersconstruct;
 
-public class TinkersConstructModule
-{
-
-}
-// DISABLE UNTIL TCON IS UPDATED TODO: RE-ENABLE
-/*import iguanaman.hungeroverhaul.common.config.Config;
+import iguanaman.hungeroverhaul.common.config.Config;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -86,4 +81,4 @@ public class TinkersConstructModule
             }
         }
     }
-}*/
+}
