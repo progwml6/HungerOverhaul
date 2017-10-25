@@ -5,7 +5,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class GameObject
@@ -14,16 +14,14 @@ public class GameObject
 
     public int meta = OreDictionary.WILDCARD_VALUE;
 
-    @SuppressWarnings("deprecation")
     public Item toItem()
     {
-        return GameData.getItemRegistry().getObject(this.name);
+        return ForgeRegistries.ITEMS.getValue(this.name);
     }
 
-    @SuppressWarnings("deprecation")
     public Block toBlock()
     {
-        return GameData.getBlockRegistry().getObject(this.name);
+        return ForgeRegistries.BLOCKS.getValue(this.name);
     }
 
     public ItemStack toItemStack()

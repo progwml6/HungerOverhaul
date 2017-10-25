@@ -2,6 +2,7 @@ package iguanaman.hungeroverhaul.module.vanilla;
 
 import iguanaman.hungeroverhaul.common.config.Config;
 import iguanaman.hungeroverhaul.library.RecipeRemover;
+import iguanaman.hungeroverhaul.library.Util;
 import iguanaman.hungeroverhaul.module.bonemeal.BonemealModule;
 import iguanaman.hungeroverhaul.module.bonemeal.modification.BonemealModification;
 import iguanaman.hungeroverhaul.module.food.FoodModifier;
@@ -24,7 +25,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import squeek.applecore.api.food.FoodValues;
 
@@ -34,7 +35,11 @@ public class VanillaModule
     {
         if (Config.addSeedsCraftingRecipe)
         {
-            GameRegistry.addRecipe(new ShapelessOreRecipe(Items.WHEAT_SEEDS, Items.WHEAT));
+            String registryName = Util.MODID + ":wheatseeds";
+
+            ShapelessOreRecipe sor = new ShapelessOreRecipe(null, Items.WHEAT_SEEDS, Items.WHEAT);
+
+            ForgeRegistries.RECIPES.register(sor.setRegistryName(registryName));
         }
 
         /*

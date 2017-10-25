@@ -10,7 +10,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-//TODO: REMOVE REFLECTION HELPER IN 1.11
+//TODO: REMOVE REFLECTION HELPER IN 1.13
 public class ReflectionModule
 {
     //@formatter:off

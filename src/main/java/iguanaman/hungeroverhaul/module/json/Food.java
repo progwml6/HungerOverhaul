@@ -5,7 +5,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import squeek.applecore.api.food.FoodValues;
 
@@ -34,16 +34,15 @@ public class Food
     }
 
     //TODO handle blocks as well!!
-    @SuppressWarnings("deprecation")
     public ItemStack toItemStack()
     {
         ResourceLocation loc = new ResourceLocation(this.name);
 
-        Item item = GameData.getItemRegistry().getObject(loc);
+        Item item = ForgeRegistries.ITEMS.getValue(loc);
 
         if (item == Items.AIR)
         {
-            Block block = GameData.getBlockRegistry().getObject(loc);
+            Block block = ForgeRegistries.BLOCKS.getValue(loc);
 
             if (block != null)
             {
@@ -51,7 +50,7 @@ public class Food
             }
         }
 
-        return item == null ? ItemStack.EMPTY : new ItemStack(GameData.getItemRegistry().getObject(loc), this.count, this.meta);
+        return item == null ? ItemStack.EMPTY : new ItemStack(ForgeRegistries.ITEMS.getValue(loc), this.count, this.meta);
     }
 
     public FoodValues toFoodValues()
@@ -64,16 +63,15 @@ public class Food
         return fromItemStack(is, fv.saturationModifier, fv.hunger);
     }
 
-    @SuppressWarnings("deprecation")
     public static Food fromItemStack(ItemStack is, Float saturationModifier, int hunger)
     {
         Food fd = new Food();
 
-        fd.name = GameData.getItemRegistry().getNameForObject(is.getItem()).toString();
+        fd.name = ForgeRegistries.ITEMS.getKey(is.getItem()).toString();
 
         if (fd.name == null || fd.name.toString().isEmpty())
         {
-            fd.name = GameData.getBlockRegistry().getNameForObject(Block.getBlockFromItem(is.getItem())).toString();
+            fd.name = ForgeRegistries.BLOCKS.getKey(Block.getBlockFromItem(is.getItem())).toString();
         }
 
         if (fd.name == null || fd.name.toString().isEmpty())

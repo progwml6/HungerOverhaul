@@ -13,6 +13,8 @@ import com.progwml6.natura.overworld.block.crops.BlockNaturaCotton;
 import com.progwml6.natura.shared.NaturaCommons;
 
 import iguanaman.hungeroverhaul.common.config.Config;
+import iguanaman.hungeroverhaul.library.RecipeRemover;
+import iguanaman.hungeroverhaul.library.Util;
 import iguanaman.hungeroverhaul.module.bonemeal.BonemealModule;
 import iguanaman.hungeroverhaul.module.bonemeal.modification.BonemealModification;
 import iguanaman.hungeroverhaul.module.food.FoodModifier;
@@ -25,9 +27,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import slimeknights.mantle.util.RecipeRemover;
 import squeek.applecore.api.food.FoodValues;
 
 public class NaturaModule
@@ -49,7 +50,11 @@ public class NaturaModule
 
         if (Config.addSeedsCraftingRecipe && isNaturaOverworldLoaded)
         {
-            GameRegistry.addRecipe(new ShapelessOreRecipe(barleySeeds, barley));
+            String registryName = Util.MODID + ":barleyseeds";
+
+            ShapelessOreRecipe sor = new ShapelessOreRecipe(null, barleySeeds, barley);
+
+            ForgeRegistries.RECIPES.register(sor.setRegistryName(registryName));
         }
 
         // seed recipe conflicts with the default flour recipe, so remove it
@@ -67,8 +72,17 @@ public class NaturaModule
 
         if (Config.addAlternateNaturaFlourCraftingRecipes)
         {
-            GameRegistry.addRecipe(new ShapelessOreRecipe(barleyFlour, barley, barley));
-            GameRegistry.addRecipe(new ShapelessOreRecipe(wheatFlour, Items.WHEAT, Items.WHEAT));
+            String registryName = Util.MODID + ":barleyflour";
+
+            ShapelessOreRecipe sor = new ShapelessOreRecipe(null, barleyFlour, barley, barley);
+
+            ForgeRegistries.RECIPES.register(sor.setRegistryName(registryName));
+
+            String registryName1 = Util.MODID + ":wheatflour";
+
+            ShapelessOreRecipe sor1 = new ShapelessOreRecipe(null, wheatFlour, Items.WHEAT, Items.WHEAT);
+
+            ForgeRegistries.RECIPES.register(sor1.setRegistryName(registryName1));
         }
 
         /*
