@@ -14,7 +14,6 @@ public class PotionWellFed extends Potion
 
         this.setIconIndex(7, 0);
         this.setPotionName("potion." + resource.getResourcePath());
-
-        REGISTRY.register(-1, resource, this);
+        this.setRegistryName(resource);
     }
 }

@@ -30,6 +30,7 @@ import iguanaman.hungeroverhaul.module.vanilla.potion.PotionWellFed;
 import iguanaman.hungeroverhaul.module.village.VillageModule;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -39,6 +40,8 @@ import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(modid = HungerOverhaul.modID, name = HungerOverhaul.modName, version = HungerOverhaul.modVersion, dependencies = "required-after:forge@[14.21.1.2387,);required-after:applecore;after:tconstruct;after:harvestcraft;after:natura@[1.12-4.3.0.17,);after:ic2;after:*", acceptedMinecraftVersions = "[1.12, 1.13)")
 public class HungerOverhaul
@@ -55,7 +58,7 @@ public class HungerOverhaul
     @Instance(modID)
     public static HungerOverhaul instance;
 
-    public static Potion potionWellFed;
+    public static Potion potionWellFed = new PotionWellFed();
 
     public static File configPath;
 
@@ -68,7 +71,7 @@ public class HungerOverhaul
 
         JsonModule.preinit(configPath);
 
-        potionWellFed = new PotionWellFed();
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @EventHandler
@@ -125,6 +128,14 @@ public class HungerOverhaul
         MinecraftForge.EVENT_BUS.register(new HungerOverhaulEventHook());
         MinecraftForge.EVENT_BUS.register(new RespawnHungerModule());
         MinecraftForge.EVENT_BUS.register(new LootModule());
+    }
+
+    @SubscribeEvent
+    public void registerPotions(Register<Potion> event)
+    {
+        IForgeRegistry<Potion> registry = event.getRegistry();
+
+        registry.register(potionWellFed);
     }
 
     @EventHandler
