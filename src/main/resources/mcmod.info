@@ -6,8 +6,8 @@
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "http://www.minecraftforum.net/topic/1813158-",
-  "authorList": ["iguana_man", "Parker8283" ,"progwml6", "squeek502"],
-  "credits": "Created by iguana_man, updated to 1.7 and maintained by Parker8283, progwml6, and squeek502",
+  "authorList": ["iguana_man", "Parker8283" ,"progwml6", "squeek502", "alexbegt"],
+  "credits": "Created by iguana_man, updated to 1.12 and maintained by Parker8283, progwml6, squeek502, and alexbegt",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

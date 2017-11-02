@@ -42,7 +42,6 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -64,6 +63,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -415,7 +415,7 @@ public class HungerOverhaulEventHook
             {
                 Item item = equipped.getItem();
 
-                if (item instanceof ItemBucket && FluidStack.loadFluidStackFromNBT(equipped.getTagCompound()) == null || cow instanceof EntityMooshroom && item == Items.BOWL)
+                if (FluidUtil.getFluidHandler(equipped) != null && FluidStack.loadFluidStackFromNBT(equipped.getTagCompound()) == null || cow instanceof EntityMooshroom && item == Items.BOWL)
                 {
                     NBTTagCompound tags = cow.getEntityData();
 
@@ -519,7 +519,7 @@ public class HungerOverhaulEventHook
                 resultingState = real_state.withProperty(BlockBeetroot.BEETROOT_AGE, 0);
             }
         }
-        //TODO: REMOVE REFLECTION HELPER IN 1.11
+        //TODO: REMOVE REFLECTION HELPER IN 1.13
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamCrop.class)
         {
             if (ReflectionModule.pamCropAgeFound && real_state.getValue(ReflectionModule.pamCropAge) >= 3)
@@ -575,7 +575,7 @@ public class HungerOverhaulEventHook
     @SubscribeEvent
     public void onBlockHarvested(HarvestDropsEvent event)
     {
-        //TODO: REMOVE REFLECTION HELPER IN 1.11
+        //TODO: REMOVE REFLECTION HELPER IN 1.13
 
         if (!Config.modifyCropDropsBreak)
         {
