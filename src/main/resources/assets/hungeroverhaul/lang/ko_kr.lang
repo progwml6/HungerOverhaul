@@ -1,0 +1,24 @@
+###############
+#   Potions   #
+###############
+potion.wellfedPotion=잘 먹음
+
+################
+#   Tooltips   #
+################
+tooltip.meal.crop_grows_best_in=가장 잘 자람:
+tooltip.meal.hearty=%s 하트
+tooltip.meal.wholesome=건강에 좋은 %s
+tooltip.meal.nourishing=영양분이 많은 %s
+tooltip.meal.unfulfilling=입맛 다시는 %s
+tooltip.meal.morsel=작은양
+tooltip.meal.snack=간식
+tooltip.meal.lightmeal=간단한 식사
+tooltip.meal.meal=식사
+tooltip.meal.largemeal=큰 식사
+tooltip.meal.feast=잔칫밥
+
+##################
+#   UI Strings   #
+##################
+MISSING

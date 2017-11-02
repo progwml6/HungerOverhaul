@@ -1,0 +1,38 @@
+###############
+#   Potions   #
+###############
+potion.wellfedPotion=Bem alimentado
+
+################
+#   Tooltips   #
+################
+tooltip.meal.crop_grows_best_in=Cresce melhor em:
+tooltip.meal.hearty=%s caloroso
+tooltip.meal.wholesome=%s saudável
+tooltip.meal.nourishing=%s nutritivo
+tooltip.meal.unfulfilling=%s insatisfatório
+tooltip.meal.morsel=bocado
+tooltip.meal.snack=lanche
+tooltip.meal.lightmeal=e leve refeição
+tooltip.meal.meal=refeição
+tooltip.meal.largemeal=e grande refeição
+tooltip.meal.feast=banquete
+tooltip.meal.hearty_largemeal=refeição grande e calorosa
+tooltip.meal.hearty_meal=refeição calorosa
+tooltip.meal.hearty_lightmeal=refeição leve e calorosa
+tooltip.meal.nourishing_largemeal=refeição grande e nutritiva
+tooltip.meal.nourishing_meal=refeição nutritiva
+tooltip.meal.nourishing_lightmeal=refeição leve e nutritiva
+tooltip.meal.unfulfilling_largemeal=refeição grande e insatisfatória
+tooltip.meal.unfulfilling_meal=refeição insatisfatória
+tooltip.meal.unfulfilling_lightmeal=refeição leve e insatisfatória
+
+##################
+#   UI Strings   #
+##################
+ui.health.dying=Morrendo
+ui.health.injured=Ferido
+ui.health.hurt=Machucado
+ui.hunger.starving=Faminto
+ui.hunger.hungry=Com fome
+ui.hunger.peckish=Estômago vazio
