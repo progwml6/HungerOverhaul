@@ -711,7 +711,10 @@ public class HungerOverhaulEventHook
 
             if (event.getItemStack().getItem() instanceof IPlantable)
             {
-                growthModification = PlantGrowthModule.getPlantGrowthModification(((IPlantable) event.getItemStack().getItem()).getPlant(event.getEntityPlayer().world, BlockPos.ORIGIN).getBlock());
+                if (event.getEntityPlayer() != null)
+                {
+                    growthModification = PlantGrowthModule.getPlantGrowthModification(((IPlantable) event.getItemStack().getItem()).getPlant(event.getEntityPlayer().world, BlockPos.ORIGIN).getBlock());
+                }
             }
             else if (event.getItemStack().getItem() instanceof ItemBlock)
             {
