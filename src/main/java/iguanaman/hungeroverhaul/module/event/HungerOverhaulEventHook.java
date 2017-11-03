@@ -632,6 +632,7 @@ public class HungerOverhaulEventHook
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SideOnly(Side.CLIENT)
     public void renderTooltips(ItemTooltipEvent event)
     {
         if (Config.addFoodTooltips && AppleCoreAPI.accessor.isFood(event.getItemStack()))
