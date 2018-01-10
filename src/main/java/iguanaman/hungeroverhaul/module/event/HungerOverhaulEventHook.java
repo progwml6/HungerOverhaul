@@ -337,7 +337,7 @@ public class HungerOverhaulEventHook
 
                         if (!seed.isEmpty())
                         {
-                            EntityItem ei = new EntityItem(world, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, seed.copy());
+                            EntityItem ei = new EntityItem(world, pos.getX() + .5, pos.getY() + 1.0, pos.getZ() + .5, seed.copy());
                             ei.motionY = 0.025000000372529D;
 
                             world.spawnEntity(ei);
