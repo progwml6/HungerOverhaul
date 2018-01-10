@@ -2,11 +2,14 @@ package iguanaman.hungeroverhaul.module.harvestcraft;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import com.pam.harvestcraft.HarvestCraft;
 import com.pam.harvestcraft.blocks.CropRegistry;
 import com.pam.harvestcraft.blocks.FruitRegistry;
+import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
 import com.pam.harvestcraft.blocks.growables.BlockPamFruit;
+import com.pam.harvestcraft.blocks.growables.BlockPamFruitLog;
 import com.pam.harvestcraft.blocks.growables.BlockPamSapling;
 import com.pam.harvestcraft.item.ItemRegistry;
 
@@ -17,18 +20,24 @@ import iguanaman.hungeroverhaul.module.food.FoodModifier;
 import iguanaman.hungeroverhaul.module.growth.PlantGrowthModule;
 import iguanaman.hungeroverhaul.module.growth.modification.PlantGrowthModification;
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
+import iguanaman.hungeroverhaul.module.reflection.ReflectionModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import squeek.applecore.api.food.FoodValues;
 
 public class HarvestCraftModule
 {
+    public static Random random = new Random();
+
     public static void init()
     {
+        random.setSeed(2 ^ 16 + 2 ^ 8 + (4 * 3 * 271));
+
         // SETUP VALUES
         if (Config.modifyFoodValues && Config.useHOFoodValues)
         {
@@ -820,14 +829,87 @@ public class HarvestCraftModule
         /*
          * Bonemeal
          */
+        BonemealModification cropBonemealModification = new BonemealModification()
+        {
+            @Override
+            public IBlockState getNewState(World world, BlockPos pos, IBlockState currentState)
+            {
+                //TODO REMOVE REFLECTION
+                if (ReflectionModule.pamCropAgeFound)
+                {
+                    int currentMeta = currentState.getValue(ReflectionModule.pamCropAge);
+                    int metaFullyGrown = 3;
+                    int metaIncrease = 0;
+
+                    if (currentMeta != metaFullyGrown)
+                    {
+                        metaIncrease = 1;
+
+                        if (Config.difficultyScalingBoneMeal && world.getDifficulty().ordinal() < EnumDifficulty.NORMAL.ordinal())
+                        {
+                            int metaRandomIncreaseRange = currentMeta < 3 ? 2 : 3;
+                            metaIncrease += random.nextInt(metaRandomIncreaseRange);
+                        }
+                    }
+
+                    return currentState.withProperty(ReflectionModule.pamCropAge, Math.min(currentMeta + metaIncrease, metaFullyGrown));
+                }
+                else
+                {
+                    return currentState;
+                }
+            }
+        };
+        BonemealModule.registerBonemealModifier(BlockPamCrop.class, cropBonemealModification);
+
         BonemealModification fruitBonemealModification = new BonemealModification()
         {
             @Override
             public IBlockState getNewState(World world, BlockPos pos, IBlockState currentState)
             {
-                return currentState.withProperty(BlockPamFruit.AGE, Math.min(currentState.getValue(BlockPamFruit.AGE) + 1, 2));
+                int currentMeta = currentState.getValue(BlockPamFruit.AGE);
+                int metaFullyGrown = 2;
+                int metaIncrease = 0;
+
+                if (currentMeta != metaFullyGrown)
+                {
+                    metaIncrease = 1;
+
+                    if (Config.difficultyScalingBoneMeal && world.getDifficulty().ordinal() < EnumDifficulty.NORMAL.ordinal())
+                    {
+                        int metaRandomIncreaseRange = currentMeta < 2 ? 1 : 2;
+                        metaIncrease += random.nextInt(metaRandomIncreaseRange);
+                    }
+                }
+
+                return currentState.withProperty(BlockPamFruit.AGE, Math.min(currentMeta + metaIncrease, metaFullyGrown));
             }
         };
         BonemealModule.registerBonemealModifier(BlockPamFruit.class, fruitBonemealModification);
+
+        BonemealModification fruitLogBonemealModification = new BonemealModification()
+        {
+            @Override
+            public IBlockState getNewState(World world, BlockPos pos, IBlockState currentState)
+            {
+                int currentMeta = currentState.getValue(BlockPamFruitLog.AGE);
+                int metaFullyGrown = 2;
+                int metaIncrease = 0;
+
+                if (currentMeta != metaFullyGrown)
+                {
+                    metaIncrease = 1;
+
+                    if (Config.difficultyScalingBoneMeal && world.getDifficulty().ordinal() < EnumDifficulty.NORMAL.ordinal())
+                    {
+                        int metaRandomIncreaseRange = currentMeta < 2 ? 1 : 2;
+                        metaIncrease += random.nextInt(metaRandomIncreaseRange);
+                    }
+                }
+
+                return currentState.withProperty(BlockPamFruitLog.AGE, Math.min(currentMeta + metaIncrease, metaFullyGrown));
+            }
+        };
+        BonemealModule.registerBonemealModifier(BlockPamFruitLog.class, fruitLogBonemealModification);
     }
 }
