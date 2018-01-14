@@ -85,32 +85,48 @@ minecraft {
     version = config.minecraft_version + "-" + config.forge_version
     runDir = 'run'
     replace '${version}', project.version
-    replace '${natura_version}', config.minecraft_version + "-" + config.natura_version
     mappings = config.mappings_version
     useDepAts = true
 
 }
 
 dependencies {
-    deobfCompile "slimeknights.mantle:Mantle:${config.minecraft_version_old}-${config.mantle_version}"
-    deobfCompile "com.progwml6.natura:natura:${config.minecraft_version_old}-${config.natura_version}"
-    deobfCompile "slimeknights:TConstruct:${config.minecraft_version_old}-${config.tconstruct_version}"
+    deobfCompile ("slimeknights.mantle:Mantle:${config.minecraft_version_short}-${config.mantle_version}") {
+        transitive = false
+    }
 
-    deobfCompile "com.github.glitchfiend.biomesoplenty:BiomesOPlenty:${config.minecraft_version}-${config.bop_version}:universal"
+    deobfCompile ("com.progwml6.natura:natura:${config.minecraft_version}-${config.natura_version}") {
+        transitive = false
+    }
 
-    deobfCompile "applecore:AppleCore:${config.minecraft_version}-${config.applecore_version}"
+    deobfCompile ("slimeknights:TConstruct:${config.minecraft_version}-${config.tconstruct_version}") {
+        transitive = false
+    }
 
-    deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
 
-    deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla_version}_${config.minecraft_version_old}"
+    deobfCompile ("com.github.glitchfiend.biomesoplenty:BiomesOPlenty:${config.minecraft_version}-${config.bop_version}:universal") {
+        transitive = false
+    }
+
+    deobfCompile ("applecore:AppleCore:${config.minecraft_version}-${config.applecore_version}") {
+        transitive = false
+    }
+
+    deobfCompile ("mezz.jei:jei_${config.minecraft_version}:${config.jei_version}") {
+        transitive = false
+    }
+
+    deobfCompile ("mcp.mobius.waila:Hwyla:${config.hwyla_version}_${config.minecraft_version_short}") {
+        transitive = false
+    }
 }
 
 // the single quotes in these filenames seems to cause problems with
 // the jenkins server, so skip this for jenkins builds
 if (System.getenv().BUILD_NUMBER == null) {
     // note: the 'repository' url changes with each version
-    repositories { ivy { artifactPattern "https://addons-origin.cursecdn.com/files/2488/307[module] [revision].[ext]" } }//
-    dependencies { compile "pam:Pam's HarvestCraft:1.12.2a@jar" }
+    repositories { ivy { artifactPattern "https://addons-origin.cursecdn.com/files/2518/832/[module] [revision].[ext]" } }//
+    dependencies { compile "pam:Pam's HarvestCraft:1.12.2f@jar" }
 }
 
 processResources

@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
+import com.pam.harvestcraft.blocks.growables.BlockPamFruit;
+import com.pam.harvestcraft.blocks.growables.BlockPamFruitLog;
 import com.progwml6.natura.overworld.NaturaOverworld;
 
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
 import iguanaman.hungeroverhaul.module.natura.helper.NaturaHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,6 +29,8 @@ public class BlockHelper
         ItemStack seedItem = BlockHelper.getSeedsOfBlock(state, seeds);
         ItemStack produceItem = BlockHelper.getProduceOfBlock(state, produce);
         boolean produceIsNotSeed = (seedItem.getItem() != produceItem.getItem() || seedItem.getItemDamage() != produceItem.getItemDamage());
+
+        boolean shouldProduceNotDrop = BlockHelper.shouldProduceNotDrop(state);
 
         for (ItemStack item : drops)
         {
@@ -43,7 +49,7 @@ public class BlockHelper
             modifiedDrops.add(seedItem);
         }
 
-        if (produceItem.getCount() > 0)
+        if (produceItem.getCount() > 0 && !shouldProduceNotDrop)
         {
             modifiedDrops.add(produceItem);
         }
@@ -121,5 +127,29 @@ public class BlockHelper
         {
             return state.getBlock().damageDropped(state);
         }
+    }
+
+    public static boolean shouldProduceNotDrop(IBlockState state)
+    {
+        if (Loader.isModLoaded("harvestcraft") && state.getBlock() instanceof BlockPamFruit)
+        {
+            Block seed = PamsModsHelper.fruitBlockToBlockMap.get(state.getBlock());
+
+            if (seed == state.getBlock() || seed == Blocks.AIR)
+            {
+                return true;
+            }
+        }
+        else if (Loader.isModLoaded("harvestcraft") && state.getBlock() instanceof BlockPamFruitLog)
+        {
+            Block seed = PamsModsHelper.fruitBlockToBlockMap.get(state.getBlock());
+
+            if (seed == state.getBlock() || seed == Blocks.AIR)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

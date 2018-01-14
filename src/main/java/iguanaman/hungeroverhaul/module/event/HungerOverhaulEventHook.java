@@ -529,16 +529,16 @@ public class HungerOverhaulEventHook
         }
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamFruit.class)
         {
-            if (ReflectionModule.pamFruitAgeFound && real_state.getValue(ReflectionModule.pamFruitAge) >= 2)
+            if (real_state.getValue(BlockPamFruit.AGE) >= 2)
             {
-                resultingState = real_state.withProperty(ReflectionModule.pamFruitAge, 0);
+                resultingState = real_state.withProperty(BlockPamFruit.AGE, 0);
             }
         }
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamFruitLog.class)
         {
-            if (ReflectionModule.pamFruitLogAgeFound && real_state.getValue(ReflectionModule.pamFruitLogAge) >= 2)
+            if (real_state.getValue(BlockPamFruitLog.AGE) >= 2)
             {
-                resultingState = real_state.withProperty(ReflectionModule.pamFruitLogAge, 0);
+                resultingState = real_state.withProperty(BlockPamFruitLog.AGE, 0);
             }
         }
 
@@ -614,8 +614,8 @@ public class HungerOverhaulEventHook
                 || (isCottonCrop && state.getValue(BlockNaturaCotton.AGE) == 4)
                 || (isBarleyCrop && state.getValue(BlockNaturaBarley.AGE) == 3)
                 || (ReflectionModule.pamCropAgeFound && (isPamCrop && state.getValue(ReflectionModule.pamCropAge) == 3))
-                || (ReflectionModule.pamFruitAgeFound && (isPamFruit && state.getValue(ReflectionModule.pamFruitAge) == 2))
-                || (ReflectionModule.pamFruitLogAgeFound && (isPamFruitLog && state.getValue(ReflectionModule.pamFruitLogAge) == 2));
+                || (isPamFruit && state.getValue(BlockPamFruit.AGE) == 2)
+                || (isPamFruitLog && state.getValue(BlockPamFruitLog.AGE) == 2);
 
         if (!fullyGrown)
         {
