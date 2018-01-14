@@ -23,7 +23,7 @@ public class FoodEventHandler
         {
             if (Config.addWellFedEffect)
             {
-                int duration = (int) Math.pow(event.foodValues.hunger * 100, 1.2);
+                int duration = (int) (Math.pow(event.foodValues.hunger * 100, 1.2) * Config.wellFedDurationMultiplier);
 
                 if (duration >= 30)
                 {
