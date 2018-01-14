@@ -166,6 +166,7 @@ public class Config
         foodSaturationDivider = foodSaturationDividerOption.get(config);
         foodHungerToSaturationDivider = foodHungerToSaturationDividerOption.get(config);
         addWellFedEffect = addWellFedEffectOption.get(config);
+        wellFedDurationMultiplier = wellFedDurationMultiplierOption.get(config);
         addTradesButcher = addTradesButcherOption.get(config);
         addTradesFarmer = addCropTradesFarmerOption.get(config);
         addSaplingTradesFarmer = addSaplingTradesFarmerOption.get(config);
@@ -427,6 +428,8 @@ public class Config
     public static float foodHungerToSaturationDivider;
     public static final ConfigOption<Boolean> addWellFedEffectOption = addOption(CATEGORY_FOOD, "addWellFedEffect", true, false, "Adds a 'well fed' effect that gives slight health regen");
     public static boolean addWellFedEffect;
+    public static final ConfigOption<Float> wellFedDurationMultiplierOption = addOption(CATEGORY_FOOD, "wellFedDurationMultiplier", 1.0f, 1.0f, "The base duration (in ticks) for the Well fed effect is (hunger_value * 100)^1.2\nThe result above will be multiplied by this value");
+    public static float wellFedDurationMultiplier;
 
     // harvestcraft integration
     public static final ConfigOption<Boolean> addTradesButcherOption = addOption(CATEGORY_HARVESTCRAFT, "addTradesButcher", true, false, "Add high tier HarvestCraft foods to the items butcher villagers will sell (HarvestCraft)");
