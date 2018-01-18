@@ -120,7 +120,7 @@ public class FoodEventHandler
 
         if (event.player.isPotionActive(HungerOverhaul.potionWellFed))
         {
-            wellfedModifier = 0.75F;
+            wellfedModifier = 1F - Config.wellFedEffectiveness;
         }
 
         EnumDifficulty difficulty = event.player.world.getDifficulty();
