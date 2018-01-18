@@ -23,7 +23,7 @@ public class FoodEventHandler
         {
             if (Config.addWellFedEffect)
             {
-                int duration = (int) Math.pow(event.foodValues.hunger * 100, 1.2);
+                int duration = (int) (Math.pow(event.foodValues.hunger * 100, 1.2) * Config.wellFedDurationMultiplier);
 
                 if (duration >= 30)
                 {
@@ -120,7 +120,7 @@ public class FoodEventHandler
 
         if (event.player.isPotionActive(HungerOverhaul.potionWellFed))
         {
-            wellfedModifier = 0.75F;
+            wellfedModifier = 1F - Config.wellFedEffectiveness;
         }
 
         EnumDifficulty difficulty = event.player.world.getDifficulty();
