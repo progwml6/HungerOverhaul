@@ -167,6 +167,7 @@ public class Config
         foodHungerToSaturationDivider = foodHungerToSaturationDividerOption.get(config);
         addWellFedEffect = addWellFedEffectOption.get(config);
         wellFedDurationMultiplier = wellFedDurationMultiplierOption.get(config);
+        wellFedEffectiveness = wellFedEffectiveness.get(config);
         addTradesButcher = addTradesButcherOption.get(config);
         addTradesFarmer = addCropTradesFarmerOption.get(config);
         addSaplingTradesFarmer = addSaplingTradesFarmerOption.get(config);
@@ -429,6 +430,8 @@ public class Config
     public static final ConfigOption<Boolean> addWellFedEffectOption = addOption(CATEGORY_FOOD, "addWellFedEffect", true, false, "Adds a 'well fed' effect that gives slight health regen");
     public static boolean addWellFedEffect;
     public static final ConfigOption<Float> wellFedDurationMultiplierOption = addOption(CATEGORY_FOOD, "wellFedDurationMultiplier", 1.0f, 1.0f, "The base duration (in ticks) for the Well fed effect is (hunger_value * 100)^1.2\nThe result above will be multiplied by this value");
+    public static float wellFedDurationMultiplier;
+    public static final ConfigOption<Float> wellFedEffectivenessOption = addOption(CATEGORY_FOOD, "wellFedEffectiveness", 0.25f, 0.25f, "How much faster the well fed effect will make health regen. E.g. 0.25 means that the health will regen 25% faster. Setting this to 1 means that health will regen at maximum speed (about 1 hp per tick)");
     public static float wellFedDurationMultiplier;
 
     // harvestcraft integration
