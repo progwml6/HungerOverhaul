@@ -13,8 +13,6 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.registries.GameData;
-import net.minecraftforge.registries.RegistryManager;
 
 public class RecipeRemover
 {
@@ -36,7 +34,7 @@ public class RecipeRemover
 
             if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
             {
-                RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe.getKey());
+                //RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe.getKey());
             }
         }
     }
@@ -56,7 +54,7 @@ public class RecipeRemover
 
                 if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
                 {
-                    RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe.getKey());
+                    //RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe.getKey());
                 }
             }
         }
@@ -77,7 +75,7 @@ public class RecipeRemover
 
                 if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
                 {
-                    RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe.getKey());
+                    //RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe.getKey());
                 }
             }
         }
