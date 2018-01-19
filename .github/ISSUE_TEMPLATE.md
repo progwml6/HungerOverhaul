@@ -5,6 +5,8 @@
 `Forge: `
 `Mantle: `
 `Natura: `
+`Apple Core: `
+`Hunger Overhaul: `
 
 ## Report Information
 <!-- Please provide a detailed description of the issue -->
