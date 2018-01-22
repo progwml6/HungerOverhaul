@@ -22,6 +22,7 @@ import iguanaman.hungeroverhaul.module.json.JsonModule;
 import iguanaman.hungeroverhaul.module.loot.LootModule;
 import iguanaman.hungeroverhaul.module.natura.NaturaModule;
 import iguanaman.hungeroverhaul.module.natura.helper.NaturaHelper;
+import iguanaman.hungeroverhaul.module.reflection.ReflectionModule;
 import iguanaman.hungeroverhaul.module.tinkersconstruct.TinkersConstructModule;
 import iguanaman.hungeroverhaul.module.tweak.TweaksModule;
 import iguanaman.hungeroverhaul.module.vanilla.VanillaModule;
@@ -119,6 +120,7 @@ public class HungerOverhaul
         //}
 
         VanillaModule.postInit();
+        ReflectionModule.postInit();
         TweaksModule.postInit();
         VillageModule.postInit();
         LootModule.postInit();

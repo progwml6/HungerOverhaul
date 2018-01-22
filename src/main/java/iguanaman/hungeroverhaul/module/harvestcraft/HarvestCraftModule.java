@@ -20,6 +20,7 @@ import iguanaman.hungeroverhaul.module.food.FoodModifier;
 import iguanaman.hungeroverhaul.module.growth.PlantGrowthModule;
 import iguanaman.hungeroverhaul.module.growth.modification.PlantGrowthModification;
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
+import iguanaman.hungeroverhaul.module.reflection.ReflectionModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -833,23 +834,30 @@ public class HarvestCraftModule
             @Override
             public IBlockState getNewState(World world, BlockPos pos, IBlockState currentState)
             {
-                int currentMeta = currentState.getValue(BlockPamCrop.AGE);
-                int metaFullyGrown = 3;
-                int metaIncrease = 0;
-
-                if (currentMeta != metaFullyGrown)
+                //TODO REMOVE REFLECTION
+                if (ReflectionModule.pamCropAgeFound)
                 {
-                    metaIncrease = 1;
+                    int currentMeta = currentState.getValue(ReflectionModule.pamCropAge);
+                    int metaFullyGrown = 3;
+                    int metaIncrease = 0;
 
-                    if (Config.difficultyScalingBoneMeal && world.getDifficulty().ordinal() < EnumDifficulty.NORMAL.ordinal())
+                    if (currentMeta != metaFullyGrown)
                     {
-                        int metaRandomIncreaseRange = currentMeta < 3 ? 2 : 3;
-                        metaIncrease += random.nextInt(metaRandomIncreaseRange);
+                        metaIncrease = 1;
+
+                        if (Config.difficultyScalingBoneMeal && world.getDifficulty().ordinal() < EnumDifficulty.NORMAL.ordinal())
+                        {
+                            int metaRandomIncreaseRange = currentMeta < 3 ? 2 : 3;
+                            metaIncrease += random.nextInt(metaRandomIncreaseRange);
+                        }
                     }
+
+                    return currentState.withProperty(ReflectionModule.pamCropAge, Math.min(currentMeta + metaIncrease, metaFullyGrown));
                 }
-
-                return currentState.withProperty(BlockPamCrop.AGE, Math.min(currentMeta + metaIncrease, metaFullyGrown));
-
+                else
+                {
+                    return currentState;
+                }
             }
         };
         BonemealModule.registerBonemealModifier(BlockPamCrop.class, cropBonemealModification);

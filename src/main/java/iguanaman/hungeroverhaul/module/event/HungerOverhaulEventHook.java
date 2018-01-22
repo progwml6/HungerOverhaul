@@ -18,6 +18,7 @@ import iguanaman.hungeroverhaul.library.ItemAndBlockList;
 import iguanaman.hungeroverhaul.module.growth.PlantGrowthModule;
 import iguanaman.hungeroverhaul.module.growth.modification.PlantGrowthModification;
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
+import iguanaman.hungeroverhaul.module.reflection.ReflectionModule;
 import iguanaman.hungeroverhaul.module.seed.GrassSeedsModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBeetroot;
@@ -518,11 +519,12 @@ public class HungerOverhaulEventHook
                 resultingState = real_state.withProperty(BlockBeetroot.BEETROOT_AGE, 0);
             }
         }
+        //TODO: REMOVE REFLECTION HELPER IN 1.13
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamCrop.class)
         {
-            if (real_state.getValue(BlockPamCrop.AGE) >= 3)
+            if (ReflectionModule.pamCropAgeFound && real_state.getValue(ReflectionModule.pamCropAge) >= 3)
             {
-                resultingState = real_state.withProperty(BlockPamCrop.AGE, 0);
+                resultingState = real_state.withProperty(ReflectionModule.pamCropAge, 0);
             }
         }
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamFruit.class)
@@ -573,6 +575,8 @@ public class HungerOverhaulEventHook
     @SubscribeEvent
     public void onBlockHarvested(HarvestDropsEvent event)
     {
+        //TODO: REMOVE REFLECTION HELPER IN 1.13
+
         if (!Config.modifyCropDropsBreak)
         {
             return;
@@ -609,7 +613,7 @@ public class HungerOverhaulEventHook
                 || (isBeetrootCrop && state.getValue(BlockBeetroot.BEETROOT_AGE) >= 3)
                 || (isCottonCrop && state.getValue(BlockNaturaCotton.AGE) == 4)
                 || (isBarleyCrop && state.getValue(BlockNaturaBarley.AGE) == 3)
-                || (isPamCrop && state.getValue(BlockPamCrop.AGE) == 3)
+                || (ReflectionModule.pamCropAgeFound && (isPamCrop && state.getValue(ReflectionModule.pamCropAge) == 3))
                 || (isPamFruit && state.getValue(BlockPamFruit.AGE) == 2)
                 || (isPamFruitLog && state.getValue(BlockPamFruitLog.AGE) == 2);
 
