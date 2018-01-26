@@ -833,7 +833,7 @@ public class HarvestCraftModule
             @Override
             public IBlockState getNewState(World world, BlockPos pos, IBlockState currentState)
             {
-                int currentMeta = currentState.getValue(BlockPamCrop.CROP_AGE);
+                int currentMeta = currentState.getValue(BlockPamCrop.CROPS_AGE);
                 int metaFullyGrown = 3;
                 int metaIncrease = 0;
 
@@ -848,7 +848,7 @@ public class HarvestCraftModule
                     }
                 }
 
-                return currentState.withProperty(BlockPamCrop.CROP_AGE, Math.min(currentMeta + metaIncrease, metaFullyGrown));
+                return currentState.withProperty(BlockPamCrop.CROPS_AGE, Math.min(currentMeta + metaIncrease, metaFullyGrown));
             }
         };
         BonemealModule.registerBonemealModifier(BlockPamCrop.class, cropBonemealModification);

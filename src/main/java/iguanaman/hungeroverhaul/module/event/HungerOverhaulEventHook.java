@@ -520,9 +520,9 @@ public class HungerOverhaulEventHook
         }
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamCrop.class)
         {
-            if (real_state.getValue(BlockPamCrop.CROP_AGE) >= 3)
+            if (real_state.getValue(BlockPamCrop.CROPS_AGE) >= 3)
             {
-                resultingState = real_state.withProperty(BlockPamCrop.CROP_AGE, 0);
+                resultingState = real_state.withProperty(BlockPamCrop.CROPS_AGE, 0);
             }
         }
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamFruit.class)
@@ -609,7 +609,7 @@ public class HungerOverhaulEventHook
                 || (isBeetrootCrop && state.getValue(BlockBeetroot.BEETROOT_AGE) >= 3)
                 || (isCottonCrop && state.getValue(BlockNaturaCotton.AGE) == 4)
                 || (isBarleyCrop && state.getValue(BlockNaturaBarley.AGE) == 3)
-                || (isPamCrop && state.getValue(BlockPamCrop.CROP_AGE) == 3)
+                || (isPamCrop && state.getValue(BlockPamCrop.CROPS_AGE) == 3)
                 || (isPamFruit && state.getValue(BlockPamFruit.AGE) == 2)
                 || (isPamFruitLog && state.getValue(BlockPamFruitLog.AGE) == 2);
 
