@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
 import com.pam.harvestcraft.blocks.growables.BlockPamFruit;
-import com.pam.harvestcraft.blocks.growables.BlockPamFruitLog;
 import com.progwml6.natura.overworld.NaturaOverworld;
 
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
@@ -132,15 +131,6 @@ public class BlockHelper
     public static boolean shouldProduceNotDrop(IBlockState state)
     {
         if (Loader.isModLoaded("harvestcraft") && state.getBlock() instanceof BlockPamFruit)
-        {
-            Block seed = PamsModsHelper.fruitBlockToBlockMap.get(state.getBlock());
-
-            if (seed == state.getBlock() || seed == Blocks.AIR)
-            {
-                return true;
-            }
-        }
-        else if (Loader.isModLoaded("harvestcraft") && state.getBlock() instanceof BlockPamFruitLog)
         {
             Block seed = PamsModsHelper.fruitBlockToBlockMap.get(state.getBlock());
 
