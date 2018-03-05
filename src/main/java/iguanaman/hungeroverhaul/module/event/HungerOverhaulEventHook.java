@@ -281,7 +281,7 @@ public class HungerOverhaulEventHook
 
                         if ((Config.addLowHungerNausea && foodLevel <= 1) || (Config.addLowHealthNausea && healthPercent <= 0.05F))
                         {
-                            event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 19, 0, true, true));
+                            event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 79, 0, true, true));
                         }
                     }
                 }
