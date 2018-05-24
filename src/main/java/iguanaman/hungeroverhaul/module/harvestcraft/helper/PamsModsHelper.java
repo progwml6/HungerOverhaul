@@ -128,40 +128,42 @@ public class PamsModsHelper
             mapFruit(FruitRegistry.getSapling(FruitRegistry.CHERRY), FruitRegistry.getFood(FruitRegistry.CHERRY), FruitRegistry.getSapling(FruitRegistry.CHERRY).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.CHESTNUT), FruitRegistry.getFood(FruitRegistry.CHESTNUT), FruitRegistry.getSapling(FruitRegistry.CHESTNUT).getFruit());
 
-            mapFruit(FruitRegistry.getSapling(FruitRegistry.CINNAMON), FruitRegistry.getFood(FruitRegistry.CINNAMON), FruitRegistry.getSapling(FruitRegistry.CINNAMON).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.COCONUT), FruitRegistry.getFood(FruitRegistry.COCONUT), FruitRegistry.getSapling(FruitRegistry.COCONUT).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.DATE), FruitRegistry.getFood(FruitRegistry.DATE), FruitRegistry.getSapling(FruitRegistry.DATE).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.DRAGONFRUIT), FruitRegistry.getFood(FruitRegistry.DRAGONFRUIT), FruitRegistry.getSapling(FruitRegistry.DRAGONFRUIT).getFruit());
-
             mapFruit(FruitRegistry.getSapling(FruitRegistry.DURIAN), FruitRegistry.getFood(FruitRegistry.DURIAN), FruitRegistry.getSapling(FruitRegistry.DURIAN).getFruit());
+
             mapFruit(FruitRegistry.getSapling(FruitRegistry.FIG), FruitRegistry.getFood(FruitRegistry.FIG), FruitRegistry.getSapling(FruitRegistry.FIG).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.GOOSEBERRY), FruitRegistry.getFood(FruitRegistry.GOOSEBERRY), FruitRegistry.getSapling(FruitRegistry.GOOSEBERRY).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.GRAPEFRUIT), FruitRegistry.getFood(FruitRegistry.GRAPEFRUIT), FruitRegistry.getSapling(FruitRegistry.GRAPEFRUIT).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.LEMON), FruitRegistry.getFood(FruitRegistry.LEMON), FruitRegistry.getSapling(FruitRegistry.LEMON).getFruit());
 
             mapFruit(FruitRegistry.getSapling(FruitRegistry.LIME), FruitRegistry.getFood(FruitRegistry.LIME), FruitRegistry.getSapling(FruitRegistry.LIME).getFruit());
-            mapFruit(FruitRegistry.getSapling(FruitRegistry.MAPLE), FruitRegistry.getFood(FruitRegistry.MAPLE), FruitRegistry.getSapling(FruitRegistry.MAPLE).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.MANGO), FruitRegistry.getFood(FruitRegistry.MANGO), FruitRegistry.getSapling(FruitRegistry.MANGO).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.NUTMEG), FruitRegistry.getFood(FruitRegistry.NUTMEG), FruitRegistry.getSapling(FruitRegistry.NUTMEG).getFruit());
-
             mapFruit(FruitRegistry.getSapling(FruitRegistry.OLIVE), FruitRegistry.getFood(FruitRegistry.OLIVE), FruitRegistry.getSapling(FruitRegistry.OLIVE).getFruit());
+
             mapFruit(FruitRegistry.getSapling(FruitRegistry.ORANGE), FruitRegistry.getFood(FruitRegistry.ORANGE), FruitRegistry.getSapling(FruitRegistry.ORANGE).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.PAPAYA), FruitRegistry.getFood(FruitRegistry.PAPAYA), FruitRegistry.getSapling(FruitRegistry.PAPAYA).getFruit());
-            mapFruit(FruitRegistry.getSapling(FruitRegistry.PAPERBARK), FruitRegistry.getFood(FruitRegistry.PAPERBARK), FruitRegistry.getSapling(FruitRegistry.PAPERBARK).getFruit());
-
             mapFruit(FruitRegistry.getSapling(FruitRegistry.PEACH), FruitRegistry.getFood(FruitRegistry.PEACH), FruitRegistry.getSapling(FruitRegistry.PEACH).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.PEAR), FruitRegistry.getFood(FruitRegistry.PEAR), FruitRegistry.getSapling(FruitRegistry.PEAR).getFruit());
+
             mapFruit(FruitRegistry.getSapling(FruitRegistry.PECAN), FruitRegistry.getFood(FruitRegistry.PECAN), FruitRegistry.getSapling(FruitRegistry.PECAN).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.PEPPERCORN), FruitRegistry.getFood(FruitRegistry.PEPPERCORN), FruitRegistry.getSapling(FruitRegistry.PEPPERCORN).getFruit());
-
             mapFruit(FruitRegistry.getSapling(FruitRegistry.PERSIMMON), FruitRegistry.getFood(FruitRegistry.PERSIMMON), FruitRegistry.getSapling(FruitRegistry.PERSIMMON).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.PISTACHIO), FruitRegistry.getFood(FruitRegistry.PISTACHIO), FruitRegistry.getSapling(FruitRegistry.PISTACHIO).getFruit());
+
             mapFruit(FruitRegistry.getSapling(FruitRegistry.PLUM), FruitRegistry.getFood(FruitRegistry.PLUM), FruitRegistry.getSapling(FruitRegistry.PLUM).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.POMEGRANATE), FruitRegistry.getFood(FruitRegistry.POMEGRANATE), FruitRegistry.getSapling(FruitRegistry.POMEGRANATE).getFruit());
-
             mapFruit(FruitRegistry.getSapling(FruitRegistry.STARFRUIT), FruitRegistry.getFood(FruitRegistry.STARFRUIT), FruitRegistry.getSapling(FruitRegistry.STARFRUIT).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.VANILLABEAN), FruitRegistry.getFood(FruitRegistry.VANILLABEAN), FruitRegistry.getSapling(FruitRegistry.VANILLABEAN).getFruit());
+
             mapFruit(FruitRegistry.getSapling(FruitRegistry.WALNUT), FruitRegistry.getFood(FruitRegistry.WALNUT), FruitRegistry.getSapling(FruitRegistry.WALNUT).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.SPIDERWEB), FruitRegistry.getFood(FruitRegistry.SPIDERWEB), FruitRegistry.getSapling(FruitRegistry.SPIDERWEB).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.CINNAMON), FruitRegistry.getFood(FruitRegistry.CINNAMON), FruitRegistry.getSapling(FruitRegistry.CINNAMON).getFruit());
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.MAPLE), FruitRegistry.getFood(FruitRegistry.MAPLE), FruitRegistry.getSapling(FruitRegistry.MAPLE).getFruit());
+
+            mapFruit(FruitRegistry.getSapling(FruitRegistry.PAPERBARK), FruitRegistry.getFood(FruitRegistry.PAPERBARK), FruitRegistry.getSapling(FruitRegistry.PAPERBARK).getFruit());
 
             for (Entry<String, ItemSeedFood> food : CropRegistry.getFoods().entrySet())
             {
