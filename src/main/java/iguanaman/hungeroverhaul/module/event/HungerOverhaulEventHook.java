@@ -553,7 +553,7 @@ public class HungerOverhaulEventHook
                 if (fortune == null)
                     fortune = 0;
                 boolean silkTouch = enchantments.get(Enchantments.SILK_TOUCH) != null;
-		ForgeEventFactory.fireBlockHarvesting(modifiedDrops, event.getWorld(), event.getPos(), clicked_state, fortune, 1.0f, silkTouch, event.getEntityPlayer());
+                ForgeEventFactory.fireBlockHarvesting(modifiedDrops, event.getWorld(), event.getPos(), clicked_state, fortune, 1.0f, silkTouch, event.getEntityPlayer());
             
                 for (ItemStack drop : modifiedDrops)
                 {
