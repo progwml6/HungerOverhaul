@@ -548,6 +548,13 @@ public class HungerOverhaulEventHook
 
                 List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(drops, clicked_state, Config.seedsPerHarvestRightClickMin, Config.seedsPerHarvestRightClickMax, Config.producePerHarvestRightClickMin, Config.producePerHarvestRightClickMax);
 
+                Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(event.getItemStack());
+                Integer fortune = enchantments.get(Enchantments.FORTUNE);
+                if (fortune == null)
+                    fortune = 0;
+                boolean silkTouch = enchantments.get(Enchantments.SILK_TOUCH) != null;
+                ForgeEventFactory.fireBlockHarvesting(modifiedDrops, event.getWorld(), event.getPos(), clicked_state, fortune, 1.0f, silkTouch, event.getEntityPlayer());
+            
                 for (ItemStack drop : modifiedDrops)
                 {
                     Block.spawnAsEntity(event.getWorld(), event.getPos(), drop);
