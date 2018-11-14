@@ -56,6 +56,12 @@ public class TweaksModule
         {
             newStackSize = Config.foodStackSizeMultiplier;
         }
+        
+        //Rotten Flesh stack size fix for trading
+        if (item.getRegistryName().equals(new ResourceLocation("minecraft:rotten_flesh")))
+        {
+            newStackSize = Math.max(8 * Config.foodStackSizeMultiplier, 40);
+        }
 
         if (curStackSize > newStackSize)
         {
