@@ -98,15 +98,15 @@ public class BonemealModule
             {
                 IBlockState state = event.getWorld().getBlockState(event.getPos());
                 IBlockState resultingState = bonemealModification.getNewState(event.getWorld(), event.getPos(), state);
-
-                if (state != resultingState)
+                //If current and new states are not equal set the new state
+                if (!state.equals(resultingState))
                 {
                     event.getWorld().setBlockState(event.getPos(), resultingState, 3);
+
+                    bonemealModification.onBonemeal(event.getWorld(), event.getPos(), event.getBlock(), resultingState);
+
+                    event.setResult(Result.ALLOW);
                 }
-
-                bonemealModification.onBonemeal(event.getWorld(), event.getPos(), event.getBlock(), resultingState);
-
-                event.setResult(Result.ALLOW);
             }
             // otherwise fall through to default implementation (Result.DEFAULT)
         }
