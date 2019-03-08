@@ -4,6 +4,7 @@ import iguanaman.hungeroverhaul.common.config.Config;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import squeek.applecore.api.food.FoodValues;
 
 public class TweaksModule
