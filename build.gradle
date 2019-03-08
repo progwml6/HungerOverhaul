@@ -41,6 +41,9 @@ repositories {
          name "Tehnut Maven FS"
          url "http://tehnut.info/maven"
     }
+    maven { 
+        url 'https://jitpack.io'
+    }
 }
 
 // Define properties file
@@ -119,15 +122,9 @@ dependencies {
     deobfCompile ("mcp.mobius.waila:Hwyla:${config.hwyla_version}_${config.minecraft_version_short}") {
         transitive = false
     }
+    compile 'com.github.MatrexsVigil:harvestcraft:-SNAPSHOT'
 }
 
-// the single quotes in these filenames seems to cause problems with
-// the jenkins server, so skip this for jenkins builds
-if (System.getenv().BUILD_NUMBER == null) {
-    // note: the 'repository' url changes with each version
-    repositories { ivy { artifactPattern "https://addons-origin.cursecdn.com/files/2521/254/[module] [revision].[ext]" } }//
-    dependencies { compile "pam:Pam's HarvestCraft:1.12.2k@jar" }
-}
 
 processResources
 {
