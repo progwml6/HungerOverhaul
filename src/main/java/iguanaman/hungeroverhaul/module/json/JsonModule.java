@@ -129,7 +129,7 @@ public class JsonModule
 
     public static void addGameObjectToList(ItemAndBlockList list, GameObject gameObj)
     {
-        if (gameObj.name == null && gameObj.name.toString().isEmpty())
+        if (gameObj.name == null && gameObj.name.isEmpty())
         {
             return;
         }

@@ -10,18 +10,18 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class GameObject
 {
-    public ResourceLocation name;
+    public String name;
 
     public int meta = OreDictionary.WILDCARD_VALUE;
 
     public Item toItem()
     {
-        return ForgeRegistries.ITEMS.getValue(this.name);
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
     }
 
     public Block toBlock()
     {
-        return ForgeRegistries.BLOCKS.getValue(this.name);
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(name));
     }
 
     public ItemStack toItemStack()
