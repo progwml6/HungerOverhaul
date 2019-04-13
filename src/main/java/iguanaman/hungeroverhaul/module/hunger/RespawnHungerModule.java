@@ -12,6 +12,9 @@ public class RespawnHungerModule
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onPlayerRespawn(PlayerRespawnEvent event)
     {
+        if (!Config.enableRespawnHunger)
+            return;
+
         int respawnHunger = Config.respawnHungerValue;
 
         if (Config.difficultyScalingRespawnHunger && event.player.world.getDifficulty().getDifficultyId() > EnumDifficulty.EASY.getDifficultyId())
