@@ -180,6 +180,7 @@ public class Config
         addAlternateNaturaFlourCraftingRecipes = addAlternateNaturaFlourCraftingRecipesOption.get(config);
         constantHungerLoss = constantHungerLossOption.get(config);
         damageOnStarve = damageOnStarveOption.get(config);
+        enableRespawnHunger = enableRespawnHungerOption.get(config);
         respawnHungerValue = respawnHungerValueOption.get(config);
         respawnHungerDifficultyModifier = respawnHungerDifficultyModifierOption.get(config);
         disableHealingHungerDrain = disableHealingHungerDrainOption.get(config);
@@ -463,6 +464,8 @@ public class Config
     public static boolean constantHungerLoss;
     public static final ConfigOption<Integer> damageOnStarveOption = addOption(CATEGORY_HUNGER, "damageOnStarve", 200, 2, "Amount of damage you take when hunger hits zero");
     public static int damageOnStarve;
+    public static final ConfigOption<Boolean> enableRespawnHungerOption = addOption(CATEGORY_HUNGER, "enableRespawnHunger", true, false, "Enable setting hunger after respawning (see 'respawnHungerValue')");
+    public static boolean enableRespawnHunger;
     public static final ConfigOption<Integer> respawnHungerValueOption = addOption(CATEGORY_HUNGER, "respawnHungerValue", 20, 0, null, 20, "hunger value set after respawning for peaceful/easy difficulty");
     public static int respawnHungerValue;
     public static final ConfigOption<Integer> respawnHungerDifficultyModifierOption = addOption(CATEGORY_HUNGER, "respawnHungerDifficultyModifier", 4, 0, null, 4, "The amount difficulty modifies the hunger value set after respawning  ('difficultyScaling' and 'difficultyScalingRespawnHunger' must be true)");
