@@ -1,0 +1,37 @@
+###############
+#   Potions   #
+###############
+potion.wellfed=Hyvin ruokittu
+
+################
+#   Tooltips   #
+################
+tooltip.meal.crop_grows_best_in=Kasvaa paremmin:
+tooltip.meal.hearty=terve %s
+tooltip.meal.wholesome=hyödyllinen %s
+tooltip.meal.nourishing=ravitseva %s
+tooltip.meal.unfulfilling=epätyydyttäviä %s
+tooltip.meal.morsel=suupala
+tooltip.meal.snack=välipala
+tooltip.meal.lightmeal=kevyt ateria
+tooltip.meal.meal=завтрак
+tooltip.meal.largemeal=большой завтрак
+tooltip.meal.feast=juhla
+tooltip.meal.hearty_morsel=terveellistä välipalaa
+tooltip.meal.wholesome_morsel=terveellistä välipalaa
+tooltip.meal.nourishing_morsel=runsas välipala
+tooltip.meal.unfulfilling_morsel=ei terveellistä välipalaa
+tooltip.meal.hearty_snack=terveellistä välipalaa
+tooltip.meal.wholesome_snack=terveellistä välipalaa
+tooltip.meal.nourishing_snack=runsas välipala
+tooltip.meal.unfulfilling_snack=ei terveellistä välipalaa
+
+##################
+#   UI Strings   #
+##################
+ui.health.dying=Sinä kuolet
+ui.health.injured=Olet loukkaantunut
+ui.health.hurt=Olet loukkaantunut
+ui.hunger.starving=Olet kuolemassa nälkään
+ui.hunger.hungry=Olet nälkäinen
+ui.hunger.peckish=Olet nälkäinen
