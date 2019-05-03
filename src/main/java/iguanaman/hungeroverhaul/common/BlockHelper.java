@@ -1,12 +1,8 @@
 package iguanaman.hungeroverhaul.common;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
 import com.pam.harvestcraft.blocks.growables.BlockPamFruit;
 import com.progwml6.natura.overworld.NaturaOverworld;
-
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
 import iguanaman.hungeroverhaul.module.natura.helper.NaturaHelper;
 import net.minecraft.block.Block;
@@ -16,6 +12,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockHelper
 {
@@ -134,10 +133,7 @@ public class BlockHelper
         {
             Block seed = PamsModsHelper.fruitBlockToBlockMap.get(state.getBlock());
 
-            if (seed == state.getBlock() || seed == Blocks.AIR)
-            {
-                return true;
-            }
+            return seed == state.getBlock() || seed == Blocks.AIR;
         }
 
         return false;

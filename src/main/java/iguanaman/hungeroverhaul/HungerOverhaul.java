@@ -2,6 +2,7 @@ package iguanaman.hungeroverhaul;
 
 import java.io.File;
 
+import iguanaman.hungeroverhaul.module.seed.GrassSeedsModule;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -113,10 +114,10 @@ public class HungerOverhaul
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        //if (Config.removeTallGrassSeeds || Config.allSeedsEqual)
-        //{
-        //    GrassSeedsModule.postInit();
-        //}
+        if (Config.removeTallGrassSeeds || Config.allSeedsEqual)
+        {
+            GrassSeedsModule.postInit();
+        }
 
         VanillaModule.postInit();
         TweaksModule.postInit();

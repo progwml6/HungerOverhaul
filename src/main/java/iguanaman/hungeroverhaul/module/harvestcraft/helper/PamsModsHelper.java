@@ -1,12 +1,8 @@
 package iguanaman.hungeroverhaul.module.harvestcraft.helper;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-
 import com.google.common.collect.Maps;
 import com.pam.harvestcraft.blocks.CropRegistry;
 import com.pam.harvestcraft.blocks.FruitRegistry;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +15,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.common.Loader;
+
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class PamsModsHelper
 {
@@ -54,7 +53,7 @@ public class PamsModsHelper
                     CropRegistry.getCrop(CropRegistry.SPINACH), CropRegistry.getCrop(CropRegistry.WHITEMUSHROOM), CropRegistry.getCrop(CropRegistry.BEAN), CropRegistry.getCrop(CropRegistry.SOYBEAN), CropRegistry.getCrop(CropRegistry.BELLPEPPER), CropRegistry.getCrop(CropRegistry.CHILIPEPPER),
                     CropRegistry.getCrop(CropRegistry.EGGPLANT), CropRegistry.getCrop(CropRegistry.OKRA), CropRegistry.getCrop(CropRegistry.PEAS), CropRegistry.getCrop(CropRegistry.TOMATO), CropRegistry.getCrop(CropRegistry.COTTON),
                     CropRegistry.getCrop(CropRegistry.PINEAPPLE), CropRegistry.getCrop(CropRegistry.GRAPE), CropRegistry.getCrop(CropRegistry.KIWI), CropRegistry.getCrop(CropRegistry.CRANBERRY), CropRegistry.getCrop(CropRegistry.RICE), CropRegistry.getCrop(CropRegistry.SEAWEED),
-                    CropRegistry.getCrop(CropRegistry.CURRYLEAF), CropRegistry.getCrop(CropRegistry.SESAME), CropRegistry.getCrop(CropRegistry.WATERCHESTNUT)
+                    CropRegistry.getCrop(CropRegistry.CURRYLEAF), CropRegistry.getCrop(CropRegistry.SESAME), CropRegistry.getCrop(CropRegistry.WATERCHESTNUT), CropRegistry.getCrop(CropRegistry.GIGAPICKLE), CropRegistry.getCrop(CropRegistry.KALE)
             };
 
             crops.put(CropRegistry.getCrop(CropRegistry.BLACKBERRY), 0);
@@ -117,6 +116,8 @@ public class PamsModsHelper
             crops.put(CropRegistry.getCrop(CropRegistry.CURRYLEAF), 57);
             crops.put(CropRegistry.getCrop(CropRegistry.SESAME), 58);
             crops.put(CropRegistry.getCrop(CropRegistry.WATERCHESTNUT), 59);
+            crops.put(CropRegistry.getCrop(CropRegistry.GIGAPICKLE), 60);
+            crops.put(CropRegistry.getCrop(CropRegistry.KALE), 61);
 
             mapFruit(FruitRegistry.getSapling(FruitRegistry.APPLE), Items.APPLE, FruitRegistry.getSapling(FruitRegistry.APPLE).getFruit());
             mapFruit(FruitRegistry.getSapling(FruitRegistry.ALMOND), FruitRegistry.getFood(FruitRegistry.ALMOND), FruitRegistry.getSapling(FruitRegistry.ALMOND).getFruit());
@@ -184,13 +185,6 @@ public class PamsModsHelper
     {
         IBlockState state = worldIn.getBlockState(pos);
 
-        if (facing == EnumFacing.UP && playerIn.canPlayerEdit(pos.offset(facing), facing, itemstack) && state.getBlock().canSustainPlant(state, worldIn, pos, EnumFacing.UP, (IPlantable) itemstack.getItem()) && worldIn.isAirBlock(pos.up()))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return facing == EnumFacing.UP && playerIn.canPlayerEdit(pos.offset(facing), facing, itemstack) && state.getBlock().canSustainPlant(state, worldIn, pos, EnumFacing.UP, (IPlantable) itemstack.getItem()) && worldIn.isAirBlock(pos.up());
     }
 }

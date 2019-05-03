@@ -1,7 +1,6 @@
 package iguanaman.hungeroverhaul.module.event;
 
 import com.google.common.collect.ImmutableList;
-
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.library.ItemAndBlockList;
 import iguanaman.hungeroverhaul.module.food.FoodModifier;

@@ -1,11 +1,5 @@
 package iguanaman.hungeroverhaul.library;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -13,6 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 public class ItemAndBlockList
 {
@@ -119,12 +119,8 @@ public class ItemAndBlockList
             return true;
         }
 
-        if (this.contains(item.getClass()))
-        {
-            return true;
-        }
+        return this.contains(item.getClass());
 
-        return false;
     }
 
     public boolean contains(Block block)
@@ -139,11 +135,7 @@ public class ItemAndBlockList
             return true;
         }
 
-        if (this.contains(block.getClass()))
-        {
-            return true;
-        }
+        return this.contains(block.getClass());
 
-        return false;
     }
 }

@@ -69,12 +69,12 @@ public class Food
 
         fd.name = ForgeRegistries.ITEMS.getKey(is.getItem()).toString();
 
-        if (fd.name == null || fd.name.toString().isEmpty())
+        if (fd.name == null || fd.name.isEmpty())
         {
             fd.name = ForgeRegistries.BLOCKS.getKey(Block.getBlockFromItem(is.getItem())).toString();
         }
 
-        if (fd.name == null || fd.name.toString().isEmpty())
+        if (fd.name == null || fd.name.isEmpty())
         {
             return null;
         }

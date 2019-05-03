@@ -1,10 +1,10 @@
 package iguanaman.hungeroverhaul.module.growth.modification;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import iguanaman.hungeroverhaul.common.config.Config;
 import net.minecraftforge.common.BiomeDictionary.Type;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlantGrowthModification
 {

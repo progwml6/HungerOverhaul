@@ -1,12 +1,11 @@
 package iguanaman.hungeroverhaul.module.natura.helper;
 
-import java.util.HashMap;
-
 import com.progwml6.natura.overworld.NaturaOverworld;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Loader;
+
+import java.util.HashMap;
 
 public class NaturaHelper
 {

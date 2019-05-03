@@ -1,7 +1,5 @@
 package iguanaman.hungeroverhaul.module.natura;
 
-import java.util.Random;
-
 import com.progwml6.natura.Natura;
 import com.progwml6.natura.common.block.BlockEnumBerryBush;
 import com.progwml6.natura.nether.NaturaNether;
@@ -10,8 +8,9 @@ import com.progwml6.natura.overworld.NaturaOverworld;
 import com.progwml6.natura.overworld.block.bush.BlockOverworldBerryBush;
 import com.progwml6.natura.overworld.block.crops.BlockNaturaBarley;
 import com.progwml6.natura.overworld.block.crops.BlockNaturaCotton;
+import com.progwml6.natura.overworld.block.saguaro.BlockSaguaro;
+import com.progwml6.natura.overworld.block.saguaro.BlockSaguaroBaby;
 import com.progwml6.natura.shared.NaturaCommons;
-
 import iguanaman.hungeroverhaul.common.config.Config;
 import iguanaman.hungeroverhaul.library.RecipeRemover;
 import iguanaman.hungeroverhaul.library.Util;
@@ -31,6 +30,8 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import squeek.applecore.api.food.FoodValues;
 
+import java.util.Random;
+
 public class NaturaModule
 {
     public static Random random = new Random();
@@ -44,11 +45,17 @@ public class NaturaModule
         random.setSeed(2 ^ 16 + 2 ^ 8 + (4 * 3 * 271));
 
         ItemStack barley = NaturaCommons.barley.copy();
-        ItemStack barleySeeds = NaturaOverworld.barley_seeds.copy();
+        ItemStack barleySeeds = ItemStack.EMPTY;
+
+        if (isNaturaOverworldLoaded)
+        {
+            barleySeeds = NaturaOverworld.barley_seeds.copy();
+        }
+
         ItemStack barleyFlour = NaturaCommons.barleyFlour.copy();
         ItemStack wheatFlour = NaturaCommons.wheatFlour.copy();
 
-        if (Config.addSeedsCraftingRecipe && isNaturaOverworldLoaded)
+        if (Config.addSeedsCraftingRecipe && isNaturaOverworldLoaded && barleySeeds != ItemStack.EMPTY)
         {
             String registryName = Util.MODID + ":barleyseeds";
 
@@ -121,11 +128,9 @@ public class NaturaModule
         PlantGrowthModification barleyGrowthModification = new PlantGrowthModification().setNeedsSunlight(true).setGrowthTickProbability(Config.cropRegrowthMultiplier).setBiomeGrowthModifier(Type.FOREST, 1).setBiomeGrowthModifier(Type.PLAINS, 1);
         PlantGrowthModule.registerPlantGrowthModifier(BlockNaturaBarley.class, barleyGrowthModification);
 
-        /*
-         * TODO: FIX
-         * PlantGrowthModification saguaroGrowthModification = new PlantGrowthModification().setNeedsSunlight(false).setGrowthTickProbability(Config.cactusRegrowthMultiplier).setBiomeGrowthModifier(Type.SANDY, 1);
-         * PlantGrowthModule.registerPlantGrowthModifier(SaguaroBlock.class, saguaroGrowthModification);
-        */
+        PlantGrowthModification saguaroGrowthModification = new PlantGrowthModification().setNeedsSunlight(false).setGrowthTickProbability(Config.cactusRegrowthMultiplier).setBiomeGrowthModifier(Type.SANDY, 1);
+        PlantGrowthModule.registerPlantGrowthModifier(BlockSaguaro.class, saguaroGrowthModification);
+        PlantGrowthModule.registerPlantGrowthModifier(BlockSaguaroBaby.class, saguaroGrowthModification);
 
         PlantGrowthModification berryBushGrowthModification = new PlantGrowthModification().setNeedsSunlight(true).setGrowthTickProbability(Config.cropRegrowthMultiplier).setBiomeGrowthModifier(Type.FOREST, 1).setBiomeGrowthModifier(Type.PLAINS, 1);
         PlantGrowthModule.registerPlantGrowthModifier(BlockOverworldBerryBush.class, berryBushGrowthModification);

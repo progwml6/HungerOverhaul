@@ -1,9 +1,5 @@
 package iguanaman.hungeroverhaul.module.harvestcraft;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 import com.pam.harvestcraft.HarvestCraft;
 import com.pam.harvestcraft.blocks.CropRegistry;
 import com.pam.harvestcraft.blocks.FruitRegistry;
@@ -12,7 +8,6 @@ import com.pam.harvestcraft.blocks.growables.BlockPamFruit;
 import com.pam.harvestcraft.blocks.growables.BlockPamFruitLog;
 import com.pam.harvestcraft.blocks.growables.BlockPamSapling;
 import com.pam.harvestcraft.item.ItemRegistry;
-
 import iguanaman.hungeroverhaul.common.config.Config;
 import iguanaman.hungeroverhaul.module.bonemeal.BonemealModule;
 import iguanaman.hungeroverhaul.module.bonemeal.modification.BonemealModification;
@@ -29,6 +24,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import squeek.applecore.api.food.FoodValues;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 public class HarvestCraftModule
 {
     public static Random random = new Random();
@@ -41,8 +40,7 @@ public class HarvestCraftModule
         if (Config.modifyFoodValues && Config.useHOFoodValues)
         {
             // crop special cases (unsure why these are singled out, exactly; was like this in 1.6.4)
-            List<Item> lowerSaturationCrops = Arrays.asList(new Item[] {
-                    CropRegistry.getFood(CropRegistry.RICE),
+            List<Item> lowerSaturationCrops = Arrays.asList(CropRegistry.getFood(CropRegistry.RICE),
                     CropRegistry.getFood(CropRegistry.CHILIPEPPER),
                     CropRegistry.getFood(CropRegistry.BELLPEPPER),
                     CropRegistry.getFood(CropRegistry.BLACKBERRY),
@@ -61,8 +59,7 @@ public class HarvestCraftModule
                     CropRegistry.getFood(CropRegistry.STRAWBERRY),
                     CropRegistry.getFood(CropRegistry.TEALEAF),
                     CropRegistry.getFood(CropRegistry.TOMATO),
-                    CropRegistry.getFood(CropRegistry.ZUCCHINI),
-            });
+                    CropRegistry.getFood(CropRegistry.ZUCCHINI));
 
             HarvestCraft.config.cropfoodRestore = 1;
 

@@ -1,15 +1,8 @@
 package iguanaman.hungeroverhaul.module.json;
 
-import java.io.File;
-import java.io.FileReader;
-import java.util.List;
-
-import org.apache.commons.io.FilenameUtils;
-
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.library.ItemAndBlockList;
 import iguanaman.hungeroverhaul.module.event.HungerOverhaulEventHook;
@@ -17,7 +10,12 @@ import iguanaman.hungeroverhaul.module.food.FoodModifier;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.io.FilenameUtils;
 import squeek.applecore.api.food.FoodValues;
+
+import java.io.File;
+import java.io.FileReader;
+import java.util.List;
 
 public class JsonModule
 {
@@ -129,7 +127,7 @@ public class JsonModule
 
     public static void addGameObjectToList(ItemAndBlockList list, GameObject gameObj)
     {
-        if (gameObj.name == null && gameObj.name.toString().isEmpty())
+        if (gameObj.name == null && gameObj.name.isEmpty())
         {
             return;
         }

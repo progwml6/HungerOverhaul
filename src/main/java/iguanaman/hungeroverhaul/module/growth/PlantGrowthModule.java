@@ -1,8 +1,5 @@
 package iguanaman.hungeroverhaul.module.growth;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import iguanaman.hungeroverhaul.common.RandomHelper;
 import iguanaman.hungeroverhaul.common.config.Config;
 import iguanaman.hungeroverhaul.module.growth.modification.PlantGrowthModification;
@@ -12,6 +9,9 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BlockEvent.CropGrowEvent.Pre;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlantGrowthModule
 {

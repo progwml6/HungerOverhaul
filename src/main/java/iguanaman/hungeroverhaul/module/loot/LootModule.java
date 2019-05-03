@@ -1,15 +1,6 @@
 package iguanaman.hungeroverhaul.module.loot;
 
-import static net.minecraft.world.storage.loot.LootTableList.CHESTS_ABANDONED_MINESHAFT;
-import static net.minecraft.world.storage.loot.LootTableList.CHESTS_DESERT_PYRAMID;
-import static net.minecraft.world.storage.loot.LootTableList.CHESTS_JUNGLE_TEMPLE;
-import static net.minecraft.world.storage.loot.LootTableList.CHESTS_SIMPLE_DUNGEON;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableSet;
-
 import iguanaman.hungeroverhaul.common.config.Config;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -26,9 +17,17 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import squeek.applecore.api.food.FoodValues;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static net.minecraft.world.storage.loot.LootTableList.CHESTS_ABANDONED_MINESHAFT;
+import static net.minecraft.world.storage.loot.LootTableList.CHESTS_DESERT_PYRAMID;
+import static net.minecraft.world.storage.loot.LootTableList.CHESTS_JUNGLE_TEMPLE;
+import static net.minecraft.world.storage.loot.LootTableList.CHESTS_SIMPLE_DUNGEON;
+
 public class LootModule
 {
-    private static final Set<String> LOOT_LOCATIONS = ImmutableSet.<String> builder()
+    private static final Set<String> LOOT_LOCATIONS = ImmutableSet.<String>builder()
             .add(CHESTS_SIMPLE_DUNGEON.toString())
             .add(CHESTS_ABANDONED_MINESHAFT.toString())
             .add(CHESTS_DESERT_PYRAMID.toString())

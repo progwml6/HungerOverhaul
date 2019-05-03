@@ -23,6 +23,7 @@ public class RespawnHungerModule
         }
 
         AppleCoreAPI.mutator.setHunger(event.player, Math.min(Math.max(respawnHunger, 1), 20));
+
         if (event.player.getFoodStats().getSaturationLevel() > event.player.getFoodStats().getFoodLevel())
         {
             AppleCoreAPI.mutator.setSaturation(event.player, event.player.getFoodStats().getFoodLevel());

@@ -1,11 +1,6 @@
 package iguanaman.hungeroverhaul.module.village.generation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
-
 import iguanaman.hungeroverhaul.common.config.Config;
 import iguanaman.hungeroverhaul.module.harvestcraft.helper.PamsModsHelper;
 import net.minecraft.block.Block;
@@ -26,6 +21,10 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.IVillageCreationHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class VillageCustomField extends Village
 {
@@ -62,7 +61,7 @@ public class VillageCustomField extends Village
             this.boundingBox.offset(0, this.groundLevel - this.boundingBox.maxY + 4 - 1, 0);
         }
 
-        BlockPos center = new BlockPos(getCenter(this.boundingBox));
+        BlockPos center = new BlockPos(this.getCenter(this.boundingBox));
 
         Biome biome = worldIn.getBiome(center);
 

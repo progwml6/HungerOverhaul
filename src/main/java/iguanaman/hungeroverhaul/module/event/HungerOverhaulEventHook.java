@@ -1,15 +1,11 @@
 package iguanaman.hungeroverhaul.module.event;
 
-import java.util.List;
-import java.util.Random;
-
 import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
 import com.pam.harvestcraft.blocks.growables.BlockPamFruit;
 import com.pam.harvestcraft.blocks.growables.BlockPamFruitLog;
 import com.pam.harvestcraft.item.items.ItemPamSeedFood;
 import com.progwml6.natura.overworld.block.crops.BlockNaturaBarley;
 import com.progwml6.natura.overworld.block.crops.BlockNaturaCotton;
-
 import iguanaman.hungeroverhaul.common.BlockHelper;
 import iguanaman.hungeroverhaul.common.ClientHelper;
 import iguanaman.hungeroverhaul.common.RandomHelper;
@@ -28,6 +24,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -36,6 +34,7 @@ import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
@@ -54,6 +53,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Text;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -71,6 +71,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodValues;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class HungerOverhaulEventHook
@@ -534,6 +538,7 @@ public class HungerOverhaulEventHook
         }
         else if (Loader.isModLoaded("harvestcraft") && clicked_block.getClass() == BlockPamFruitLog.class)
         {
+
             if (real_state.getValue(BlockPamFruitLog.AGE) >= 2)
             {
                 resultingState = real_state.withProperty(BlockPamFruitLog.AGE, 0);
@@ -551,10 +556,12 @@ public class HungerOverhaulEventHook
                 Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(event.getItemStack());
                 Integer fortune = enchantments.get(Enchantments.FORTUNE);
                 if (fortune == null)
+                {
                     fortune = 0;
+                }
                 boolean silkTouch = enchantments.get(Enchantments.SILK_TOUCH) != null;
                 ForgeEventFactory.fireBlockHarvesting(modifiedDrops, event.getWorld(), event.getPos(), clicked_state, fortune, 1.0f, silkTouch, event.getEntityPlayer());
-            
+
                 for (ItemStack drop : modifiedDrops)
                 {
                     Block.spawnAsEntity(event.getWorld(), event.getPos(), drop);
@@ -644,8 +651,8 @@ public class HungerOverhaulEventHook
             int hungerFill = values.hunger;
             float satiation = values.saturationModifier * 20 - hungerFill;
 
-            String mealDescriptor = "";
-            String noun;
+            String mealDescriptor = null;
+            String noun = null;
             String adjective = null;
 
             if (hungerFill <= 1)
@@ -704,40 +711,61 @@ public class HungerOverhaulEventHook
                 }
             }
 
-            int topIndex = event.getToolTip().size() > 0 ? 1 : 0;
+            int topIndex;
 
-            event.getToolTip().add(topIndex, mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
+            if (event.getToolTip() != null)
+            {
+                topIndex = event.getToolTip().size() > 0 ? 1 : 0;
+            }
+            else
+            {
+                topIndex = 0;
+            }
+
+            if (mealDescriptor != null && !mealDescriptor.equals(""))
+            {
+                event.getToolTip().add(topIndex, mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
+            }
         }
 
         if (Config.wrongBiomeRegrowthMultiplier > 1)
         {
             PlantGrowthModification growthModification = null;
 
-            if (event.getItemStack().getItem() instanceof IPlantable)
+            if (event.getItemStack() != ItemStack.EMPTY)
             {
-                if (event.getEntityPlayer() != null)
+                if (event.getItemStack().getItem() instanceof IPlantable)
                 {
-                    growthModification = PlantGrowthModule.getPlantGrowthModification(((IPlantable) event.getItemStack().getItem()).getPlant(event.getEntityPlayer().world, BlockPos.ORIGIN).getBlock());
-                }
-            }
-            else if (event.getItemStack().getItem() instanceof ItemBlock)
-            {
-                Block block = Block.getBlockFromItem(event.getItemStack().getItem());
+                    if (event.getEntityPlayer() != null)
+                    {
+                        IPlantable plantableItem = ((IPlantable) event.getItemStack().getItem());
+                        IBlockState plant = plantableItem.getPlant(event.getEntityPlayer().world, BlockPos.ORIGIN);
 
-                if (block != null)
-                {
-                    growthModification = PlantGrowthModule.getPlantGrowthModification(block);
+                        if (plantableItem != null && plant != null)
+                        {
+                            growthModification = PlantGrowthModule.getPlantGrowthModification(plant.getBlock());
+                        }
+                    }
                 }
-            }
-            else
-            {
-                if (Loader.isModLoaded("harvestcraft"))
+                else if (event.getItemStack().getItem() instanceof ItemBlock)
                 {
-                    Block block = PamsModsHelper.fruitItemToBlockMap.get(event.getItemStack().getItem());
+                    Block block = Block.getBlockFromItem(event.getItemStack().getItem());
 
                     if (block != null)
                     {
                         growthModification = PlantGrowthModule.getPlantGrowthModification(block);
+                    }
+                }
+                else
+                {
+                    if (Loader.isModLoaded("harvestcraft"))
+                    {
+                        Block block = PamsModsHelper.fruitItemToBlockMap.get(event.getItemStack().getItem());
+
+                        if (block != null)
+                        {
+                            growthModification = PlantGrowthModule.getPlantGrowthModification(block);
+                        }
                     }
                 }
             }

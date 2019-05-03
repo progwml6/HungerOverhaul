@@ -1,8 +1,5 @@
 package iguanaman.hungeroverhaul.module.food;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import iguanaman.hungeroverhaul.common.config.Config;
 import iguanaman.hungeroverhaul.library.ItemAndBlockList;
 import net.minecraft.item.Item;
@@ -11,6 +8,9 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import squeek.applecore.api.food.FoodEvent;
 import squeek.applecore.api.food.FoodValues;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FoodModifier
 {

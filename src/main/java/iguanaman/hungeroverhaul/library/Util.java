@@ -1,12 +1,11 @@
 package iguanaman.hungeroverhaul.library;
 
-import java.util.Locale;
-
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import java.util.Locale;
 
 public class Util
 {

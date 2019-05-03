@@ -1,9 +1,5 @@
 package iguanaman.hungeroverhaul.module.village.trade;
 
-import java.util.Random;
-
-import javax.annotation.Nonnull;
-
 import iguanaman.hungeroverhaul.library.Util;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
@@ -12,6 +8,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
+
+import javax.annotation.Nonnull;
+import java.util.Random;
 
 public class EmeraldForItemstack implements ITradeList
 {

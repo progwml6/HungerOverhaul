@@ -103,6 +103,7 @@ dependencies {
         transitive = false
     }
 
+    //compile fileTree(dir: 'libs', include: ['*.jar'])
 
     deobfCompile ("com.github.glitchfiend.biomesoplenty:BiomesOPlenty:${config.minecraft_version}-${config.bop_version}:universal") {
         transitive = false
@@ -116,7 +117,7 @@ dependencies {
         transitive = false
     }
 
-    deobfCompile ("mcp.mobius.waila:Hwyla:${config.hwyla_version}_${config.minecraft_version_short}") {
+    deobfCompile ("mcp.mobius.waila:Hwyla:${config.hwyla_version}_${config.minecraft_version}") {
         transitive = false
     }
 }
@@ -125,8 +126,15 @@ dependencies {
 // the jenkins server, so skip this for jenkins builds
 if (System.getenv().BUILD_NUMBER == null) {
     // note: the 'repository' url changes with each version
-    repositories { ivy { artifactPattern "https://addons-origin.cursecdn.com/files/2521/254/[module] [revision].[ext]" } }//
-    dependencies { compile "pam:Pam's HarvestCraft:1.12.2k@jar" }
+    repositories { 
+        ivy { 
+            artifactPattern "https://media.forgecdn.net/files/2650/315/[module] [revision].[ext]"
+            metadataSources {
+                artifact()
+            }
+        } 
+    }//
+    dependencies { compile "pam:Pam's HarvestCraft:1.12.2zb@jar" }
 }
 
 processResources
@@ -160,18 +168,18 @@ artifacts {
 }
 // verify the properties exist.. or initialize.
 if (!project.hasProperty("keystore_location")) // keystore location
-    ext.keystore_location = ".";
+    ext.keystore_location = "."
     
 if (!project.hasProperty("keystore_user_alias")) // keystore user alias
-    ext.keystore_user_alias = "";
+    ext.keystore_user_alias = ""
 if (!project.hasProperty("sftp_username"))
-    ext.sftp_username = "";
+    ext.sftp_username = ""
 if (!project.hasProperty("sftp_key"))
-    ext.sftp_key = "";
+    ext.sftp_key = ""
 if (!project.hasProperty("keystore_user_password")) // keystore user pass
-    ext.keystore_user_password = "";
+    ext.keystore_user_password = ""
 if (System.getenv().KSK_PW != null)
-    ext.keystore_user_password =System.getenv().KSK_PW;
+    ext.keystore_user_password =System.getenv().KSK_PW
 task("signJar", dependsOn: "build")
 {
     inputs.file jar.getArchivePath()
