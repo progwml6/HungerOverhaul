@@ -1,11 +1,16 @@
 package iguanaman.hungeroverhaul.module.event;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
 import com.pam.harvestcraft.blocks.growables.BlockPamFruit;
 import com.pam.harvestcraft.blocks.growables.BlockPamFruitLog;
 import com.pam.harvestcraft.item.items.ItemPamSeedFood;
 import com.progwml6.natura.overworld.block.crops.BlockNaturaBarley;
 import com.progwml6.natura.overworld.block.crops.BlockNaturaCotton;
+
 import iguanaman.hungeroverhaul.common.BlockHelper;
 import iguanaman.hungeroverhaul.common.ClientHelper;
 import iguanaman.hungeroverhaul.common.RandomHelper;
@@ -71,10 +76,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodValues;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class HungerOverhaulEventHook
@@ -744,6 +745,10 @@ public class HungerOverhaulEventHook
                         if (plantableItem != null && plant != null)
                         {
                             growthModification = PlantGrowthModule.getPlantGrowthModification(plant.getBlock());
+                        }
+                        else
+                        {
+                            //Fix compile issue which looses "plantableItem != null && plant != null"
                         }
                     }
                 }
