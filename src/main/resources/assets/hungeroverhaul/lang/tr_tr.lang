@@ -1,0 +1,33 @@
+###############
+#   Potions   #
+###############
+potion.wellfed=İyi Beslenmiş
+
+################
+#   Tooltips   #
+################
+tooltip.meal.crop_grows_best_in=En İyi Yetiştiği Yer:
+tooltip.meal.hearty=yararlı %s
+tooltip.meal.wholesome=sağlıklı %s
+tooltip.meal.nourishing=besleyici %s
+tooltip.meal.unfulfilling=tamamlanmamış %s
+tooltip.meal.morsel=lokmalı
+tooltip.meal.snack=atıştırmalık
+tooltip.meal.lightmeal=hafif besin
+tooltip.meal.meal=besin
+tooltip.meal.largemeal=ağır besin
+tooltip.meal.feast=ziyafet
+
+# if necessary, special cases for the meal descriptors can be handled by
+# defining combined strings like so (remove the #)
+#tooltip.meal.hearty_largemeal=hearty large meal
+
+##################
+#   UI Strings   #
+##################
+ui.health.dying=Ölüyor
+ui.health.injured=Yaralı
+ui.health.hurt=Acıyor
+ui.hunger.starving=Acıkıyor
+ui.hunger.hungry=Acıkmış
+ui.hunger.peckish=Çok Acıkmış
