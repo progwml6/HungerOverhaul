@@ -37,10 +37,6 @@ repositories {
     maven {
         url "http://www.ryanliptak.com/maven/"
     }
-    maven {
-         name "Tehnut Maven FS"
-         url "http://tehnut.info/maven"
-    }
 }
 
 // Define properties file
@@ -116,10 +112,6 @@ dependencies {
     deobfCompile ("mezz.jei:jei_${config.minecraft_version}:${config.jei_version}") {
         transitive = false
     }
-
-    deobfCompile ("mcp.mobius.waila:Hwyla:${config.hwyla_version}_${config.minecraft_version}") {
-        transitive = false
-    }
 }
 
 // the single quotes in these filenames seems to cause problems with
@@ -128,13 +120,13 @@ if (System.getenv().BUILD_NUMBER == null) {
     // note: the 'repository' url changes with each version
     repositories { 
         ivy { 
-            artifactPattern "https://media.forgecdn.net/files/2650/315/[module] [revision].[ext]"
+            artifactPattern "https://media.forgecdn.net/files/2771/840/[module] [revision].[ext]"
             metadataSources {
                 artifact()
             }
         } 
     }//
-    dependencies { compile "pam:Pam's HarvestCraft:1.12.2zb@jar" }
+    dependencies { compile "pam:Pam's HarvestCraft:1.12.2zf@jar" }
 }
 
 processResources
