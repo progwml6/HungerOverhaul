@@ -1,5 +1,11 @@
 package iguanaman.hungeroverhaul.common.config;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.logging.log4j.Logger;
+
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.library.Util;
 import net.minecraft.util.text.TextFormatting;
@@ -8,11 +14,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.apache.logging.log4j.Logger;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Config
 {
@@ -445,8 +446,8 @@ public class Config
     public static boolean addHarvestCraftChestLoot;
     public static final ConfigOption<Integer> chestLootMaxStackSizeOption = addOption(CATEGORY_HARVESTCRAFT, "chestLootMaxStackSize", 16, 1, null, 64, "Max stack size for food to be found in chests (addHarvestCraftChestLoot must be true)");
     public static int chestLootMaxStackSize;
-    public static final ConfigOption<Integer> chestLootChanceOption = addOption(CATEGORY_HARVESTCRAFT, "chestLootChance", 5, 1, null, 5, "Weighted chance for food to be found in chests (addHarvestCraftChestLoot must be true)");
-    public static int chestLootChance;
+    public static final ConfigOption<Float> chestLootChanceOption = addOption(CATEGORY_HARVESTCRAFT, "chestLootChance", 1.0f, 0.0f, 1.0f, 1.0f, "Weighted chance for food to be found in chests (addHarvestCraftChestLoot must be true) Value must be between 0.0 and 1.0.");
+    public static float chestLootChance;
     public static final ConfigOption<Boolean> foodsUnplantableOption = addOption(CATEGORY_HARVESTCRAFT, "foodsUnplantable", true, false, "Makes HarvestCraft foods unplantable, meaning seeds are required to plant crops");
     public static boolean foodsUnplantable;
 
