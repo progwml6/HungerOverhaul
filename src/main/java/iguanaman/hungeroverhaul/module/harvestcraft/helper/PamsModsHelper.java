@@ -7,7 +7,6 @@ import com.pam.harvestcraft.blocks.growables.BlockPamCrop;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemStack;
@@ -60,7 +59,7 @@ public class PamsModsHelper
                         FruitRegistry.getSapling(fruitName).getFruit()
                 );
             }
-            // mapFruit(FruitRegistry.getSapling(FruitRegistry.APPLE), Items.APPLE, FruitRegistry.getSapling(FruitRegistry.APPLE).getFruit());
+
             for (Entry<String, ItemSeedFood> food : CropRegistry.getFoods().entrySet())
             {
                 productToSeedMap.put(food.getValue(), CropRegistry.getSeed(food.getKey()));
