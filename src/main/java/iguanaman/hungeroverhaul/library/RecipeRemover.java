@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.RegistryManager;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -29,6 +30,7 @@ public class RecipeRemover
     public static void removeAnyRecipe(ItemStack resultItem)
     {
         Set<Entry<ResourceLocation, IRecipe>> recipes = ForgeRegistries.RECIPES.getEntries();
+        Set<ResourceLocation> removeRecipes = new HashSet<>();
 
         for (Entry<ResourceLocation, IRecipe> recipe : recipes)
         {
@@ -36,14 +38,20 @@ public class RecipeRemover
 
             if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
             {
-                RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe.getKey());
+                removeRecipes.add(recipe.getKey());
             }
+        }
+
+        for(ResourceLocation recipe : removeRecipes)
+        {
+            RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe);
         }
     }
 
     public static void removeShapedRecipe(ItemStack resultItem)
     {
         Set<Entry<ResourceLocation, IRecipe>> recipes = ForgeRegistries.RECIPES.getEntries();
+        Set<ResourceLocation> removeRecipes = new HashSet<>();
 
         for (Entry<ResourceLocation, IRecipe> recipe : recipes)
         {
@@ -56,15 +64,21 @@ public class RecipeRemover
 
                 if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
                 {
-                    RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe.getKey());
+                    removeRecipes.add(recipe.getKey());
                 }
             }
+        }
+
+        for(ResourceLocation recipe : removeRecipes)
+        {
+            RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe);
         }
     }
 
     public static void removeShapelessRecipe(ItemStack resultItem)
     {
         Set<Entry<ResourceLocation, IRecipe>> recipes = ForgeRegistries.RECIPES.getEntries();
+        Set<ResourceLocation> removeRecipes = new HashSet<>();
 
         for (Entry<ResourceLocation, IRecipe> recipe : recipes)
         {
@@ -77,9 +91,14 @@ public class RecipeRemover
 
                 if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
                 {
-                    RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe.getKey());
+                    removeRecipes.add(recipe.getKey());
                 }
             }
+        }
+
+        for(ResourceLocation recipe : removeRecipes)
+        {
+            RegistryManager.ACTIVE.getRegistry(GameData.RECIPES).remove(recipe);
         }
     }
 
